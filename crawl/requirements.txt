@@ -1,0 +1,16 @@
+# Base requirements
+selenium
+requests
+python-dotenv
+pandas
+markdownify
+urllib3
+
+# PDF and document processing
+pypdf
+python-docx
+
+# LLM & OCR libraries
+litellm
+mistralai
+pydantic
