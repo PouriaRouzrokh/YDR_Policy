@@ -68,7 +68,7 @@ class YaleCrawler:
         os.makedirs(config.DOCUMENT_DIR, exist_ok=True)
         
         # Initialize the data tracking CSV
-        self.policies_df_path = os.path.join(config.RAW_DATA_DIR, "policies_data.csv")
+        self.policies_df_path = os.path.join(config.RAW_DATA_DIR, "crawled_policies_data.csv")
         if not os.path.exists(self.policies_df_path):
             policies_df = pd.DataFrame(columns=[
                 'url', 'file_path', 'include', 'found_links_count', 

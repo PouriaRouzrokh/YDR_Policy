@@ -1,7 +1,6 @@
 """
 Main entry point for the Yale Medicine crawler application.
 """
-import argparse
 import logging
 import os
 
@@ -26,28 +25,12 @@ def main():
     # Load environment variables
     load_dotenv()
     
-    # Set up argument parser
-    parser = argparse.ArgumentParser(description='Yale Medicine Policy Crawler')
-    parser.add_argument('--url', type=str, default=config.MAIN_URL,
-                        help=f'URL to start crawling from (default: {config.MAIN_URL})')
-    parser.add_argument('--depth', type=int, default=config.DEFAULT_MAX_DEPTH,
-                        help=f'Maximum crawling depth (default: {config.DEFAULT_MAX_DEPTH})')
-    parser.add_argument('--definite-only', action='store_true',
-                        help='Follow only definite policy links (overrides config setting)')
-    parser.add_argument('--resume', action='store_true',
-                        help='Resume from last crawl state if available')
-    parser.add_argument('--reset', action='store_true',
-                        help='Reset (delete) any existing crawl state and start fresh')
-    parser.add_argument('--debug', action='store_true',
-                        help='Enable debug logging')
-    
-    # Parse arguments
-    args = parser.parse_args()
-    
-    # Set debug level if requested
-    if args.debug:
-        logging.getLogger().setLevel(logging.DEBUG)
-        logger.info("Debug logging enabled")
+    # Set up configuration using default values from config
+    url = config.MAIN_URL
+    depth = config.DEFAULT_MAX_DEPTH
+    follow_definite_only = config.FOLLOW_DEFINITE_LINKS_ONLY
+    resume = config.RESUME_CRAWL  # Default: don't resume from previous state
+    reset = config.RESET_CRAWL   # Default: don't reset existing crawl state
     
     # Validate environment variables
     if not os.environ.get("OPENAI_API_KEY"):
@@ -56,32 +39,25 @@ def main():
     if not os.environ.get("MISTRAL_API_KEY"):
         logger.warning("MISTRAL_API_KEY not found in environment variables. PDF OCR processing will not work.")
     
-    # Check if definite-only flag is set
-    if args.definite_only:
-        config.FOLLOW_DEFINITE_LINKS_ONLY = True
-        logger.info("Command-line flag set to follow only definite policy links")
-    
     # Handle reset option (overrides resume)
-    if args.reset:
+    if reset:
         from crawler_state import CrawlerState
         state_manager = CrawlerState(os.path.join(config.RAW_DATA_DIR, "state"), logger)
         state_manager.clear_state()
         logger.info("Crawler state has been reset. Starting fresh crawl.")
         resume = False
-    else:
-        resume = args.resume
     
     # Display configuration settings
     logger.info(f"Starting crawler with the following settings:")
-    logger.info(f"  - Starting URL: {args.url}")
-    logger.info(f"  - Maximum depth: {args.depth}")
-    logger.info(f"  - Follow definite links only: {config.FOLLOW_DEFINITE_LINKS_ONLY}")
+    logger.info(f"  - Starting URL: {url}")
+    logger.info(f"  - Maximum depth: {depth}")
+    logger.info(f"  - Follow definite links only: {follow_definite_only}")
     logger.info(f"  - Resume from previous state: {resume}")
     
     # Initialize and start the crawler
     try:
-        crawler = YaleCrawler(max_depth=args.depth, resume=resume, logger=logger)
-        crawler.start(initial_url=args.url)
+        crawler = YaleCrawler(max_depth=depth, resume=resume, logger=logger)
+        crawler.start(initial_url=url)
         
         logger.info(f"Crawling completed. Results saved to {config.RAW_DATA_DIR}")
         

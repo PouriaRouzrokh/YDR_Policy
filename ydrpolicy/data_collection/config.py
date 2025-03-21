@@ -39,3 +39,7 @@ FOLLOW_DEFINITE_LINKS_ONLY = False  # If True, only follow links the LLM conside
 DEFAULT_MAX_DEPTH = 6
 REQUEST_TIMEOUT = 30        
 WAIT_TIME = 60
+
+## Crawler state
+RESUME_CRAWL = False
+RESET_CRAWL = False
