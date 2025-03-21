@@ -1,14 +1,13 @@
 """
 Main entry point for the Yale Medicine crawler application.
 """
-import os
-import logging
 import argparse
-from dotenv import load_dotenv
+import logging
+import os
 
-# Local imports
-from crawler import YaleCrawler
 import config
+from crawler import YaleCrawler
+from dotenv import load_dotenv
 from logger import DataCollectionLogger
 
 logger = DataCollectionLogger(
@@ -18,7 +17,7 @@ logger = DataCollectionLogger(
 )
 
 # Create output directories before setting up logging
-os.makedirs(config.OUTPUT_DIR, exist_ok=True)
+os.makedirs(config.RAW_DATA_DIR, exist_ok=True)
 os.makedirs(config.MARKDOWN_DIR, exist_ok=True)
 os.makedirs(config.DOCUMENT_DIR, exist_ok=True)
 
@@ -65,7 +64,7 @@ def main():
     # Handle reset option (overrides resume)
     if args.reset:
         from crawler_state import CrawlerState
-        state_manager = CrawlerState(os.path.join(config.OUTPUT_DIR, "state"), logger)
+        state_manager = CrawlerState(os.path.join(config.RAW_DATA_DIR, "state"), logger)
         state_manager.clear_state()
         logger.info("Crawler state has been reset. Starting fresh crawl.")
         resume = False
@@ -84,7 +83,7 @@ def main():
         crawler = YaleCrawler(max_depth=args.depth, resume=resume, logger=logger)
         crawler.start(initial_url=args.url)
         
-        logger.info(f"Crawling completed. Results saved to {config.OUTPUT_DIR}")
+        logger.info(f"Crawling completed. Results saved to {config.RAW_DATA_DIR}")
         
     except KeyboardInterrupt:
         logger.info("Crawling stopped by user")
@@ -95,8 +94,8 @@ if __name__ == "__main__":
     print("Yale Medicine Policy Crawler")
     print("============================")
     print("This script will crawl Yale Medicine pages for policies and guidelines.")
-    print(f"All results will be saved in the '{config.OUTPUT_DIR}' directory.")
-    print(f"Logs will be saved to '{os.path.join(config.OUTPUT_DIR, 'crawler.log')}'")
+    print(f"All results will be saved in the '{config.RAW_DATA_DIR}' directory.")
+    print(f"Logs will be saved to '{os.path.join(config.RAW_DATA_DIR, 'crawler.log')}'")
     print("Press Ctrl+C to stop the crawler at any time - state will be saved automatically.")
     print()
     

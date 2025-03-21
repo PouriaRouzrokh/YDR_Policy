@@ -8,10 +8,7 @@ import logging
 from mistralai import Mistral
 
 # Local imports
-import config  # Import directly from root
-
-# Local imports
-import config
+from ydrpolicy.data_collection import config  # Changed to absolute import
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')

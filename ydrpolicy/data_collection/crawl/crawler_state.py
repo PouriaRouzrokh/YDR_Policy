@@ -1,12 +1,11 @@
 """
 Module for managing crawler state to enable resume functionality.
 """
-import os
 import json
-import pickle
 import logging
-from typing import Dict, List, Set, Tuple, Any
-from venv import logger
+import os
+import pickle
+from typing import Any, Dict, List, Set, Tuple
 
 class CrawlerState:
     """Class for managing the crawler state to enable resuming from where it left off."""

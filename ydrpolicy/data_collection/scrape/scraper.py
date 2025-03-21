@@ -1,11 +1,13 @@
+import logging
 import os
 import re
-import logging
+
 import pandas as pd
 from openai import OpenAI
+from prompts import SCRAPER_LLM_SYSTEM_PROMPT
 from pydantic import BaseModel, Field
 from tqdm import tqdm
-from prompts import SCRAPER_LLM_SYSTEM_PROMPT
+
 
 class PolicyExtraction(BaseModel):
     """Schema for the OpenAI API response."""

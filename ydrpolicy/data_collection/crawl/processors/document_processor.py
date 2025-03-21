@@ -14,9 +14,9 @@ import markdownify
 from docx import Document
 
 # Local imports
-import config  # Import directly from root
-from processors.llm_processor import process_document_with_ocr
-from processors.pdf_processor import pdf_to_markdown
+from ydrpolicy.data_collection import config  # Changed to absolute import
+from ydrpolicy.data_collection.crawl.processors.llm_processor import process_document_with_ocr
+from ydrpolicy.data_collection.crawl.processors.pdf_processor import pdf_to_markdown
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')

@@ -12,8 +12,8 @@ from mistralai import Mistral
 from litellm import completion
 
 # Local imports
-import config  # Import directly from root
-import processors.llm_prompts as llm_prompts
+from ydrpolicy.data_collection import config  # Changed to absolute import
+from ydrpolicy.data_collection.crawl.processors import llm_prompts
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')

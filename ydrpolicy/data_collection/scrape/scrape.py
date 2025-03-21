@@ -1,11 +1,10 @@
+import argparse
 import logging
 import os
-import argparse
-from dotenv import load_dotenv
-import pandas as pd
-import config
 
-# Local imports
+import config
+import pandas as pd
+from dotenv import load_dotenv
 from logger import DataCollectionLogger
 from scraper import scrape_policies
 

@@ -1,29 +1,29 @@
 """
 Module for web crawling and link extraction using priority-based algorithm with resume capability.
 """
+import heapq
+import json
+import logging
 import os
 import re
-import logging
-import urllib.parse
-import heapq
 import signal
 import time
-import json
-import pandas as pd
-from typing import Set, List, Tuple, Dict, Optional
+import urllib.parse
+from typing import Dict, List, Optional, Set, Tuple
 
+from ydrpolicy.data_collection import config
+import pandas as pd
+from ydrpolicy.data_collection.crawl.crawler_state import CrawlerState
+from ydrpolicy.data_collection.crawl.processors.document_processor import (convert_to_markdown,
+                                           download_document, html_to_markdown)
+from ydrpolicy.data_collection.crawl.processors.llm_processor import analyze_content_for_policies
+from ydrpolicy.data_collection.crawl.processors.pdf_processor import pdf_to_markdown
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
-# Local imports
-import config
-from crawler_state import CrawlerState
-from processors.document_processor import download_document, convert_to_markdown, html_to_markdown
-from processors.pdf_processor import pdf_to_markdown
-from processors.llm_processor import analyze_content_for_policies
 
 class YaleCrawler:
     """Class for crawling Yale Medicine webpages and documents using priority-based algorithm."""
@@ -45,7 +45,7 @@ class YaleCrawler:
         self.current_depth = 0
         self.resume = resume
         self.logger = logger        
-        self.state_manager = CrawlerState(os.path.join(config.OUTPUT_DIR, "state"), logger)
+        self.state_manager = CrawlerState(os.path.join(config.RAW_DATA_DIR, "state"), logger)
         
         # Flag to track if the crawler is stopping gracefully
         self.stopping = False
@@ -63,12 +63,12 @@ class YaleCrawler:
         ]
         
         # Create output directories
-        os.makedirs(config.OUTPUT_DIR, exist_ok=True)
+        os.makedirs(config.RAW_DATA_DIR, exist_ok=True)
         os.makedirs(config.MARKDOWN_DIR, exist_ok=True)
         os.makedirs(config.DOCUMENT_DIR, exist_ok=True)
         
         # Initialize the data tracking CSV
-        self.policies_df_path = os.path.join(config.OUTPUT_DIR, "policies_data.csv")
+        self.policies_df_path = os.path.join(config.RAW_DATA_DIR, "policies_data.csv")
         if not os.path.exists(self.policies_df_path):
             policies_df = pd.DataFrame(columns=[
                 'url', 'file_path', 'include', 'found_links_count', 

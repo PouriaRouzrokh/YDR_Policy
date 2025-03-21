@@ -1,10 +1,10 @@
 import logging
 import os
-import sys
 from typing import Optional
-from pydantic import BaseModel
+
 from rich.console import Console
 from rich.logging import RichHandler
+
 
 class DataCollectionLogger:
     """Custom logger class using Rich for formatting and file output"""

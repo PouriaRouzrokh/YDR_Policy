@@ -2,6 +2,7 @@
 Configuration settings for the Yale Medicine crawler.
 """
 import os
+
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -9,7 +10,7 @@ load_dotenv()
 
 # --------------------------- Data directory settings --------------------------
 
-DATA_DIR = "/Users/pouria/Documents/Coding/YDR Policy Scraping/data"
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 RAW_DATA_DIR = os.path.join(DATA_DIR, "raw")
 DOCUMENT_DIR = os.path.join(RAW_DATA_DIR, "documents")
 MARKDOWN_DIR = os.path.join(RAW_DATA_DIR, "markdown_files")
