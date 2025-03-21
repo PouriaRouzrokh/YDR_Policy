@@ -4,7 +4,7 @@ import re
 
 import pandas as pd
 from openai import OpenAI
-from ydrpolicy.data_collection.prompts import SCRAPER_LLM_SYSTEM_PROMPT
+from ydrpolicy.data_collection.scrape.llm_prompts import SCRAPER_LLM_SYSTEM_PROMPT
 from pydantic import BaseModel, Field
 from tqdm import tqdm
 
@@ -92,16 +92,20 @@ def scrape_policies(df: pd.DataFrame, api_key: str = None, model: str = None, ba
                 # Parse the JSON response
                 import json
                 result = json.loads(response_content)
-            
-            # Log the results
-            logger.info(f"\nRESULTS:")
-            logger.info(f"Contains policy: {result['contains_policy']}")
-            logger.info(f"Reasoning: {result['reasoning']}")
+
             if result['contains_policy']:
                 policy_content = clean_string(result['policy_content'])
                 policy_name = row['url'].split("/")[-1]
                 policy_content_path = os.path.join(scraped_policies_dir, policy_name + ".txt")
                 result['policy_content_path'] = policy_content_path
+            else:
+                result['policy_content_path'] = None
+
+            # Log the results
+            logger.info(f"\nRESULTS:")
+            logger.info(f"Contains policy: {result['contains_policy']}")
+            logger.info(f"Reasoning: {result['reasoning']}")
+            if result['contains_policy']:
                 logger.info(f"\nEXTRACTED POLICY SAVED TO: {policy_content_path}")
                 logger.info(f"{'-'*40}")
                 logger.info(policy_content)

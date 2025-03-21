@@ -36,7 +36,7 @@ ALLOWED_EXTENSIONS = DOCUMENT_EXTENSIONS + ['.html', '.htm', '.php', '.aspx']
 ## Crawling behavior
 FOLLOW_DEFINITE_LINKS_ONLY = False  # If True, only follow links the LLM considers "definite" policy content
                                     # If False, follow both "definite" and "probable" links
-DEFAULT_MAX_DEPTH = 6
+DEFAULT_MAX_DEPTH = 2
 REQUEST_TIMEOUT = 30        
 WAIT_TIME = 60
 

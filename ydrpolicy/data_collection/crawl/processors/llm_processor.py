@@ -106,7 +106,7 @@ def analyze_content_for_policies(content: str, url: str, links: list = None) -> 
         try:
             # Get completion from LLM with proper Pydantic model
             response = completion(
-                model=config.LLM_MODEL,
+                model=config.CRAWLER_LLM_MODEL,
                 messages=messages,
                 response_format={"type": "json_object"}
             )
@@ -135,7 +135,7 @@ def analyze_content_for_policies(content: str, url: str, links: list = None) -> 
             # Try direct JSON approach as fallback
             try:
                 response = completion(
-                    model=config.LLM_MODEL,
+                    model=config.CRAWLER_LLM_MODEL,
                     messages=messages,
                     response_format={"type": "json_object"}
                 )

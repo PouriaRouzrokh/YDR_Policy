@@ -7,21 +7,24 @@ from dotenv import load_dotenv
 from ydrpolicy.data_collection.logger import DataCollectionLogger
 from ydrpolicy.data_collection.scrape.scraper import scrape_policies
 
-logger = DataCollectionLogger(
-    name="scrape", 
-    level=logging.INFO, 
-    path=os.path.join(config.PROCESSED_DATA_DIR, "scrape.log")
-)
-
-def main():
+def main(logger: logging.Logger = None):
     """Main function to run the policy extraction process."""       
     
     # Load environment variables
     load_dotenv()
+
+    # If no logger is provided, create a new one
+    if logger is None:
+        logger = DataCollectionLogger(
+            name="scrape", 
+            level=logging.INFO, 
+            path=os.path.join(config.PROCESSED_DATA_DIR, "scrape.log")
+        )
     
     # Set up configuration using default values from config
     RAW_DATA_DIR = config.RAW_DATA_DIR
     SCRAPED_POLICIES_DIR = config.SCRAPED_POLICIES_DIR
+    PROCESSED_DATA_DIR = config.PROCESSED_DATA_DIR
     input_file = os.path.join(RAW_DATA_DIR, "crawled_policies_data.csv")
     model = config.SCRAPER_LLM_MODEL
     OPENAI_API_KEY = config.OPENAI_API_KEY
@@ -56,7 +59,7 @@ def main():
     )
     
     # Save the scraped policies
-    output_path = os.path.join(SCRAPED_POLICIES_DIR, "scraped_policies_data.csv")
+    output_path = os.path.join(PROCESSED_DATA_DIR, "scraped_policies_data.csv")
     logger.info(f"Saving scraped policies to: {output_path}")
     df_with_policies.to_csv(output_path, index=False)
     logger.info("Policy extraction completed successfully")
@@ -67,6 +70,12 @@ if __name__ == "__main__":
     print("This script will extract policies from crawled Yale Medicine pages.")
     print(f"Results will be saved in the configured output directory.")
     print()
+
+    logger = DataCollectionLogger(
+        name="scrape", 
+        level=logging.INFO, 
+        path=os.path.join(config.PROCESSED_DATA_DIR, "scrape.log")
+    )
     
     logger.info("\n" + "="*80 + "\n" + "STARTING POLICY EXTRACTION PROCESS" + "\n" + "="*80)
-    main()
+    main(logger)

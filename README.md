@@ -89,7 +89,7 @@ yale-radiology-rag/
 ├── docker-compose.yml        # Docker compose configuration
 ├── nginx.conf                # Nginx configuration for production
 ├── supervisord.conf          # Supervisor configuration for process management
-├── main.py                   # Entry point for different modes (MCP, API, Data Collection)
+├── pytest.ini                # PyTest configuration
 │
 ├── data/                     # Data storage
 │   ├── raw/                  # Raw data from crawler
@@ -107,176 +107,221 @@ yale-radiology-rag/
 │   ├── auth/                 # Authentication data
 │   └── uploads/              # User uploaded documents
 │
-├── data_collection/          # Data collection components
-│   ├── __init__.py           # Package initialization
-│   ├── config.py             # Configuration for crawlers and LLMs
-│   ├── logger.py             # Custom logger implementation
-│   ├── prompts.py            # LLM prompts for analysis
+├── test_data/                # Test data files
+│   ├── mock_policies/        # Mock policy files for testing
+│   ├── mock_documents/       # Mock documents for testing
+│   ├── fixtures/             # Test fixtures
+│   └── snapshots/            # Test snapshots
+│
+├── tests/                    # Centralized test directory
+│   ├── __init__.py           # Test package initialization
+│   ├── conftest.py           # PyTest fixtures and configuration
+│   ├── data_collection/      # Tests for data collection components
+│   │   ├── __init__.py       # Test package initialization
+│   │   ├── test_crawler.py   # Tests for crawler
+│   │   └── test_scraper.py   # Tests for scraper
 │   │
-│   ├── crawl/                # Web crawler functionality
+│   ├── mcp_server/           # Tests for MCP server components
+│   │   ├── __init__.py       # Test package initialization
+│   │   ├── test_server.py    # Tests for MCP server
+│   │   └── test_tools/       # Tests for MCP tools
+│   │       ├── __init__.py   # Test package initialization
+│   │       ├── test_naive_rag.py   # Tests for naive RAG
+│   │       ├── test_graph_rag.py   # Tests for graph RAG
+│   │       ├── test_keyword_search.py # Tests for keyword search
+│   │       └── test_hybrid_search.py  # Tests for hybrid search
+│   │
+│   ├── backend/              # Tests for backend components
+│   │   ├── __init__.py       # Test package initialization
+│   │   ├── test_app.py       # Tests for main app
+│   │   ├── test_api/         # Tests for API endpoints
+│   │   │   ├── __init__.py   # Test package initialization
+│   │   │   ├── test_auth.py  # Tests for auth endpoints
+│   │   │   ├── test_chat.py  # Tests for chat endpoints
+│   │   │   └── test_policies.py # Tests for policy endpoints
+│   │   ├── test_services/    # Tests for backend services
+│   │   │   ├── __init__.py   # Test package initialization
+│   │   │   ├── test_auth_service.py  # Tests for auth service
+│   │   │   └── test_search_service.py # Tests for search service
+│   │   └── test_chat/        # Tests for chat components
+│   │       ├── __init__.py   # Test package initialization
+│   │       ├── test_chat_agent.py # Tests for chat agent
+│   │       └── test_prompt_templates.py # Tests for prompt templates
+│   │
+│   └── frontend/             # Tests for frontend components
+│       ├── __init__.py       # Test package initialization
+│       ├── components/       # Tests for React components
+│       ├── hooks/            # Tests for React hooks
+│       └── services/         # Tests for frontend services
+│
+├── ydrpolicy/                # Main package directory for all code
+│   ├── __init__.py           # Package initialization
+│   ├── main.py               # Entry point for different modes
+│   ├── config.py             # Global configuration settings
+│   ├── constants.py          # Global constants and enumerations
+│   ├── logger.py             # Centralized logging configuration
+│   │
+│   ├── data_collection/      # Data collection components
 │   │   ├── __init__.py       # Package initialization
-│   │   ├── crawl.py          # Main entry point for crawling
-│   │   ├── crawler.py        # YaleCrawler implementation
-│   │   ├── crawler_state.py  # State management for resuming
-│   │   └── processors/       # Document processing utilities
+│   │   ├── config.py         # Configuration for crawlers and LLMs
+│   │   ├── prompts.py        # LLM prompts for analysis
+│   │   │
+│   │   ├── crawl/            # Web crawler functionality
+│   │   │   ├── __init__.py   # Package initialization
+│   │   │   ├── crawl.py      # Main entry point for crawling
+│   │   │   ├── crawler.py    # YaleCrawler implementation
+│   │   │   ├── crawler_state.py  # State management for resuming
+│   │   │   └── processors/   # Document processing utilities
+│   │   │       ├── __init__.py   # Package initialization
+│   │   │       ├── document_processor.py # Document download/conversion
+│   │   │       ├── pdf_processor.py    # PDF processing with OCR
+│   │   │       └── llm_processor.py    # LLM-based content analysis
+│   │   │
+│   │   └── scrape/           # Policy extraction functionality
 │   │       ├── __init__.py   # Package initialization
-│   │       ├── document_processor.py # Document download/conversion
-│   │       ├── pdf_processor.py    # PDF processing with OCR
-│   │       └── llm_processor.py    # LLM-based content analysis
+│   │       ├── scrape.py     # Main entry point for scraping
+│   │       └── scraper.py    # Policy extraction implementation
 │   │
-│   └── scrape/               # Policy extraction functionality
-│   |    ├── __init__.py       # Package initialization
-│   |    ├── scrape.py         # Main entry point for scraping
-│   |    └── scraper.py        # Policy extraction implementation
-│   │
-│   └── tests/                # Tests for data collection
-│       ├── __init__.py       # Test package initialization
-│       ├── test_crawler.py   # Tests for crawler
-│       └── test_scraper.py   # Tests for scraper
-│
-├── mcp_server/               # MCP Server implementation
-│   ├── __init__.py           # Package initialization
-│   ├── config.py             # MCP server configuration
-│   ├── server.py             # MCP server entry point
-│   ├── tools/                # MCP-compliant tools
+│   ├── mcp_server/           # MCP Server implementation
 │   │   ├── __init__.py       # Package initialization
-│   │   ├── base_tool.py      # Abstract MCP tool interface
-│   │   ├── naive_rag.py      # Simple RAG implementation
-│   │   ├── graph_rag.py      # Graph-based RAG implementation
-│   │   ├── keyword_search.py # Full-text search implementation
-│   │   └── hybrid_search.py  # Hybrid search implementation
-│   │
-│   ├── schemas.py            # MCP-specific Pydantic schemas
-│   └── services/             # Services for MCP
-│       ├── __init__.py       # Package initialization
-│       ├── vector_store.py   # Vector DB operations for MCP
-│       └── database.py       # Database access for MCP
-│
-├── backend/                  # Backend API components
-│   ├── __init__.py           # Package initialization
-│   ├── app.py                # FastAPI application entry point
-│   ├── config.py             # Configuration settings using Pydantic
-│   ├── constants.py          # Constant values and enumerations
-│   ├── logger.py             # Logging configuration
-│   ├── exceptions.py         # Custom exception definitions
-│   │
-│   ├── database/             # Database models & operations
-│   │   ├── __init__.py       # Package initialization
-│   │   ├── engine.py         # SQLAlchemy engine and session setup
-│   │   ├── models.py         # SQLAlchemy ORM models
-│   │   ├── repository/       # Repository pattern implementations
+│   │   ├── config.py         # MCP server configuration
+│   │   ├── server.py         # MCP server entry point
+│   │   ├── tools/            # MCP-compliant tools
 │   │   │   ├── __init__.py   # Package initialization
-│   │   │   ├── base.py       # Base repository class
-│   │   │   ├── users.py      # User repository
-│   │   │   ├── policies.py   # Policy repository
-│   │   │   ├── chat.py       # Chat history repository
-│   │   │   ├── api_usage.py  # API usage tracking repository
-│   │   │   └── feedback.py   # User feedback repository
-│   │   └── migrations/       # Alembic migrations
-│   │       ├── versions/     # Migration scripts
-│   │       ├── env.py        # Alembic environment
-│   │       ├── script.py.mako # Migration template
-│   │       └── alembic.ini   # Alembic configuration
+│   │   │   ├── base_tool.py  # Abstract MCP tool interface
+│   │   │   ├── naive_rag.py  # Simple RAG implementation
+│   │   │   ├── graph_rag.py  # Graph-based RAG implementation
+│   │   │   ├── keyword_search.py # Full-text search implementation
+│   │   │   └── hybrid_search.py  # Hybrid search implementation
+│   │   │
+│   │   ├── schemas.py        # MCP-specific Pydantic schemas
+│   │   └── services/         # Services for MCP
+│   │       ├── __init__.py   # Package initialization
+│   │       ├── vector_store.py # Vector DB operations for MCP
+│   │       └── database.py   # Database access for MCP
 │   │
-│   ├── services/             # Shared business logic services
+│   ├── backend/              # Backend API components
 │   │   ├── __init__.py       # Package initialization
-│   │   ├── auth_service.py   # Authentication logic
-│   │   ├── search_service.py # Search service (full-text + vector)
-│   │   ├── embeddings.py     # Text embedding logic with OpenAI
-│   │   ├── chunking.py       # Text chunking strategies
-│   │   ├── policy_service.py # Policy processing service
-│   │   ├── mcp_client.py     # Client for connecting to MCP server
-│   │   └── usage_tracking.py # API usage tracking service
-│   │
-│   ├── chat/                 # Chat Agent implementation
-│   │   ├── __init__.py       # Package initialization
-│   │   ├── agents/           # LLM agents
+│   │   ├── app.py            # FastAPI application entry point
+│   │   ├── config.py         # Configuration settings using Pydantic
+│   │   ├── exceptions.py     # Custom exception definitions
+│   │   │
+│   │   ├── database/         # Database models & operations
 │   │   │   ├── __init__.py   # Package initialization
-│   │   │   ├── base_agent.py # Abstract base agent
-│   │   │   ├── chat_agent.py # Main chat agent implementation
-│   │   │   ├── prompt_templates.py # Prompt engineering templates
-│   │   │   ├── openai_provider.py # OpenAI API handler
-│   │   │   └── gemini_provider.py # Google Gemini API handler
-│   │   ├── schemas.py        # Chat-specific Pydantic schemas
-│   │   └── service.py        # Chat service implementation
+│   │   │   ├── engine.py     # SQLAlchemy engine and session setup
+│   │   │   ├── models.py     # SQLAlchemy ORM models
+│   │   │   ├── repository/   # Repository pattern implementations
+│   │   │   │   ├── __init__.py   # Package initialization
+│   │   │   │   ├── base.py   # Base repository class
+│   │   │   │   ├── users.py  # User repository
+│   │   │   │   ├── policies.py # Policy repository
+│   │   │   │   ├── chat.py   # Chat history repository
+│   │   │   │   ├── api_usage.py # API usage tracking repository
+│   │   │   │   └── feedback.py # User feedback repository
+│   │   │   └── migrations/   # Alembic migrations
+│   │   │       ├── versions/ # Migration scripts
+│   │   │       ├── env.py    # Alembic environment
+│   │   │       ├── script.py.mako # Migration template
+│   │   │       └── alembic.ini # Alembic configuration
+│   │   │
+│   │   ├── services/         # Shared business logic services
+│   │   │   ├── __init__.py   # Package initialization
+│   │   │   ├── auth_service.py # Authentication logic
+│   │   │   ├── search_service.py # Search service (full-text + vector)
+│   │   │   ├── embeddings.py # Text embedding logic with OpenAI
+│   │   │   ├── chunking.py   # Text chunking strategies
+│   │   │   ├── policy_service.py # Policy processing service
+│   │   │   ├── mcp_client.py # Client for connecting to MCP server
+│   │   │   └── usage_tracking.py # API usage tracking service
+│   │   │
+│   │   ├── chat/             # Chat Agent implementation
+│   │   │   ├── __init__.py   # Package initialization
+│   │   │   ├── agents/       # LLM agents
+│   │   │   │   ├── __init__.py # Package initialization
+│   │   │   │   ├── base_agent.py # Abstract base agent
+│   │   │   │   ├── chat_agent.py # Main chat agent implementation
+│   │   │   │   ├── prompt_templates.py # Prompt engineering templates
+│   │   │   │   ├── openai_provider.py # OpenAI API handler
+│   │   │   │   └── gemini_provider.py # Google Gemini API handler
+│   │   │   ├── schemas.py    # Chat-specific Pydantic schemas
+│   │   │   └── service.py    # Chat service implementation
+│   │   │
+│   │   ├── routers/          # FastAPI routers
+│   │   │   ├── __init__.py   # Package initialization
+│   │   │   ├── auth.py       # Authentication routes
+│   │   │   ├── chat.py       # Chat routes
+│   │   │   ├── policies.py   # Policy management routes
+│   │   │   ├── about.py      # About page content routes
+│   │   │   └── feedback.py   # User feedback routes
+│   │   │
+│   │   ├── schemas/          # Shared Pydantic schemas
+│   │   │   ├── __init__.py   # Package initialization
+│   │   │   ├── auth.py       # Auth-related schemas
+│   │   │   ├── policy.py     # Policy-related schemas
+│   │   │   ├── about.py      # About page schemas
+│   │   │   ├── api_usage.py  # API usage tracking schemas
+│   │   │   └── feedback.py   # Feedback-related schemas
+│   │   │
+│   │   ├── middleware/       # Middleware components
+│   │   │   ├── __init__.py   # Package initialization
+│   │   │   ├── auth_middleware.py # JWT validation middleware
+│   │   │   ├── error_handler.py # Error handling middleware
+│   │   │   ├── usage_tracker.py # API usage tracking middleware
+│   │   │   └── logging_middleware.py # Request logging middleware
+│   │   │
+│   │   └── middleware/       # Middleware components
+│   │       ├── __init__.py   # Package initialization
+│   │       ├── auth_middleware.py # JWT validation middleware
+│   │       ├── error_handler.py # Error handling middleware
+│   │       ├── usage_tracker.py # API usage tracking middleware
+│   │       └── logging_middleware.py # Request logging middleware
 │   │
-│   ├── routers/              # FastAPI routers
-│   │   ├── __init__.py       # Package initialization
-│   │   ├── auth.py           # Authentication routes
-│   │   ├── chat.py           # Chat routes
-│   │   ├── policies.py       # Policy management routes
-│   │   ├── about.py          # About page content routes
-│   │   └── feedback.py       # User feedback routes
-│   │
-│   ├── schemas/              # Shared Pydantic schemas
-│   │   ├── __init__.py       # Package initialization
-│   │   ├── auth.py           # Auth-related schemas
-│   │   ├── policy.py         # Policy-related schemas
-│   │   ├── about.py          # About page schemas
-│   │   ├── api_usage.py      # API usage tracking schemas
-│   │   └── feedback.py       # Feedback-related schemas
-│   │
-│   ├── middleware/           # Middleware components
-│   │   ├── __init__.py       # Package initialization
-│   │   ├── auth_middleware.py # JWT validation middleware
-│   │   ├── error_handler.py  # Error handling middleware
-│   │   ├── usage_tracker.py  # API usage tracking middleware
-│   │   └── logging_middleware.py # Request logging middleware
-│   │
-│   └── tests/                # Backend tests
-│       ├── __init__.py       # Test package initialization
-│       ├── conftest.py       # Test fixtures
-│       ├── test_api/         # API endpoint tests
-│       ├── test_services/    # Service-level tests
-│       └── test_chat/        # Chat agent tests
-│
-├── frontend/                 # Next.js Frontend
-    ├── .eslintrc.json       # ESLint configuration
-    ├── next.config.js       # Next.js configuration
-    ├── package.json         # NPM dependencies
-    ├── tsconfig.json        # TypeScript configuration
-    ├── tailwind.config.js   # Tailwind CSS configuration
-    │
-    ├── public/              # Static files
-    │   ├── favicon.ico      # Site favicon
-    │   ├── yale-logo.svg    # Yale logo
-    │   └── images/          # Image assets
-    │
-    └── src/                 # Source code
-        ├── app/             # Next.js app router
-        │   ├── layout.tsx   # Root layout
-        │   ├── page.tsx     # Landing page
-        │   ├── login/       # Login route
-        │   ├── dashboard/   # Main dashboard route
-        │   ├── chat/        # Chat interface
-        │   │   ├── page.tsx # Main chat page
-        │   │   └── history/ # Chat history management
-        │   ├── policies/    # Policy management
-        │   ├── about/       # About page
-        │   └── profile/     # User profile
-        │
-        ├── components/      # Reusable components
-        │   ├── ui/          # Base UI components
-        │   ├── auth/        # Login components
-        │   ├── chat/        # Chat interface components
-        │   │   ├── ChatInterface.tsx # Main chat UI component
-        │   │   ├── ChatMessage.tsx   # Individual message component
-        │   │   ├── ChatSelector.tsx  # Chat history selector
-        │   │   ├── NewChatButton.tsx # Start new chat button
-        │   │   ├── DeleteChatButton.tsx # Delete chat button
-        │   │   ├── SearchMethodSelector.tsx # Search method selector
-        │   │   ├── ModelSelector.tsx # OpenAI/Gemini selector
-        │   │   └── FeedbackButtons.tsx # Feedback UI component
-        │   ├── policies/    # Policy viewing components
-        │   ├── about/       # About page components
-        │   └── layout/      # Layout components
-        │
-        ├── hooks/           # Custom React hooks
-        ├── services/        # API client services
-        ├── types/           # TypeScript types
-        ├── utils/           # Utility functions
-        ├── styles/          # Global styles
-        └── tests/           # Frontend tests
+│   └── frontend/             # Next.js Frontend
+│       ├── .eslintrc.json    # ESLint configuration
+│       ├── next.config.js    # Next.js configuration
+│       ├── package.json      # NPM dependencies
+│       ├── tsconfig.json     # TypeScript configuration
+│       ├── tailwind.config.js # Tailwind CSS configuration
+│       │
+│       ├── public/           # Static files
+│       │   ├── favicon.ico   # Site favicon
+│       │   ├── yale-logo.svg # Yale logo
+│       │   └── images/       # Image assets
+│       │
+│       └── src/              # Source code
+│           ├── app/          # Next.js app router
+│           │   ├── layout.tsx # Root layout
+│           │   ├── page.tsx  # Landing page
+│           │   ├── login/    # Login route
+│           │   ├── dashboard/ # Main dashboard route
+│           │   ├── chat/     # Chat interface
+│           │   │   ├── page.tsx # Main chat page
+│           │   │   └── history/ # Chat history management
+│           │   ├── policies/ # Policy management
+│           │   ├── about/    # About page
+│           │   └── profile/  # User profile
+│           │
+│           ├── components/   # Reusable components
+│           │   ├── ui/       # Base UI components
+│           │   ├── auth/     # Login components
+│           │   ├── chat/     # Chat interface components
+│           │   │   ├── ChatInterface.tsx # Main chat UI component
+│           │   │   ├── ChatMessage.tsx  # Individual message component
+│           │   │   ├── ChatSelector.tsx # Chat history selector
+│           │   │   ├── NewChatButton.tsx # Start new chat button
+│           │   │   ├── DeleteChatButton.tsx # Delete chat button
+│           │   │   ├── SearchMethodSelector.tsx # Search method selector
+│           │   │   ├── ModelSelector.tsx # OpenAI/Gemini selector
+│           │   │   └── FeedbackButtons.tsx # Feedback UI component
+│           │   ├── policies/ # Policy viewing components
+│           │   ├── about/    # About page components
+│           │   └── layout/   # Layout components
+│           │
+│           ├── hooks/        # Custom React hooks
+│           ├── services/     # API client services
+│           ├── types/        # TypeScript types
+│           ├── utils/        # Utility functions
+│           └── styles/       # Global styles
 ```
 
 ## Implementation of main.py

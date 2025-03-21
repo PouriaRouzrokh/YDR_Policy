@@ -9,21 +9,18 @@ from ydrpolicy.data_collection.crawl.crawler import YaleCrawler
 from dotenv import load_dotenv
 from ydrpolicy.data_collection.logger import DataCollectionLogger
 
-logger = DataCollectionLogger(
-    name="crawl",
-    level=logging.INFO,
-    path=os.path.join(config.RAW_DATA_DIR, "crawl.log")
-)
-
-# Create output directories before setting up logging
-os.makedirs(config.RAW_DATA_DIR, exist_ok=True)
-os.makedirs(config.MARKDOWN_DIR, exist_ok=True)
-os.makedirs(config.DOCUMENT_DIR, exist_ok=True)
-
-def main():
+def main(logger: logging.Logger = None):
     """Main function to run the crawler."""
     # Load environment variables
     load_dotenv()
+
+    # If no logger is provided, create a new one
+    if logger is None:
+        logger = DataCollectionLogger(
+            name="crawl",
+            level=logging.INFO,
+            path=os.path.join(config.RAW_DATA_DIR, "crawl.log")
+        )
     
     # Set up configuration using default values from config
     url = config.MAIN_URL
@@ -74,5 +71,16 @@ if __name__ == "__main__":
     print(f"Logs will be saved to '{os.path.join(config.RAW_DATA_DIR, 'crawler.log')}'")
     print("Press Ctrl+C to stop the crawler at any time - state will be saved automatically.")
     print()
+
+    logger = DataCollectionLogger(
+        name="crawl",
+        level=logging.INFO,
+        path=os.path.join(config.RAW_DATA_DIR, "crawl.log")
+    )
+
+    # Create output directories before setting up logging
+    os.makedirs(config.RAW_DATA_DIR, exist_ok=True)
+    os.makedirs(config.MARKDOWN_DIR, exist_ok=True)
+    os.makedirs(config.DOCUMENT_DIR, exist_ok=True)
     
-    main()
+    main(logger)
