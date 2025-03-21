@@ -9,8 +9,15 @@ from ydrpolicy.data_collection.crawl.crawler import YaleCrawler
 from dotenv import load_dotenv
 from ydrpolicy.data_collection.logger import DataCollectionLogger
 
-def main(logger: logging.Logger = None):
+def main(logger: logging.Logger = None, config_override: dict = None):
     """Main function to run the crawler."""
+
+    def determine_config(key, default_value):
+        if config_override is not None:
+            if key in config_override:
+                return config_override[key]
+        return default_value
+    
     # Load environment variables
     load_dotenv()
 
@@ -23,11 +30,11 @@ def main(logger: logging.Logger = None):
         )
     
     # Set up configuration using default values from config
-    url = config.MAIN_URL
-    depth = config.DEFAULT_MAX_DEPTH
-    follow_definite_only = config.FOLLOW_DEFINITE_LINKS_ONLY
-    resume = config.RESUME_CRAWL  # Default: don't resume from previous state
-    reset = config.RESET_CRAWL   # Default: don't reset existing crawl state
+    url = determine_config("MAIN_URL", config.MAIN_URL) 
+    depth = determine_config("DEFAULT_MAX_DEPTH", config.DEFAULT_MAX_DEPTH)
+    follow_definite_only = determine_config("FOLLOW_DEFINITE_LINKS_ONLY", config.FOLLOW_DEFINITE_LINKS_ONLY)
+    resume = determine_config("RESUME_CRAWL", config.RESUME_CRAWL)  # Default: don't resume from previous state
+    reset = determine_config("RESET_CRAWL", config.RESET_CRAWL)   # Default: don't reset existing crawl state
     
     # Validate environment variables
     if not os.environ.get("OPENAI_API_KEY"):

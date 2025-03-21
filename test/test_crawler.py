@@ -20,6 +20,10 @@ def test_crawler():
         "MARKDOWN_DIR": MARKDOWN_DIR,
         "PROCESSED_DATA_DIR": PROCESSED_DATA_DIR,
         "SCRAPED_POLICIES_DIR": SCRAPED_POLICIES_DIR,
+        "DEFAULT_MAX_DEPTH": 1,
+        "FOLLOW_DEFINITE_LINKS_ONLY": True,
+        "RESUME_CRAWL": False,
+        "RESET_CRAWL": False,
     }
     crawl_main(config_override=config_dict)
 

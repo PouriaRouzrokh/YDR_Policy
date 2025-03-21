@@ -7,8 +7,14 @@ from dotenv import load_dotenv
 from ydrpolicy.data_collection.logger import DataCollectionLogger
 from ydrpolicy.data_collection.scrape.scraper import scrape_policies
 
-def main(logger: logging.Logger = None):
+def main(logger: logging.Logger = None, config_override: dict = None):
     """Main function to run the policy extraction process."""       
+
+    def determine_config(key, default_value):
+        if config_override is not None:
+            if key in config_override:
+                return config_override[key]
+        return default_value
     
     # Load environment variables
     load_dotenv()
@@ -22,12 +28,12 @@ def main(logger: logging.Logger = None):
         )
     
     # Set up configuration using default values from config
-    RAW_DATA_DIR = config.RAW_DATA_DIR
-    SCRAPED_POLICIES_DIR = config.SCRAPED_POLICIES_DIR
-    PROCESSED_DATA_DIR = config.PROCESSED_DATA_DIR
-    input_file = os.path.join(RAW_DATA_DIR, "crawled_policies_data.csv")
-    model = config.SCRAPER_LLM_MODEL
-    OPENAI_API_KEY = config.OPENAI_API_KEY
+    OPENAI_API_KEY = determine_config("OPENAI_API_KEY", config.OPENAI_API_KEY)
+    RAW_DATA_DIR = determine_config("RAW_DATA_DIR", config.RAW_DATA_DIR)
+    SCRAPED_POLICIES_DIR = determine_config("SCRAPED_POLICIES_DIR", config.SCRAPED_POLICIES_DIR)
+    PROCESSED_DATA_DIR = determine_config("PROCESSED_DATA_DIR", config.PROCESSED_DATA_DIR)
+    crawled_policies_data_path = os.path.join(RAW_DATA_DIR, "crawled_policies_data.csv")
+    model = determine_config("SCRAPER_LLM_MODEL", config.SCRAPER_LLM_MODEL)
     
     # Validate environment variables
     if not os.environ.get("OPENAI_API_KEY"):
@@ -39,14 +45,13 @@ def main(logger: logging.Logger = None):
     # Log configuration settings
     logger.info(f"Starting policy extraction with the following settings:")
     logger.info(f"  - Input directory: {RAW_DATA_DIR}")
-    logger.info(f"  - Input file: {input_file}")
+    logger.info(f"  - Crawled policies dataframe path: {crawled_policies_data_path}")
     logger.info(f"  - Output directory: {SCRAPED_POLICIES_DIR}")
     logger.info(f"  - Scraping LLM model: {model}")
 
     # Read the original data
-    input_path = os.path.join(RAW_DATA_DIR, input_file)
-    logger.info(f"Reading input data from: {input_path}")
-    original_df = pd.read_csv(input_path)
+    logger.info(f"Reading input data from: {crawled_policies_data_path}")
+    original_df = pd.read_csv(crawled_policies_data_path)
 
     # Extract policies
     df_with_policies = scrape_policies(
