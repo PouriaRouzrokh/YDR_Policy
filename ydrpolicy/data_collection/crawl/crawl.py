@@ -5,10 +5,10 @@ import argparse
 import logging
 import os
 
-import config
-from crawler import YaleCrawler
+from ydrpolicy.data_collection import config
+from ydrpolicy.data_collection.crawl.crawler import YaleCrawler
 from dotenv import load_dotenv
-from logger import DataCollectionLogger
+from ydrpolicy.data_collection.logger import DataCollectionLogger
 
 logger = DataCollectionLogger(
     name="crawl",

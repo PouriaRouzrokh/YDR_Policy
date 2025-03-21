@@ -2,11 +2,11 @@ import argparse
 import logging
 import os
 
-import config
+from ydrpolicy.data_collection import config
 import pandas as pd
 from dotenv import load_dotenv
-from logger import DataCollectionLogger
-from scraper import scrape_policies
+from ydrpolicy.data_collection.logger import DataCollectionLogger
+from ydrpolicy.data_collection.scrape.scraper import scrape_policies
 
 logger = DataCollectionLogger(
     name="scrape", 

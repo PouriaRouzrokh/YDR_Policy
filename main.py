@@ -1,6 +1,7 @@
 import argparse
-import os
 import sys
+from ydrpolicy.data_collection.crawl.crawl import main as crawl_main
+from ydrpolicy.data_collection.scrape.scrape import main as scrape_main
 
 def main():
     parser = argparse.ArgumentParser(description="Yale Radiology Policies RAG Application")
@@ -35,11 +36,9 @@ def main():
 
     if args.mode == "data":
         if args.task == "crawl" or args.task == "all":
-            from data_collection.crawl.crawl import main as crawl_main
             crawl_main()
 
         if args.task == "scrape" or args.task == "all":
-            from data_collection.scrape.scrape import main as scrape_main
             scrape_main()
 
     elif args.mode == "mcp":

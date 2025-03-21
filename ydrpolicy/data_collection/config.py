@@ -10,7 +10,7 @@ load_dotenv()
 
 # --------------------------- Data directory settings --------------------------
 
-DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data2")
 RAW_DATA_DIR = os.path.join(DATA_DIR, "raw")
 DOCUMENT_DIR = os.path.join(RAW_DATA_DIR, "documents")
 MARKDOWN_DIR = os.path.join(RAW_DATA_DIR, "markdown_files")

@@ -9,13 +9,13 @@ from rich.logging import RichHandler
 class DataCollectionLogger:
     """Custom logger class using Rich for formatting and file output"""
     
-    def __init__(self, name: str = "DataCollectionLogger", level: int = logging.INFO, log_file: Optional[str] = None):
+    def __init__(self, name: str = "DataCollectionLogger", level: int = logging.INFO, path: Optional[str] = None):
         """Initialize the logger with Rich formatting and file output
 
         Args:
             name: The name of the logger
             level: The logging level (default: logging.INFO)
-            log_file: Optional file path to save logs. If None, logs will only be displayed in the console
+            path: Optional file path to save logs. If None, logs will only be displayed in the console
         """
         # Create a Rich console
         self.console = Console()
@@ -39,15 +39,15 @@ class DataCollectionLogger:
         self.logger.addHandler(rich_handler)
         
         # Add file handler if a log file is specified
-        if log_file:
-            os.makedirs(os.path.dirname(log_file), exist_ok=True)
+        if path:
+            os.makedirs(os.path.dirname(path), exist_ok=True)
             # Standard formatter for file logs
             file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
             
             # Create and configure file handler
             file_handler = logging.FileHandler(
-                log_file, 
-                mode='a' if os.path.exists(log_file) else 'w', 
+                path, 
+                mode='a' if os.path.exists(path) else 'w', 
                 encoding='utf-8'
             )
             file_handler.setFormatter(file_formatter)
@@ -57,7 +57,7 @@ class DataCollectionLogger:
             self.logger.addHandler(file_handler)
             
             # Log that we initialized with a file
-            self.logger.info(f"Logging initialized. Log file: {log_file}")
+            self.logger.info(f"Logging initialized. Log file: {path}")
         else:
             self.logger.info("Logging initialized (console only)")
 

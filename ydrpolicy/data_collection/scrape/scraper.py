@@ -4,7 +4,7 @@ import re
 
 import pandas as pd
 from openai import OpenAI
-from prompts import SCRAPER_LLM_SYSTEM_PROMPT
+from ydrpolicy.data_collection.prompts import SCRAPER_LLM_SYSTEM_PROMPT
 from pydantic import BaseModel, Field
 from tqdm import tqdm
 
