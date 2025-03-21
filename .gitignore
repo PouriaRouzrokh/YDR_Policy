@@ -11,3 +11,7 @@ wheels/
 
 # APIs
 .env
+
+# Data
+data/raw/documents/
+data/raw/markdown_files/

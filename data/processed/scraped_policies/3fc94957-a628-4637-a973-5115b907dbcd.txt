@@ -1,0 +1,70 @@
+RADIOLOGY CT or MRI TECHNOLOGIST Policy for Power Injection
+
+CVDs with TPN infusions cannot be used for contrast injection unless TPN has been disconnected and vigorously flushed by an RN prior to the exam before the patient leaves the floor
+
+NOTE No IV medication drips should be stopped or restarted without an RNs help The injector should not be used with any IV that has questionable patency If in doubt question the radiologist or the patients caregivers
+
+CVDs  Adult Use
+
+ Catheter                                                     Used for CT Inject  Lumen Size           Max Injection Rate                                                            Max PSI                                                                                      
+
+ Power PICCS Bard or equivalent from other manufacturer      Yes                                       Check Hub                                                                     Check hub                                                                                    
+ Power Ports Bard or equivalent port from other manufacturer   Yes                  6510 French        5 ccsec                                                                      300                                                                                          
+ Power Hickmann                                               Yes                                       Check hub                                                                     Check hub                                                                                    
+ Non Power Injectable or unknown                              Yes                                       1 ccsec                                                                    100                                                                                          
+ Micropuncture introducers placed by IR                         Yes                  5 French             5 cc                                                                          300                                                                                          
+ IV catheters in a foot vein                                   Yes                  18g22g IV access    1 ccsec                                                                    100                                                                                          
+ EJ or IJ  IV access Including Cordis                         Yes                  18g22g IV access    2 ccsec can be increased if no other access available pending radiologist approval  300                                                                                          
+ TripleLumen Arrow                                           Yes                  16g  brown port 18g  blue port  1 ccsec unless a higher rate is listed on the hub                 100 lines that list higher injection rates at hub are usually OK to inject up to 300 psi      
+
+ Review Epic lines and drains section to determine if the type of port is known If unknown and a higher injection rate is required review the chest Xray or scout image with the radiologist for a CT icon denoting a power injectable port
+
+ Catheter                         Used for CT Inject  Lumen Size     Max Injection Rate  Max PSI 
+
+ Power Mid Lines                  Yes                  45 French     5 ccsec            300     
+ QuintonNonPower HickmanPermacath  NO                                                          
+ NonMarked Piccs                 NO                                                              
+
+PROCESS 
+1 Follow Hand Hygiene Policy at all times wash or use Purell don gloves and when completed remove gloves then wash or use Purell
+2 The RN must access and deaccess all indwelling ports CVD lumen access may be performed by the technologist to inject contrast
+3 Prior to use all CVAD lines used for contrastwhether with an injector or hand injectionmust undergo a 15second hub scrub with an approved disinfectant and be allowed to air dry minimum 15 seconds All CVDs must be checked for patency and blood return using a 10 cc saline syringe with 3 cc removed and flushed with 10 cc sterile saline thereafter A CVD should not be used without verification of blood return
+4 The technologist should monitor the injection site for the duration of the injection when possible
+5 The contrast for all CVDs is Omnipaque 350 If there is a prior contrast reaction to Omnipaque an alternative agent such as Isovue 370 may be used
+
+SCRIPT 
+
+Adult Power Hickman  InPatients
+ Call the floor to check IV status If the RN indicates the patient has a Hickman ask the following
+   1 Is the Hickman a Power Hickman Check for labeling on the clamp a P or X on the line seen on the chest Xray or documentation in EPIC
+   2 Has there been TPN running
+       If YES Flush vigorously immediately and disconnect the TPN clearly marking the lumen used for TPN
+       Send the patient with no medications running an open flush is allowed
+       Instruct the RN that the patient will return without the catheter being flushed with heparin
+       If the TPN cannot be stopped and flushed before leaving the floor the Hickman may not be used for contrast injection
+       Follow a 15second hub scrub and allow it to air dry minimum 15 seconds
+       Do not disconnect the injector prior to exam completion or the hub scrub will need to be repeated
+       The maximum flow rate will be listed on the lumen clamp
+
+Power Hickman  Outpatients
+ Follow a 15second hub scrub and allow it to air dry minimum 15 seconds The maximum flow rate is as noted on the lumen clamp
+ Do not disconnect the injector prior to exam completion instead call the South Pavilion Core IR RN Prep Hold RN or the RN in your respective area to flush heparin postinjection per YNHH policy
+
+Injection Rate for Pediatric Peripheral IV Injections for neckfoot veins
+
+ Lumen Size            Max Flow Rate   PSI  
+
+ 18g 20g IV access    5 ccsec        150  
+ 22g IV access         3 ccsec        150  
+ 24g IV access         15 ccsec      50   
+
+PEDIATRIC CENTRAL LINES INCLUDING BROVIAC
+ Only pediatric central lines that are 4 French approximately 24G or larger should be used for contrast injections Note A higher gauge number indicates a smaller line a lower gauge number indicates a larger line
+ Many neonate PICC lines are between 153F and are at high risk of being damaged by a contrast injection they should not be used unless approved by the radiologist and the ordering attending provider
+ For inpatients Call the RN and instruct them to accompany the patient The pediatric RN will follow YNHH hub scrub policy access the central line and then the technologist will connect the contrast Omnipaque 350 may be injected at 1 ccsec at 100 PSI
+ For outpatients with a Broviac Call Out Patient Pediatric Nursing and follow the same process as for inpatients
+
+IALERT
+Attention all technologists who inject contrast If you see a Pall Positive ELD filter or a Baxter INTERLINE System Extension Set air eliminating filter connected to a patient stop the line and notify a nurse immediately These filters are used for patients with a patent foramen ovale as any introduced air could cause a serious reaction They should NEVER be used with a power injector
+
+For questions please contact Dave Facchini at davidfacchiniynhhorg or 2036884367

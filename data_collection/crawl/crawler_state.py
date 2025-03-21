@@ -6,14 +6,12 @@ import json
 import pickle
 import logging
 from typing import Dict, List, Set, Tuple, Any
-
-# Set up logging
-logger = logging.getLogger(__name__)
+from venv import logger
 
 class CrawlerState:
     """Class for managing the crawler state to enable resuming from where it left off."""
     
-    def __init__(self, state_dir: str):
+    def __init__(self, state_dir: str, logger: logging.Logger):
         """
         Initialize the crawler state manager.
         
@@ -23,6 +21,7 @@ class CrawlerState:
         self.state_dir = state_dir
         self.state_file = os.path.join(state_dir, "crawler_state.json")
         self.queue_file = os.path.join(state_dir, "priority_queue.pkl")
+        self.logger = logger
         
         # Create the state directory if it doesn't exist
         os.makedirs(state_dir, exist_ok=True)
@@ -59,12 +58,12 @@ class CrawlerState:
             with open(self.queue_file, 'wb') as f:
                 pickle.dump(priority_queue, f)
                 
-            logger.info(f"Crawler state saved: {len(visited_urls)} URLs visited, {len(priority_queue)} URLs in queue")
-            logger.info(f"Last URL: {current_url} (depth: {current_depth})")
+            self.logger.info(f"Crawler state saved: {len(visited_urls)} URLs visited, {len(priority_queue)} URLs in queue")
+            self.logger.info(f"Last URL: {current_url} (depth: {current_depth})")
             return True
             
         except Exception as e:
-            logger.error(f"Error saving crawler state: {str(e)}")
+            self.logger.error(f"Error saving crawler state: {str(e)}")
             return False
     
     def load_state(self) -> Dict[str, Any]:
@@ -76,7 +75,7 @@ class CrawlerState:
         """
         # Check if state files exist
         if not (os.path.exists(self.state_file) and os.path.exists(self.queue_file)):
-            logger.info("No previous crawler state found")
+            self.logger.info("No previous crawler state found")
             return {}
         
         try:
@@ -92,13 +91,13 @@ class CrawlerState:
             state["priority_queue"] = priority_queue
             state["visited_urls"] = set(state["visited_urls"])
             
-            logger.info(f"Loaded crawler state: {len(state['visited_urls'])} URLs visited, {len(priority_queue)} URLs in queue")
-            logger.info(f"Last URL: {state['current_url']} (depth: {state['current_depth']})")
+            self.logger.info(f"Loaded crawler state: {len(state['visited_urls'])} URLs visited, {len(priority_queue)} URLs in queue")
+            self.logger.info(f"Last URL: {state['current_url']} (depth: {state['current_depth']})")
             
             return state
             
         except Exception as e:
-            logger.error(f"Error loading crawler state: {str(e)}")
+            self.logger.error(f"Error loading crawler state: {str(e)}")
             return {}
     
     def clear_state(self) -> bool:
@@ -116,11 +115,11 @@ class CrawlerState:
             if os.path.exists(self.queue_file):
                 os.remove(self.queue_file)
                 
-            logger.info("Crawler state cleared")
+            self.logger.info("Crawler state cleared")
             return True
             
         except Exception as e:
-            logger.error(f"Error clearing crawler state: {str(e)}")
+            self.logger.error(f"Error clearing crawler state: {str(e)}")
             return False
             
     def state_exists(self) -> bool:

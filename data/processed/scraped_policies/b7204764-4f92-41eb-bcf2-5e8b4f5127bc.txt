@@ -1,0 +1,104 @@
+DEPARTMENT OF RADIOLOGY AND BIOMEDICAL IMAGING STANDARD OPERATING PROCEDURES Use of IV and Oral Contrast Media in Radiology
+Reviewed and approved by David Facchini Director and Jay Pahade MD Vice Chair of Radiology Quality and Safety
+
+
+PURPOSE
+To provide guidelines for the use of intravenous or oral iodinated and gadolinium based contrast media as well as the proper response of Radiology staff in the event of a contrast media event
+
+
+RESPONSIBILITY
+1 IV and oral contrast media agents are considered medications according to the Joint Commission and therefore all adherences to the Medication Management Standards and all applicable YNHH drug use policies apply
+2 The patients physician PA or APRN is responsible to order radiology exams including those that require contrast media either by written requisition or via computer order entry system Inpatient and ED requests for contrast exams must include the patients pregnancy status and renal function as appropriate
+3 The radiologist has primary responsibility to review pertinent available patient history including eGFR levels when applicable and the appropriateness of the request for contrast media The dose and the type of contrast administered will usually be preassigned per protocol performed
+4 Per YDR and DR administration the responsibility to protocol CT exams with contrast is limited to radiology physicians andor advanced practitioners unless exam is eligible for autoprotocol For exams ordered with IV contrast the patients eGFR should be  30 If the eGFR is  30 follow the low eGFR workflow as follows
+   a eGFR results for inpatient and ED patients should be within 48 hours All inpatients and ED patients require a results value in order to proceed with contrast administration unless the exam is eligible for eGFR bypass
+   b Any outpatient that answers Yes to a renal risk factor question on the CT OralIV Contrast Questionnaire requires a renal function assessment If no eGFR value is available within 6 weeks in Epic a Point of Care POC eGFR test is given eGFR levels under 30 are referred to the radiologist
+5 All personnel involved in the administration of contrast media must be aware of the steps to anticipate a contrast reaction in order to prevent it or if one occurs recognize it and take appropriate measures See Addendum 115A Recognition and Response to Contrast Reaction
+6 eGFR Workflow and Responsibilities for CT
+   a If a CT study is ordered WITH contrast and eGFR is over 30 the exam can be protocoled with IV contrast
+   b For full trauma lifelimb threatening or stroke code CT exams eGFR testing is not required prior to imaging
+   c If a CT study is ordered WITH contrast and eGFR is below 30 upon patient arrival the technologist must notify the appropriate reading room so that the radiologist can review the case and decide how to proceed
+      i Give contrast despite eGFR 30  if in doubt discuss with ordering provider and document the reasoning
+      ii Change to CT WITHOUT contrast  if the clinical question can be answered without IV contrast with appropriate documentation and communication including use of 52 Modifier and contacting the CSA via email at 52LimitedImagingynhhorg
+      iii CancelReschedule the exam  with cancellation noted in Epic as lab function out of range and further communication with the ordering provider as needed
+
+
+PROCEDURE GUIDELINES FOR INTRAVENOUS IV CONTRAST
+1 Intravenous contrast will be injected through an IV line established by the nurse or technologist Refer to DR Policy Medication Administration by Technologists in Diagnostic Radiology
+2 Prior to administering IV contrast the patients history including medications and allergies and renal screening via questionnaire or medical record review are completed by the technologist
+   a If no contraindications exist proceed with IV contrast administration per the radiologists protocol
+   b If contraindications are noted refer the case to the radiologist for further consideration
+   c Maintain the IV line during the exam in case IV drug therapy is needed
+   d A physician APP or RN must be present during the contrast administration
+   e A contrast reaction kit and emergency equipment including a code cart at hospital sites must be readily available
+
+
+POINT OF CARE TESTING
+1 Point of Care testing is performed by technologists technologist aids or nursing primarily for outpatients at the time of the appointment This test  which assesses the quantitative measurement of creatinine in blood capillary venous or arterial and may calculate eGFR via meter or EHR  is inspected by the College of American Pathologists as part of the Department of Laboratory Medicines accreditation at Yale New Haven Hospital
+2 The Point of Care meter is maintained by the MRI and CT scan departments with strict adherence to a QA schedule Staff undergo orientation and annual competency reviews on its use with training provided by the Department of Laboratory Medicine
+3 For CT patients any outpatient answering Yes to contrastrelated questions on the CT OralIV Contrast Questionnaire will receive point of care testing if no eGFRCr value is available within 6 weeks eGFR levels under 30 are referred to the radiologist
+
+
+PREMEDICATION POLICY FOR PRIOR ALLERGICLIKE REACTIONS TO CONTRAST MEDIA
+For planned administration of contrast agents
+ Previous reaction to allergens eg shellfish peanuts medications etc
+    Mild None
+    Moderate None
+    Severe None
+ Previous reaction to the same class of contrast agent to be administered
+    Mild None
+    Moderate Premedicate and use a different agent
+    Severe Do not give contrast
+ Previous reaction to a different class of contrast agent than the one planned
+    Mild None
+    Moderate None
+    Severe None
+
+Unless in the opinion of the responsible health care professional and supervising radiologist where in emergency situations the potential benefits may outweigh the risks In such instances the clinical provider should accompany the patient to the radiology suite to assist in management if a repeat reaction occurs
+
+Premedication with steroids and Benadryl is now recommended only for patients who have had a reaction to contrast of a similar class iodinated agents used during CT versus gadolinium based agents used during MRI Prophylaxis for reactions to other allergens is no longer necessary
+
+This guideline is based on the following information
+ The overall reaction risk in the general population is less than 1 ranging from 0206 Wang et al Dillman et al
+ Patients with a prior reaction to the same class of contrast agent have a higher repeat reaction risk 311 overall with a 2 breakthrough rate even with premedication during CT Mervak et al Lasser et al
+ The standard of care in the United States is to premedicate patients with steroids and antihistamines to decrease the risk of a repeat reaction in susceptible patients
+ An IV steroid regimen as recommended below is likely noninferior to a longer oral regimen and is therefore recommended in the ED and inpatient settings to expedite imaging when needed Mervak et al
+
+
+Exclusions
+In certain clinical scenarios the urgency of obtaining a contrastenhanced CT or MRI may outweigh the time required to complete the approved premedication protocol In such cases contrast may be administered without premedication or with a modified pretreatment protocol This decision should be jointly agreed upon by the supervising radiologist and ordering clinician and the patient if feasible with appropriate documentation in the medical record
+
+
+AllergicLike Reaction Definitions
+Mild
+  Limited urticaria andor pruritus if treatment was not required for urticariapruritus
+  Nasal congestion
+  Cutaneous edema
+  Sneezing conjunctivitis or rhinorrhea
+  Limited itchyscratchy throat
+
+Moderate
+  Diffuse urticariapruritus requiring medical treatment
+  Diffuse erythema with stable vital signs
+  Facial edema without dyspnea
+  Throat tightness or hoarseness without dyspnea
+  Wheezing or bronchospasm with mild or no hypoxia
+
+Severe
+  Diffuse edema or facial edema with dyspnea
+  Diffuse erythema with hypotension
+  Laryngeal edema with stridor andor hypoxia
+  Wheezingbronchospasm associated with significant hypoxia
+  Anaphylactic shock hypotension with tachycardia
+
+Notes
+1 Physiologic reactions such as nausea vomiting or a sensation of warmth are unlikely to benefit from premedication
+2 If urticariapruritus required medical treatment it should be considered moderate in severity
+
+
+References
+ Wang CL Cohan RH Ellis JH Caoili EM Wang G Francis IR Frequency outcome and appropriateness of treatment of nonionic contrast media reactions AJR 2008 191409415
+ Lasser EC Berry CC Mishkin MM Williamson B Zheutlin N Silverman JM Pretreatment with corticosteroids to prevent adverse reactions to nonionic contrast media AJR 1994 162523526
+ Mervak BM Davenport MS Ellis JH et al Breakthrough reaction rates in highrisk inpatients premedicated before contrastenhanced CT AJR 2015 2057784
+ Dillman JR Strouse PJ Ellis JH Cohan RH Jan SC Incidence and severity of acute allergiclike reactions to iv nonionic iodinated contrast material in children AJR 2007 18816431647
+ Mervak BM Cohan RH Ellis JH Khalatbari S Davenport MS Intravenous Corticosteroid Premedication Administered 5 Hours before Contrast Administration

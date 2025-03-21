@@ -2,7 +2,6 @@
 Main entry point for the Yale Medicine crawler application.
 """
 import os
-import sys
 import logging
 import argparse
 from dotenv import load_dotenv
@@ -10,38 +9,18 @@ from dotenv import load_dotenv
 # Local imports
 from crawler import YaleCrawler
 import config
+from logger import DataCollectionLogger
+
+logger = DataCollectionLogger(
+    name="crawl",
+    level=logging.INFO,
+    path=os.path.join(config.RAW_DATA_DIR, "crawl.log")
+)
 
 # Create output directories before setting up logging
 os.makedirs(config.OUTPUT_DIR, exist_ok=True)
 os.makedirs(config.MARKDOWN_DIR, exist_ok=True)
 os.makedirs(config.DOCUMENT_DIR, exist_ok=True)
-
-# Set up logging with immediate flushing
-log_file = os.path.join(config.OUTPUT_DIR, "crawler.log")
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-# Create file handler with immediate flushing
-file_handler = logging.FileHandler(log_file, mode='a' if os.path.exists(log_file) else 'w', encoding='utf-8')
-file_handler.setFormatter(formatter)
-file_handler.setLevel(logging.INFO)
-
-# Create console handler
-console_handler = logging.StreamHandler(sys.stdout)
-console_handler.setFormatter(formatter)
-console_handler.setLevel(logging.INFO)
-
-# Configure root logger
-root_logger = logging.getLogger()
-root_logger.setLevel(logging.INFO)
-root_logger.addHandler(file_handler)
-root_logger.addHandler(console_handler)
-
-# Force immediate flush after each log
-for handler in [file_handler, console_handler]:
-    handler.flush = lambda: True  # Always return True for flush
-
-logger = logging.getLogger(__name__)
-logger.info("Logging initialized. Log file: %s", log_file)
 
 def main():
     """Main function to run the crawler."""
@@ -86,7 +65,7 @@ def main():
     # Handle reset option (overrides resume)
     if args.reset:
         from crawler_state import CrawlerState
-        state_manager = CrawlerState(os.path.join(config.OUTPUT_DIR, "state"))
+        state_manager = CrawlerState(os.path.join(config.OUTPUT_DIR, "state"), logger)
         state_manager.clear_state()
         logger.info("Crawler state has been reset. Starting fresh crawl.")
         resume = False
@@ -102,7 +81,7 @@ def main():
     
     # Initialize and start the crawler
     try:
-        crawler = YaleCrawler(max_depth=args.depth, resume=resume)
+        crawler = YaleCrawler(max_depth=args.depth, resume=resume, logger=logger)
         crawler.start(initial_url=args.url)
         
         logger.info(f"Crawling completed. Results saved to {config.OUTPUT_DIR}")

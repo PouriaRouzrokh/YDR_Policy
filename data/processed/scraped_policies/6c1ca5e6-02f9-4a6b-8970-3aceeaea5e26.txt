@@ -1,0 +1,124 @@
+Title Continuous Subcutaneous Insulin Infusion Pump andor Continuous Glucose Monitoring  Patient SelfManagement While Admitted and Usage During Radiology Exams
+Date Approved October 2019  Approved by Formulary Integration Committee FIC and System Clinical Council
+Date ReviewedRevised Sept 2020
+Distribution MCN Policy Manager  System Policy Type I or II I
+
+
+PURPOSE
+To provide guidance for inpatients to safely selfmanage their own care using Continuous Subcutaneous Insulin Infusion Pump CSII or Insulin Pump andor Continuous Glucose Monitoring CGM systems
+
+
+APPLICABILITY
+This policy applies to each licensed hospital affiliated with Yale New Haven Health System YNHHS including Bridgeport Hospital Greenwich Hospital Lawrence  Memorial Hospital Westerly Hospital Yale New Haven Hospital and any other hospital that may affiliate with YNHHS
+
+
+DEFINITIONS
+CSII  Insulin pump An external continuous infusion device used to deliver a constant infusion of rapidacting insulin preset basal insulin rates and patientdelivered premeal boluses and correction boluses to manage glycemic control
+
+Continuous Glucose Monitoring CGM systems Use a small sensor inserted subcutaneously to continuously measure glucose levels in the interstitial fluid The sensor transmits results to a receiver which may be a smart phone displaying realtime glucose levels and glycemic trends
+
+Automated Insulin Delivery Insulin Pump system Interfaced with a CGM it adjusts basal insulin delivery based on glucose trajectories and values Note that patients will still need to bolus for carbohydrate intake and may require correction doses
+
+ Low suspend and predictive low glucose suspend systems eg tslim X2 with BasalIQ Medtronic 530G Medtronic 630G Interrupt basal insulin delivery in response to low or predicted low sensor glucose values
+ Hybrid Closed Loop HCL insulin pumps eg Medtronic 670G tsim X2 with ControlIQ Capable of both increasing and reducing basal insulin delivery based on sensor values
+
+
+POLICY
+A The admitting provider evaluates if the patient or identified caregiver eg significant other parent guardian is capable of selfmanagement of the insulin pump andor CGM system
+
+B The patients insulin pump settings eg basalbolus settings may require adjustment during hospitalization to minimize hyper and hypoglycemia due to factors such as
+   a Stress of illness infection surgery
+   b Alterations in carbohydrate intake
+   c Enteral or parenteral nutrition
+   d Administration of medications that affect glycemic control eg steroids pressors octreotide etc
+
+C Adjustments to the insulin pump settings are ordered by the provider
+
+D The patient maintains and adjusts the pump settings per provider order
+
+E For planned surgeries the anesthesiologist and patient collaborate regarding insulin pump andor CGM management during the perioperative period
+
+F Although CGM is not FDAapproved for guiding inpatient therapy when paired with an insulin pump it may be useful for patient selfcare
+
+
+PROCEDURE
+Continuous Subcutaneous Insulin Infusion CSII  Insulin Pump
+1 Verify that the patient wishes to continue using their insulin pump during the hospital stay and is able to selfmanage
+2 Confirm the patients or caregivers ability to manage the pump ensuring they are
+   a Fully alert and oriented
+   b Possess adequate manual dexterity
+   c Have sufficient visual acuity
+   d Possess ready access to patientsupplied pump supplies provided from home
+   e Have signed an agreement for insulin pump management to be filed in the medical record and provided to the patient
+3 Assess for potential contraindications such as cognitive or physical impairments behavioral concerns lack of supplies medical conditions eg DKA critical illness or pump malfunction
+4 Inform the patient that the health care team reserves the right to remove the pump if selfmanagement becomes unsafe
+5 Establish an alternative insulin replacement plan eg BasalBolusCorrection regimen or insulin infusion order in case the pump is discontinued
+6 Nursing must confirm that patientsupplied pump supplies are available for the duration of the stay the hospital does not stock these supplies
+7 The pharmacist will verify the availability of patientsupplied insulin vials per the YNHHS policy if unavailable a vial may be ordered
+8 Nursing verifies that a provider order exists in the patients record for pump use including details such as
+   a Continuation of current basal rates and settings
+   b Clinician contact information
+   c Manufacturer details
+   d Insulin type brand concentration basal rates bolus parameters target blood glucose ranges and infusion site change guidelines at least every 72 hours or sooner if indicated
+9 Diet orders for consistent carbohydrate intake and appropriate consultations Endocrinology Diabetes CDE Registered Dietitian Nutritionist should be made
+10 Document the pumps presence and the last infusion setsite change on admission
+11 Communicate pointofcare POC glucose readings and document patientadministered doses in real time in the MAR
+12 Assess and document the infusion site for signs of inflammation or infection every shift
+13 Notify the provider if
+   a Blood glucose targets are not met
+   b There are concerns with the patients ability to selfmanage
+   c The patient cannot change the infusion set due to lack of supplies
+14 Notify the Radiology Department for patients scheduled for radiological procedures xrayfluoroscopy CT or MRI and if required
+   a Order the removal of the insulin pump before the procedure with specific instructions based on procedure duration
+   b Ensure the pump is kept outside the imaging room
+   c Remove infusion sets with metal cannulas before MRI
+15 If the pump is discontinued due to patient inability or critical illness
+   a Initiate alternate insulin therapy SC or infusion immediately
+   b Disconnect the pump
+   c Secure the pump per facility policy or send it home with a designated family memberguardian
+
+Continuous Glucose Monitoring CGM System
+1 Confirm the patients or caregivers ability and understanding to use CGM in the hospital ensuring that
+   a The patient is fully alert and oriented
+   b Treatment decisions rely on hospital POC blood glucose meter results since CGM is not FDAapproved for inpatient management
+   c CGM results are for patient information only
+   d The patient has the manual dexterity needed to operate the device
+   e Hospital POC results may be used for necessary calibrations
+   f A signed agreement for CGM monitoring is obtained and documented
+2 Nurse confirms that patientsupplied CGM supplies are available the hospital does not stock these supplies
+3 Assess the CGM insertion site every shift and document findings in the EMR
+4 Notify the Radiology Department if the patient is scheduled for procedures ensure CGM removal as per manufacturer guidelines see Appendix
+5 Arrange consultations Endocrinology Diabetes CDE Registered Dietitian Nutritionist as applicable
+6 If CGM must be removed due to procedures or supply issues
+   a Remove the sensor and transmitter
+   b Secure the CGM components with staff or send them home with a designated family memberguardian
+
+Automated Insulin Delivery Insulin Infusion Pump
+1 Automatic Mode algorithmregulated basal rates may not be suitable in all circumstances The admitting provider must assess appropriateness and note this in the insulin pump order set
+   a At YNH YSC and SRC consult an Endocrinologist Endocrine Fellow or Diabetes Team APRN
+   b At other networks consult the patients insulin pump prescriber if uncertain
+2 Contraindications for automatic mode include but are not limited to
+   a Highdose steroid therapy
+   b DKA HHS or other critical illnesses
+   c Lack of sensor supplies
+   d Sensor malfunctions
+   e Provider discretion
+
+
+REFERENCES
+1 Improving the Clinical Value and Utility of CGM Systems Issues and Recommendations  A Joint Statement of the European Association for the Study of Diabetes and the American Diabetes Association
+2 Diabetes Technology Working Group Petrie JR et al Diabetes Care 40 12 16141621 2017
+3 International Consensus on Use of Continuous Glucose Monitoring Danne T et al Diabetes Care 40 12 16311640 2017
+4 American Association of Clinical Endocrinologists and American College of Endocrinology 2016 Outpatient Glucose Monitoring Consensus Statement Bailey TS et al Endocrine Practice 22 2 231261 2016
+5 Diabetes Technology Update Use of Insulin Pumps and Continuous Glucose Monitoring in the Hospital Umpierrez GE and Klonoff DC Diabetes Care 2018 41 8 15791589
+6 American Diabetes Association Diabetes Care in the Hospital Standards of Medical Care in Diabetes 2018 Diabetes Care 2018 41 Suppl 1 S144S151
+
+
+APPENDIX
+The insulin pump or CGM system is to be removed before any radiological procedure involving xrayfluoroscopy CT scanning or MRI unless the device manufacturer provides information supporting safe use If the device cannot be temporarily stopped evaluate the risks and benefits as outlined below
+
+Insulin Pump and CGM Systems during Xray exams CT Scans and MRI
+ The presence of an insulin pump or glucose monitor should not preclude medically indicated CT or Xray imaging but the device should be removed whenever possible
+ The probability that xray or CT scan irradiation causes a device malfunction or adverse event is extremely low especially if the device is not located in the region being imaged
+ No known adverse events during CT imaging of insulin pumps or glucose monitors have been reported Although other electronic devices eg cardiac implantable devices neurostimulators have had adverse events there is little evidence that CT irradiation was the direct cause
+ Sta

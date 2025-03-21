@@ -1,0 +1,54 @@
+Radiology Tips Requesting Formal Interpretation of Outside Imaging Studies
+
+Radiologists working in the Yale Department of Radiology and Biomedical Imaging YDR can issue a formal interpretation with a report placed in Epic for studies performed at facilities not covered by YDR Currently all radiology sites affiliated with YNHHSRC Milford Hospital and Bridgeport Hospital OutPatient Radiology are staffed by YDR
+
+Official interpretation of outside imaging by YDR offers a second opinion to patients with interpretation by a tertiary care center subspecialized Radiologist Published data has shown that such programs decrease costs reduce radiation exposure caused by repeat exams and frequently result in alteration in diagnosis and clinical management
+
+Your patients insurance company will be billed a professional fee for the secondary interpretation by a YDR radiologist
+
+
+
+What types of studies can be nominated for an official second read
+1 Must be an MRI CT PETCT All forms of breast imaging are also eligible mammogram ultrasound MRI
+2 Must be less than 90 days old Do not place requests for outside reads on exams older than 90 days they will automatically be canceled by YDR Image Library staff except in specific clinical circumstances at discretion of radiologist Images not eligible for outside interpretation will still be uploadedviewable in our PACS
+
+
+
+Sites eligible for outside reads
+Any hospitalsite including Smilow Cancer Center affiliated sites ex St Francis where the original interpretation is not completed by a YDR Radiologist This includes exams performed at other YaleNew Haven Health System facilities including Bridgeport Hospital main campus Greenwich Hospital Lawrence and Memorial and Westerly Hospital Inpatient exams are eligible if the patient is transferred to YNHH or if request is placed after patient discharge see exception 3 below for further information
+
+
+
+Sites not eligible
+1 Bridgeport Hospital Outpatient Radiology locations including Park Avenue Medical Center and Milford Hospital are NOT eligible for second reads as exams are interpreted by YDR radiologists
+2 Any exam performed at a Veterans VA health system site is NOT eligible secondary to insurance limitations and VA Radiologist affiliation with Yale Radiology
+3 Second reads for imaging exams on inpatients at other YNHHS hospitals ex Bridgeport Greenwich etc while they are still hospitalized at the other site are not eligible
+
+
+
+To request an outside read
+
+Best Method
+1 Upload the exam via Powershare software available on every clinical workstation and choose nominate for second readofficial interpretation option Powershare can receive images electronically from many other institutions or pull images from CDROM
+2 Carefully complete the patient clinical details and requesting MDs contact information
+3 Cosign the request for the imaging order in your Epic Inbasket
+4 Only request an outside read for the most recent examinations Example  if your patient has multiple CT ChestAbdomenPelvis exams and PETCTs only request most recent exam for official read Older exams should still be uploaded but will be used for comparison when interpreting most recent study
+
+
+
+Alternative Methods
+1 Disc may be dropped off at the Image Library for upload An order can be placed via paper form with Image Library
+2 For images already uploaded into our PACS can be seen in patient imaging tab in EPIC that are in an OSF status an outside read request can also be made via EPIC by typing outside in the EPIC order search bar and selecting the correct study type Request can also be sent via email to the Image Library team at radiologycustomerserviceynhhorg You must provide details on which exact study you are requesting an outside read on the relevant clinical historyreason for consult and the authorizingordering provider name and contact information
+
+Tumor board and multidisciplinary conference cases must follow the same upload and ordering procedure as described above Please submit these cases 23 days in advance of the conference
+
+
+
+Additional details
+If inadequate clinical history is available or image quality is poorincomplete the radiologist has the discretion to not issue a formal report for the requested study
+
+Errors in entered exam information will lead to interpretation delays or cancelation Orders placed via EPIC with no corresponding images uploaded will be canceled after 72 hours
+
+Curbside consults will not be provided for CT MRI or PETCT exams that are eligible for the outside read program
+
+For Questions  the Image Library team can be reached at 2036888811 Any clarifications on policyprocedure can be directed to Dr Regina Hooley Vice Chair of Clinical Affairs or Dr Jay Pahade Vice Chair Quality and Safety

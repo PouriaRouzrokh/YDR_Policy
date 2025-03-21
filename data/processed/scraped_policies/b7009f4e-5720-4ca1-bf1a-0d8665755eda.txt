@@ -1,0 +1,167 @@
+Yale Radiology and Biomedical Imaging  SOP 800000  Effective Date 8120
+Version Number 1
+RAD Mission Clinical
+Date 2252022
+Prepared By Jay Pahade MD
+Management Approval Rob Goodman MD
+Date 2252022
+
+
+
+Purpose
+
+Peer learning supports a culture of learning and minimizing blame Guiding principles are
+ All radiologists are encouraged to submit peer feedback
+ Feedback is identified by peers and brought back to individual radiologists by a peer learning leader in a respectful fashion to improve their practice
+ Peer learning opportunities are presented to sections andor the whole department in an anonymous nonjudgmental manner focused on group learning and clinical improvement
+
+Goal
+The goal of peer learning is improvement of services  relying on trust and the free exchange of constructive professional feedback It supports daily work quality patient safety litigation risk reduction and overall learning
+
+Definition of Peer Learning Opportunities
+Cases address actual or potential performance issues including discrepancies and great calls and are identified during routine work conferences event reports or other sources
+
+
+
+Description of Program Structure and Organization
+
+Roles and Responsibilities
+
+A Peer Learning Program Leaders
+   i Director of Peer Learning currently led by the Vice Chair for Quality and Safety
+      1 Promote the peer learning program to all radiologists
+      2 Develop and maintain peer learning workflows
+      3 Train radiologists on expectations and submission processes
+      4 Oversee program implementation and identify best practices
+      5 Support translation of feedback into quality improvement
+      6 Coordinate wholedepartment peer learning conferences
+      7 Review the annual peer learning report
+
+   ii Subspecialty Peer Learning Program Managers section delegated leads
+      8 Receive and review learning opportunity submissions
+      9 Discuss cases with individual radiologists when appropriate
+     10 Coordinate development of subspecialty peer learning content
+     11 Collaborate with the Vice Chair of Quality and Safety on quality improvement initiatives
+
+B Radiologists
+   i Interpret exams with an awareness of learning opportunities
+  ii Submit learning opportunities when identified
+ iii Engage in peer learning conferences
+
+C Administrative Support
+   i Provide logistical support for the program including
+      1 Scheduling peer learning conferences
+      2 Creating and maintaining records attendance case summaries
+      3 Coordinating with the CME coordinator for conference CME approval
+      4 Assisting in annual report creation and OPPE case submission data collation
+      5 Curating data and slides for conferences
+      6 Reporting post conference case outcomes to the hospitals Professional Practice Executive Committee PPEC
+
+
+
+Scope
+
+This policy affects all attending clinical radiologists
+
+
+
+Materials
+
+ Appendix 1  Primordial Peer Learning Case Submission TIPS Sheet
+ Appendix 2  Yale New Health System Radiology OPPE Form
+
+
+
+WorkflowParticipation
+
+Meaningful participation in the peer learning program is defined by two components
+
+1 Active Participation in Case Entry
+    For full or parttime radiologists excluding IR practitioners a minimum of 24 case entries approximately 2 cases per month on average per academic year July 1st  June 30th is required
+    Both learning opportunity and good call cases count toward this requirement see Appendix 1 for instructions
+    Cases deemed to offer no learning value may be removed from the participation count Participation is prorated for leaves of absence IR practitioners have no minimal case submission requirement for presentation
+
+2 Attendance
+    At least 50 attendance is required at the departmentwide quarterly peer learning conference IRIS for staff in certain divisions neuroradiology cardiothoracic emergency body musculoskeletal pediatric radiology
+    For divisions not presenting at IRIS participation in either the departmentwide or sectional peer learningMM conference suffices Sectional meetings should be held quarterly or more frequently at the discretion of the section chiefchampion
+    Recorded conferences may be viewed with prior notification to update attendance records
+
+
+
+Reporting
+
+ The peer learning content is sequestered from individual performance evaluations Instead participation is noted in the OPPE evaluation for radiologists without generating performance data directly from peer learning submissions
+ The Vice Chair of Quality and Safety provides quarterly documentation to the hospitals Professional Practice and Evaluation Committee PPEC including
+    Attendance lists
+    Details of cases and teaching points
+    Potential action plans arising from identified learning opportunities
+
+Quality Improvement
+Dedicated efforts are made to translate peer learning findings into quality improvement initiatives with coordinated oversight between the Vice Chair of Quality and Safety and a designated Radiology QI team
+
+Annual Report
+A summary of program accomplishments is generated from the peer learning database including
+   1 Total number of exams submitted as peer learning opportunities or good calls
+   2 Percentage of radiologists meeting attendance requirements
+   3 Percentage of radiologists meeting submission requirements
+   4 List of quality improvement activities linked to peer learning discussions
+
+
+
+DefinitionsAbbreviations
+
+ SOP Standard Operating Procedure
+ YDR Yale Department of Radiology and Biomedical Imaging
+ PPEC Professional Practice Evaluation Committee
+ IRIS Improved Radiology Interpretation System
+ OPPE Ongoing Professional Practice Evaluation
+
+
+
+References
+
+S DelBasso R Hooley TR Goodman
+
+
+
+Revision History
+
+ Version  Date       Reason For Revision       
+
+ 10      61120    New SOP creation          
+ 20      22522    Updates                   
+
+
+
+Appendix 1  Primordial Peer Learning Case Entry
+
+This appendix outlines the process for submitting peer learning cases via the Primordial Communicator App
+
+1 Launch a study on the workstation with Visage and access the Peer Learning Software using the Primordial Communicator App Note The old Peervue software will be retired
+
+2 In the Communicator select the Create New list and click on Peer Learning
+
+3 In Step 1
+   a Choose the appropriate case typically a prior exam
+   b Adjust the Identified By field if necessary default is Radiologist
+   c Select the correct section corresponding to the radiologist who interpreted the case
+
+4 Click Next to proceed to Step 2
+
+5 In Step 2
+    Enter comments under the Description tab text is mandatory even for Good Call cases
+    Optional tabs for Clinical History and Clinical Follow may be filled out if desired
+    Features such as Capture Region Capture Window and clipboard paste for screenshots may be included in future updates
+
+6 At the bottom select one of the following options
+   a Learning Opportunity  for cases with potential learning value that count toward the participation requirement
+   b Good Call  for commendable case evaluations that also count toward the requirement
+   c For Discussion  flags a case for potential sectional discussion these do not count toward participation requirements
+
+Upon submission the case will be forwarded to the sectional Peer Learning Champion or Section Chief If the case is approved as a learning opportunity an email with case details will be sent to the interpreting radiologist
+
+
+
+Appendix 2  YNHHS Radiology Ongoing Professional Practice Evaluation OPPE Form
+
+This appendix references the OPPE form used to document radiologist participation in the peer learning program Image reference provided in the original document

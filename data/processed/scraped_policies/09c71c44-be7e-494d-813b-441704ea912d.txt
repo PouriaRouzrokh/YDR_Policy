@@ -1,0 +1,61 @@
+Magnetic Resonance Imaging is an ever changing evolving technology There are potential risks in the MR environment not only for the patient but also for the accompanying family members attending health care professionals and others who find themselves only occasionally or rarely in the magnetic fields of MR scanners such as security housekeeping personnel firefighters police etc This manual has been developed to help guide the MR staff regarding these issues
+
+The policies written in this manual are guidelines to follow as a standard of care throughout the Yale New Haven Health system MRI departments It is at the discretion of the supervising radiology attending to divert from any policy in an emergency situation Please refer to page 101 Exceptions of MR safety policies for further detail
+
+It is the intent of the Yale New Haven Hospital safety manual to
+ Protect and educate all patients direct and ancillary personnel about the possible risks associated with the MR Suite including but not limited to static and timevarying magnetic fields as well as RF pulses
+ Remain in compliance with the most uptodate MR safety information provided by the Joint Commission and the ACR
+ Serve as a helpful guide as the field of MRI continues to evolve supporting MR services that are among the most powerful yet safest of all diagnostic procedures in modern medicine
+
+Furthermore the following guidelines apply
+1 All clinical and research MR sites regardless of magnet format or field strengthand covering diagnostic research interventional andor surgical applicationsmust maintain MR safety policies
+2 These policies and procedures will be reviewed regularly by the MR Safety Officer and the Medical Director to accommodate significant changes in the MR center environment including standards from the ACR Joint Commission and international bodies
+3 Responsibility for implementing and maintaining these policies and procedures rests with the Medical Director of the YNHH MRI Centers
+4 All MR personnel shall review MR safety annually
+5 All nonMR staff patients and their families must be provided appropriate materials such as guidelines brochures or posters that explain potential accidents and adverse events in the MRI environment
+6 Updated safety policies must be accessible to MR staffeither online or in a hard copy in every MR area
+7 Any MR safety incident or near miss must be reported promptly to the center manager the MR Safety Officer and the Medical Director An event report should be documented via the intranet and if equipment is involved reported to the FDA Maude website at wwwfdagovmedwatch
+
+
+
+The MR task group of the American Society for Testing and Materials ASTM International has developed a set of MR safety terms Note that this terminology is not applied retrospectively to implants and devices approved by the FDA under the labels MR safe or MR compatible if they were tested prior to December 2005 Furthermore products marketed with vague descriptions such as nonmagnetic or the outdated term MR compatible should not be assumed to adhere to current ASTM classifications
+
+ASTM has introduced corresponding icons which may appear in the document as image links to standardize safety labels
+ MR SAFE  An item that poses no known hazards in any MRI environment For example nonconducting nonmetallic nonmagnetic items like a plastic Petri dish are considered MR Safe Icon letters MR in green on a white square with a green border or white on a green square
+ MR CONDITIONAL  An item that has been shown to be safe in a specific MR environment under defined conditions Icon the letters MR in black inside a yellow triangle with a black border with labeling that includes test results and conditions of use
+ MR UNSAFE  An item known to pose hazards in all MRI environments eg ferromagnetic scissors Icon the letters MR in black on a white field inside a red circle with a diagonal red band
+ Safety in MRI Not Evaluated  For devices with no provided MRI safety information
+
+img0jpegimagesimg0jpegpng
+
+The ACR has established a 4zone concept per the ACR Guidance Document for Safe MR Practices 2007 to provide progressive access restrictions within the MRI environment
+ Zone I Open to the general public typically the area outside the controlled MR environment
+ Zone II A transition area between the public Zone I and the strictly controlled areas access here is limited to patients family members and hospital personnel who have undergone initial MR safety screening
+
+img1jpegimagesimg1jpegpng
+
+ Zone III Areas adjacent to the scanner leading into Zone IV where potentially hazardous MR energies may exist This zone is physically restrictedonly MR personnel with appropriate keys or passcodes have free access Patients and prescreened personnel may enter only when accompanied by designated MR staff
+ Zone IV The room that houses the MR scanner itself clearly marked as hazardous due to very strong magnetic fields Only patients or their family members and hospital staff accompanied by properly screened MR personnel are permitted here
+
+img2jpegimagesimg2jpegpng
+
+NonMR personnel must be accompanied at all times by a designated MR staff member when in Zones III or IV
+
+
+
+SITE ACCESS RESTRICTIONS
+
+ MRI Center Fitkin Basement
+The MRI outpatient center at 789 Howard Avenue uses a prep hold area adjacent to MR 5 and MR 1 for transferring stretcher or wheelchairbound patients onto MR safe equipment To help prevent overcrowding and potential safety incidents no more than three additional hospital staff members are allowed per procedural MRI
+
+ Smilow Level 2 MRI Suite
+Located on the second floor at 20 Park Street of the Smilow Cancer Hospital this MRI suite transfers stretcher and wheelchairbound patients to a prep hold area equipped with MR safe devices Staff accompanying any procedural MRI is similarly restricted to three people to mitigate risks
+
+ Smilow Level 1 Breast Center MRI Suite
+At 20 Park Street on the first floor of the Smilow Cancer Hospital the Breast Center MRI Suite is divided into four zones Stretcherbound patients are preferentially scheduled on the second floor MRI suite and wheelchairbound patients are transferred to MR safe equipment in the changing area
+
+ North Haven MRI Suite
+The MRI suite at 6 Devine Street in North Haven is organized into four zones Here stretcher and wheelchairbound patients are transferred to designated MR safe equipment in the transfer area
+
+ Pediatric Suite West Pavilion
+Located on the second floor of the YNHH Childrens Hospital the Pediatric MRI Suite utilizes MR safe stretchers in the MRI intake room for stretcherbound patients For procedural MR examinations the accompanying hospital staff is limited to three individuals to avoid overcrowding and enhance safety

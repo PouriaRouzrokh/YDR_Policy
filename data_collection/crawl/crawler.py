@@ -25,19 +25,17 @@ from processors.document_processor import download_document, convert_to_markdown
 from processors.pdf_processor import pdf_to_markdown
 from processors.llm_processor import analyze_content_for_policies
 
-# Set up logging
-logger = logging.getLogger(__name__)
-
 class YaleCrawler:
     """Class for crawling Yale Medicine webpages and documents using priority-based algorithm."""
     
-    def __init__(self, max_depth: int = config.DEFAULT_MAX_DEPTH, resume: bool = True):
+    def __init__(self, max_depth: int = config.DEFAULT_MAX_DEPTH, resume: bool = True, logger: logging.Logger = None):
         """
         Initialize the crawler.
         
         Args:
             max_depth: Maximum depth to crawl
             resume: Whether to try to resume from a previous crawl
+            logger: Logger for logging messages
         """
         self.max_depth = max_depth
         self.visited_urls = set()
@@ -46,7 +44,8 @@ class YaleCrawler:
         self.current_url = None
         self.current_depth = 0
         self.resume = resume
-        self.state_manager = CrawlerState(os.path.join(config.OUTPUT_DIR, "state"))
+        self.logger = logger        
+        self.state_manager = CrawlerState(os.path.join(config.OUTPUT_DIR, "state"), logger)
         
         # Flag to track if the crawler is stopping gracefully
         self.stopping = False
@@ -82,29 +81,29 @@ class YaleCrawler:
     
     def _init_driver(self):
         """Initialize the Selenium WebDriver."""
-        logger.info("Initializing Chrome WebDriver...")
+        self.logger.info("Initializing Chrome WebDriver...")
         chrome_options = Options()
         chrome_options.add_argument("--start-maximized")
         chrome_options.add_argument("--disable-notifications")
         
         try:
             self.driver = webdriver.Chrome(options=chrome_options)
-            logger.info("WebDriver initialized successfully")
+            self.logger.info("WebDriver initialized successfully")
         except Exception as e:
-            logger.error(f"Error initializing WebDriver: {str(e)}")
+            self.logger.error(f"Error initializing WebDriver: {str(e)}")
             raise
     
     def signal_handler(self, sig, frame):
         """Handle termination signals to save state before exiting."""
-        logger.info("Received termination signal. Saving state and shutting down gracefully...")
+        self.logger.info("Received termination signal. Saving state and shutting down gracefully...")
         self.stopping = True
         self.save_state()
         
         if self.driver:
-            logger.info("Closing browser...")
+            self.logger.info("Closing browser...")
             self.driver.quit()
         
-        logger.info("Crawler stopped gracefully. Run again with --resume to continue from this point.")
+        self.logger.info("Crawler stopped gracefully. Run again with --resume to continue from this point.")
         exit(0)
     
     def save_state(self):
@@ -120,13 +119,13 @@ class YaleCrawler:
     def load_state(self):
         """Load previous crawler state if it exists."""
         if not self.resume:
-            logger.info("Resume mode disabled, starting fresh crawl")
+            self.logger.info("Resume mode disabled, starting fresh crawl")
             self.state_manager.clear_state()
             return False
             
         state = self.state_manager.load_state()
         if not state:
-            logger.info("No previous state to resume from")
+            self.logger.info("No previous state to resume from")
             return False
             
         # Restore state
@@ -135,7 +134,7 @@ class YaleCrawler:
         self.current_url = state["current_url"]
         self.current_depth = state["current_depth"]
         
-        logger.info(f"Resumed crawler state with {len(self.visited_urls)} visited URLs and {len(self.priority_queue)} URLs in queue")
+        self.logger.info(f"Resumed crawler state with {len(self.visited_urls)} visited URLs and {len(self.priority_queue)} URLs in queue")
         return True
     
     def start(self, initial_url: str = config.MAIN_URL):
@@ -147,12 +146,12 @@ class YaleCrawler:
         """
         try:
             # Navigate to the initial URL
-            logger.info(f"Opening {initial_url}...")
+            self.logger.info(f"Opening {initial_url}...")
             self.driver.get(initial_url)
             
             # Wait for manual login
-            logger.info("Please log in manually. The browser will wait until you're done.")
-            logger.info("Once you've logged in and can see the policies page, press Enter to continue...")
+            self.logger.info("Please log in manually. The browser will wait until you're done.")
+            self.logger.info("Once you've logged in and can see the policies page, press Enter to continue...")
             input()
             
             # Check if we should resume or start fresh
@@ -161,22 +160,22 @@ class YaleCrawler:
             if not resumed:
                 # Add initial URL to priority queue with high priority
                 heapq.heappush(self.priority_queue, (-100, initial_url, 0))  # Negative priority so highest is first
-                logger.info(f"Starting new crawl from {initial_url}")
+                self.logger.info(f"Starting new crawl from {initial_url}")
             else:
-                logger.info(f"Resuming crawl from {self.current_url}")
+                self.logger.info(f"Resuming crawl from {self.current_url}")
                 
                 # Make sure we're on the right page before continuing
                 if self.current_url:
-                    logger.info(f"Navigating to last processed URL: {self.current_url}")
+                    self.logger.info(f"Navigating to last processed URL: {self.current_url}")
                     self.driver.get(self.current_url)
                     time.sleep(2)  # Give the page a moment to load
             
             # Start automated crawling
-            logger.info(f"Starting automated crawling with max depth {self.max_depth}...")
+            self.logger.info(f"Starting automated crawling with max depth {self.max_depth}...")
             self.crawl_automatically()
             
         except Exception as e:
-            logger.error(f"Error during crawling: {str(e)}")
+            self.logger.error(f"Error during crawling: {str(e)}")
             # Save state on error
             self.save_state()
         
@@ -187,7 +186,7 @@ class YaleCrawler:
                 
             # Close the browser
             if self.driver:
-                logger.info("Closing the browser...")
+                self.logger.info("Closing the browser...")
                 self.driver.quit()
     
     def crawl_automatically(self):
@@ -208,25 +207,25 @@ class YaleCrawler:
                 
                 # Skip if already visited or max depth reached
                 if url in self.visited_urls:
-                    logger.info(f"Skipping already visited URL: {url}")
+                    self.logger.info(f"Skipping already visited URL: {url}")
                     continue
                     
                 if depth > self.max_depth:
-                    logger.info(f"Skipping {url} - max depth reached")
+                    self.logger.info(f"Skipping {url} - max depth reached")
                     continue
                 
                 # Process the URL
-                logger.info(f"\n{'='*80}\nProcessing [{pages_processed+1}] (Priority: {priority:.1f}, Depth: {depth}): {url}")
+                self.logger.info(f"\n{'='*80}\nProcessing [{pages_processed+1}] (Priority: {priority:.1f}, Depth: {depth}): {url}")
                 self.process_url(url, depth)
                 pages_processed += 1
                 
                 # Save state periodically
                 if pages_processed % save_interval == 0:
                     self.save_state()
-                    logger.info(f"Progress: {pages_processed} pages processed, {len(self.priority_queue)} URLs in queue")
+                    self.logger.info(f"Progress: {pages_processed} pages processed, {len(self.priority_queue)} URLs in queue")
                     
             except Exception as e:
-                logger.error(f"Error processing URL {self.current_url}: {str(e)}")
+                self.logger.error(f"Error processing URL {self.current_url}: {str(e)}")
                 # Continue with next URL
                 continue
                 
@@ -235,9 +234,9 @@ class YaleCrawler:
         
         if not self.stopping:
             if self.priority_queue:
-                logger.info(f"Crawler stopped with {len(self.priority_queue)} URLs still in queue")
+                self.logger.info(f"Crawler stopped with {len(self.priority_queue)} URLs still in queue")
             else:
-                logger.info("Crawler completed - all URLs processed")
+                self.logger.info("Crawler completed - all URLs processed")
                 # Clear state as we're done
                 self.state_manager.clear_state()
     
@@ -253,19 +252,19 @@ class YaleCrawler:
         """
         # Skip empty URLs and anchors
         if not url or url.startswith('#') or url.startswith('javascript:'):
-            logger.debug(f"Skipping empty or javascript URL: {url}")
+            self.logger.debug(f"Skipping empty or javascript URL: {url}")
             return False
         
         # Skip already visited URLs
         if url in self.visited_urls:
-            logger.debug(f"Skipping already visited URL: {url}")
+            self.logger.debug(f"Skipping already visited URL: {url}")
             return False
         
         # Check domain restrictions
         parsed_url = urllib.parse.urlparse(url)
         allowed = any(domain in parsed_url.netloc for domain in config.ALLOWED_DOMAINS)
         if not allowed:
-            logger.debug(f"Skipping URL from non-allowed domain: {url}")
+            self.logger.debug(f"Skipping URL from non-allowed domain: {url}")
         return allowed
     
     def is_document_url(self, url: str) -> bool:
@@ -284,7 +283,7 @@ class YaleCrawler:
         # Check for known document extensions
         extension = os.path.splitext(path)[1]
         if extension in config.DOCUMENT_EXTENSIONS:
-            logger.info(f"Detected document URL by extension: {url}")
+            self.logger.info(f"Detected document URL by extension: {url}")
             return True
         
         # Check for document repository patterns
@@ -301,17 +300,17 @@ class YaleCrawler:
         
         for pattern in doc_patterns:
             if pattern in url.lower():
-                logger.info(f"Detected document URL by pattern '{pattern}': {url}")
+                self.logger.info(f"Detected document URL by pattern '{pattern}': {url}")
                 return True
         
         # Additional checks for Yale medicine document URLs
         if 'files-profile.medicine.yale.edu/documents/' in url:
-            logger.info(f"Detected Yale Medicine document repository URL: {url}")
+            self.logger.info(f"Detected Yale Medicine document repository URL: {url}")
             return True
         
         # Add specific check for the URL pattern you mentioned
         if re.match(r'https://files-profile\.medicine\.yale\.edu/documents/[a-f0-9-]+', url):
-            logger.info(f"Detected Yale Medicine document UUID URL: {url}")
+            self.logger.info(f"Detected Yale Medicine document UUID URL: {url}")
             return True
             
         return False
@@ -374,7 +373,7 @@ class YaleCrawler:
         if 'search' in path or 'login' in path or 'contact' in path:
             priority -= 10.0
             
-        logger.debug(f"Priority for {url} (link text: '{link_text}'): {priority:.1f}")
+        self.logger.debug(f"Priority for {url} (link text: '{link_text}'): {priority:.1f}")
         return priority
     
     def extract_links(self, html_content: str, base_url: str) -> List[Tuple[str, str]]:
@@ -406,7 +405,7 @@ class YaleCrawler:
             if self.is_allowed_url(link):
                 processed_links.append((link, text.strip()))
         
-        logger.info(f"Extracted {len(processed_links)} valid links from {base_url}")
+        self.logger.info(f"Extracted {len(processed_links)} valid links from {base_url}")
         return processed_links
     
     def process_url(self, url: str, depth: int):
@@ -419,7 +418,7 @@ class YaleCrawler:
         """
         # Mark as visited
         self.visited_urls.add(url)
-        logger.info(f"Processing URL: {url} at depth {depth}")
+        self.logger.info(f"Processing URL: {url} at depth {depth}")
         
         # Special handling for root URL to ensure we don't get stuck
         is_root_url = (depth == 0)
@@ -427,12 +426,12 @@ class YaleCrawler:
         # Process based on URL type
         if self.is_document_url(url):
             # Process document
-            logger.info(f"Processing as document: {url}")
+            self.logger.info(f"Processing as document: {url}")
             markdown_content = self.process_document(url)
             
             # No need to extract links from documents
             if not markdown_content:
-                logger.warning(f"Failed to extract content from document {url}")
+                self.logger.warning(f"Failed to extract content from document {url}")
                 return
             
             # Analyze and save policy content
@@ -440,11 +439,11 @@ class YaleCrawler:
             self.save_policy_content(url, markdown_content, depth, policy_result)
         else:
             # Process webpage
-            logger.info(f"Processing as webpage: {url}")
+            self.logger.info(f"Processing as webpage: {url}")
             markdown_content, all_links = self.process_webpage(url)
             
             if not markdown_content:
-                logger.warning(f"Failed to extract content from webpage {url}")
+                self.logger.warning(f"Failed to extract content from webpage {url}")
                 return
             
             # Pass the links to the LLM for analysis
@@ -459,29 +458,29 @@ class YaleCrawler:
                 
                 # For the root URL: If no policy links are found, follow all links up to a limit
                 if is_root_url and not policy_result.get('definite_links') and not policy_result.get('probable_links'):
-                    logger.warning("No policy links found on root page. Following all links as a fallback.")
+                    self.logger.warning("No policy links found on root page. Following all links as a fallback.")
                     # Follow all links from the root page (limited to first 20 to avoid overwhelming)
                     for link_url, link_text in all_links[:20]:
                         links_to_follow.append((link_url, link_text))
-                        logger.info(f"Adding fallback link from root: {link_url}")
+                        self.logger.info(f"Adding fallback link from root: {link_url}")
                 else:
                     # Normal policy link following
                     # Add definite links
                     for link_url in policy_result.get('definite_links', []):
                         links_to_follow.append((link_url, "Definite policy link"))
-                        logger.info(f"Adding definite policy link: {link_url}")
+                        self.logger.info(f"Adding definite policy link: {link_url}")
                     
                     # Add probable links if configured to do so
                     if not config.FOLLOW_DEFINITE_LINKS_ONLY:
                         for link_url in policy_result.get('probable_links', []):
                             links_to_follow.append((link_url, "Probable policy link"))
-                            logger.info(f"Adding probable policy link: {link_url}")
+                            self.logger.info(f"Adding probable policy link: {link_url}")
                 
                 # Add the links to the queue
                 self.add_links_to_queue(links_to_follow, depth + 1)
                 
                 # Log summary of links
-                logger.info(f"Added {len(links_to_follow)} links to priority queue. Queue size: {len(self.priority_queue)}")
+                self.logger.info(f"Added {len(links_to_follow)} links to priority queue. Queue size: {len(self.priority_queue)}")
     
     def add_links_to_queue(self, links: List[Tuple[str, str]], depth: int):
         """
@@ -497,9 +496,9 @@ class YaleCrawler:
                 priority = self.calculate_priority(url, link_text)
                 heapq.heappush(self.priority_queue, (-priority, url, depth))  # Negate for max heap
                 added_count += 1
-                logger.info(f"Added to queue: {url} (Priority: {priority:.1f}, Depth: {depth})")
+                self.logger.info(f"Added to queue: {url} (Priority: {priority:.1f}, Depth: {depth})")
         
-        logger.info(f"Added {added_count} links to priority queue. Queue size: {len(self.priority_queue)}")
+        self.logger.info(f"Added {added_count} links to priority queue. Queue size: {len(self.priority_queue)}")
     
     def process_webpage(self, url: str) -> Tuple[str, List[Tuple[str, str]]]:
         """
@@ -513,7 +512,7 @@ class YaleCrawler:
         """
         try:
             # Navigate to the URL
-            logger.info(f"Navigating to webpage: {url}")
+            self.logger.info(f"Navigating to webpage: {url}")
             self.driver.get(url)
             
             # Wait for the main content to load
@@ -523,20 +522,20 @@ class YaleCrawler:
             
             # Get the page HTML
             html_content = self.driver.page_source
-            logger.info(f"Retrieved HTML content from {url} (length: {len(html_content)} characters)")
+            self.logger.info(f"Retrieved HTML content from {url} (length: {len(html_content)} characters)")
             
             # Convert HTML to markdown
             markdown_content = html_to_markdown(html_content)
-            logger.info(f"Converted HTML to markdown (length: {len(markdown_content)} characters)")
+            self.logger.info(f"Converted HTML to markdown (length: {len(markdown_content)} characters)")
             
             # Extract links
             links = self.extract_links(html_content, url)
-            logger.info(f"Extracted {len(links)} links from {url}")
+            self.logger.info(f"Extracted {len(links)} links from {url}")
             
             return markdown_content, links
             
         except Exception as e:
-            logger.error(f"Error processing webpage {url}: {str(e)}")
+            self.logger.error(f"Error processing webpage {url}: {str(e)}")
             return "", []
     
     def process_document(self, url: str) -> str:
@@ -557,20 +556,20 @@ class YaleCrawler:
             # For URLs matching Yale document repository pattern
             if 'files-profile.medicine.yale.edu/documents/' in url:
                 # Assume this is a PDF for Yale document repository URLs without extension
-                logger.info(f"Processing Yale document repository URL as PDF: {url}")
+                self.logger.info(f"Processing Yale document repository URL as PDF: {url}")
                 doc_output_dir = os.path.join(config.DOCUMENT_DIR, f"doc_{hash(url) % 10000}")
                 os.makedirs(doc_output_dir, exist_ok=True)
                 
-                logger.info(f"Processing with Mistral OCR: {url}")
+                self.logger.info(f"Processing with Mistral OCR: {url}")
                 markdown_path = pdf_to_markdown(url, doc_output_dir)
                 
                 if markdown_path and os.path.exists(markdown_path):
                     with open(markdown_path, 'r', encoding='utf-8') as f:
                         content = f.read()
-                        logger.info(f"Successfully extracted content using OCR: {url} (length: {len(content)} characters)")
+                        self.logger.info(f"Successfully extracted content using OCR: {url} (length: {len(content)} characters)")
                         return content
                 else:
-                    logger.error(f"Failed to convert document from {url}")
+                    self.logger.error(f"Failed to convert document from {url}")
                     return f"# Failed to Extract Content\n\nURL: {url}\n\nCould not extract content from this document."
             
             # Process based on file extension
@@ -579,32 +578,32 @@ class YaleCrawler:
                 doc_output_dir = os.path.join(config.DOCUMENT_DIR, f"doc_{hash(url) % 10000}")
                 os.makedirs(doc_output_dir, exist_ok=True)
                 
-                logger.info(f"Processing with Mistral OCR: {url}")
+                self.logger.info(f"Processing with Mistral OCR: {url}")
                 markdown_path = pdf_to_markdown(url, doc_output_dir)
                 
                 if markdown_path and os.path.exists(markdown_path):
                     with open(markdown_path, 'r', encoding='utf-8') as f:
                         content = f.read()
-                        logger.info(f"Successfully extracted content using OCR: {url} (length: {len(content)} characters)")
+                        self.logger.info(f"Successfully extracted content using OCR: {url} (length: {len(content)} characters)")
                         return content
                 else:
-                    logger.error(f"Failed to convert document from {url}")
+                    self.logger.error(f"Failed to convert document from {url}")
                     return ""
             else:
                 # For other document types, use the standard approach
                 file_path = download_document(url, config.DOCUMENT_DIR)
                 
                 if not file_path:
-                    logger.error(f"Failed to download document from {url}")
+                    self.logger.error(f"Failed to download document from {url}")
                     return ""
                 
                 # Convert document to markdown
                 markdown_content = convert_to_markdown(file_path, url)
-                logger.info(f"Converted document to markdown: {url} (length: {len(markdown_content)} characters)")
+                self.logger.info(f"Converted document to markdown: {url} (length: {len(markdown_content)} characters)")
                 return markdown_content
                 
         except Exception as e:
-            logger.error(f"Error processing document {url}: {str(e)}")
+            self.logger.error(f"Error processing document {url}: {str(e)}")
             return f"# Error Processing Document\n\nURL: {url}\n\nError: {str(e)}"
     
     def save_policy_content(self, url: str, content: str, depth: int, policy_result: dict = None) -> Optional[str]:
@@ -622,7 +621,7 @@ class YaleCrawler:
         """
         # If policy_result not provided, analyze content
         if policy_result is None:
-            logger.info(f"No policy result provided, analyzing content for {url}")
+            self.logger.info(f"No policy result provided, analyzing content for {url}")
             policy_result = analyze_content_for_policies(content, url)
         
         # Save all content as markdown regardless of policy detection
@@ -645,7 +644,7 @@ class YaleCrawler:
             f.write("---\n\n")
             f.write(content)
         
-        logger.info(f"Full content saved to {full_file_path}")
+        self.logger.info(f"Full content saved to {full_file_path}")
         
         # Extract policy details
         include_policy = policy_result.get('include', False)
@@ -654,7 +653,7 @@ class YaleCrawler:
         
         # If no policy content detected, record data and return None
         if not include_policy:
-            logger.info(f"No policy content found in {url}")
+            self.logger.info(f"No policy content found in {url}")
             self.record_policy_data(url, full_file_path, include_policy, [], [], 0)
             return None
         
@@ -692,7 +691,7 @@ class YaleCrawler:
             
             f.write(policy_result['content'])
         
-        logger.info(f"Policy content saved to {policy_file_path}")
+        self.logger.info(f"Policy content saved to {policy_file_path}")
         
         # Record policy data
         self.record_policy_data(url, policy_file_path, include_policy, definite_links, probable_links, 
@@ -737,15 +736,15 @@ class YaleCrawler:
             if url in df['url'].values:
                 # Update existing entry
                 df.loc[df['url'] == url] = pd.Series(new_row)
-                logger.info(f"Updated existing entry in policies data for {url}")
+                self.logger.info(f"Updated existing entry in policies data for {url}")
             else:
                 # Add new entry
                 df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
-                logger.info(f"Added new entry to policies data for {url}")
+                self.logger.info(f"Added new entry to policies data for {url}")
             
             # Save DataFrame
             df.to_csv(self.policies_df_path, index=False)
-            logger.info(f"Policy data recorded in {self.policies_df_path}")
+            self.logger.info(f"Policy data recorded in {self.policies_df_path}")
             
         except Exception as e:
-            logger.error(f"Error recording policy data: {str(e)}")
+            self.logger.error(f"Error recording policy data: {str(e)}")

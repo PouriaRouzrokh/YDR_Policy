@@ -1,0 +1,140 @@
+ CIT Downtime Report Resolution Procedure
+REVISED 1172020
+AVITABLE JOHN
+
+Downtime Report Resolution Procedure
+
+The purpose of this document is to set the expectation for what the Clinical Imaging Technology teams responsibilities are in the event of a planned Epic downtime resulting in temporary accessions being generated
+
+ Preliminary Tasks
+  1 Determine relevant staff that will be working during Downtime
+     a Go to amioncomhttpamioncom to find YSC and SRC oncall Resident and Radiologist
+         Attending Schedule can be found on yaleradqgendacomhttpyaleradqgendacom
+     b Eileana Valentin EileanaValentinbpthosporg is the contact for BH residency at this time
+     c GH uses Nighthawk Telerad service for overnight ED exams which are faxed in and are thus unaffected by an Epic downtime
+  2 Email the relevant staff to remind them of the downtime You may wish to include a phone number that you can be reached at if any issues are encountered
+
+ 200AM  Downtime Begins
+
+Orders for imaging exams will be written on paper These paper orders will have a sticker placed on them with the DowntimeTemporary Accession number When performing these exams technologists will track the exams that they perform on a log sheet The log sheet should include Patient Name MRN Exam Type Exam Date and Time Temporary Accession and Epic Accession
+
+While the technologists are performing exams and recording information on the logs Radiologists are dictating in PowerScribe on temporary accessions Radiologists may include additional information in their report such as Patient Name and MRN though they are not required to do so
+
+ 600AM  Downtime Ends
+
+After the downtime ends you will receive notification from Production Control that the downtime activities have been completed successfully Once the Production system comes back up the Technologists will begin placing scheduling and completing the orders that were placed on paper during the downtime
+
+Once all orders are placed and their Epic accession numbers noted the log will be sent to DITrainingynhhorg along with contact information for the individual who submitted the log
+
+ Associating Temporary Accessions with Epic Accessions
+
+Once you receive logs you can begin associating temporary accessions with Epic accessions No temporary accession will be associated without proper documentation You should not have to do additional research or make judgment calls to decide whether or where a temporary accession should be associated If there are any questions contact the person who sent the log
+
+To associate Temporary Accessions log in to the PowerScribe webportal and search for all temporary accessions created in the past 24 hours
+
+ Site            Order Status       Patient Class       Account         
+                                     
+ All            Temporary       All              All             
+ Locking         Report Status     Section         Ordering Physician         
+ All            All                            All            
+ Time Frame Custown  Transfer Status     Location             Reset  Search 4 
+
+A list of search results will appear which should include all of the temporary accessions that were created during the downtime as well as other accessions that do not need to be addressed You will only be associating temporary accessions that have been appropriately documented on the log Different sites may prefix their temporary accession numbers to denote the originating location Accessions that include a patients name should be disregarded
+
+From the search results screen click the Actions link on the right of the screen and select the Associate option After clicking Associate you will have the option to add or replace the order Select the Replace option Then search for the Epic accession number and complete the association Once completed the system will wait 3 minutes and send the report to Epic alternatively you can force the report to send immediately
+
+img0jpegimagesimg0jpegpng
+
+After sending the report to Epic confirm that it appears appropriately and was transmitted through the interface There may be issues with interfaces on both the Epic and PowerScribe sides especially during a downtime
+
+ 700AM  Status Report
+
+At 700AM you should begin receiving downtime logs Send a status report that includes information about who has sent logs at what time and what is still pending This email should be sent to
+
+ YDR Administrators
+ YDR Section Chiefs
+ YSC ED Overnight Staff
+ YNHH Radiology Management
+ BH Radiology Management
+ Matthew Zawalich and Heather Hogle
+
+ FollowUp Status Report
+
+After sending the initial status report and continuing to associate temporary accessions as they are received send another email updating key staff on the progress made This followup email generally goes to management only excluding the radiologistsYDR Section Chiefs
+
+In this followup email reference any issues encountered difficulties in obtaining necessary information and note successes such as a location providing timely logs
+
+ Final Status Report
+
+Once all temporary accessions have been associated with the appropriate Epic accession numbers send a final summary email to all parties including the radiologists YDR Section Chiefs confirming that all temporary accessions have been appropriately associated and verified in Epic
+
+ Deleting Temporary Accessions
+
+As a final task delete the temporary accessions that have been associated This is a lower priority task and can be completed after other tasks have been finished
+
+
+
+Contacts for Missing Information  Email Distribution Lists
+
+In the event that you are not receiving the necessary information contact the following
+
+ YSC                                  SRC                                     BH                                                                 
+      
+ 1 ED Reading Room 6886180             1 ED Techs  7895909                    1 Resident OnCall Lounge  2033844368                         
+ 2 Neuro Reading Room 2003181         2 CT Techs  7893959                     2 Resident OnCall Pager accessible from SmartWeb               
+ 3 ED Front Desk 6882355              3 ED Reading Room  7893013               3 Reading Room  2033842884                                      
+ 4 Manager on Call Contact ED Front Desk  4 Manager on Call Contact YSC ED Front Desk  4 Techs  2033843177br5 Tech OnCall Pager accessible from SmartWeb 
+                                                                               6 Manager on Call Leah Velardi 203 9033448                     
+
+Email Distribution Lists provided as Outlook Items to be added to the address book
+
+ YDR Admin
+   Rob Goodman Robgoodmanyaleedu
+   Serena
+   DelBasso serenadelbasssoyaleedu
+
+ Body Imaging
+   Gary Israel garyisraelyaleedu
+
+ Breast Imaging
+   John Lewin johnlewinyaleedu
+
+ Cardiac Imaging
+   Hamid Mojibian hamidmojibianyaleedu
+
+ Emergency Radiology
+   Jason Teitelbaum jasonteitelbaumyaleedu
+
+ Interventional Radiology
+   David Madoff davidmadoffynhhorg
+
+ Musculoskeletal
+   Andrew Haims andrewhaismyaleedu
+
+ Neuroradiology
+   Amit Mahajan Amitmahajanyaleedu
+
+ Nuclear Medicine
+   Lawrence Saperstein Lawrencespaersteinyaleedu
+
+ Pediatric Radiology
+   Cicero Silva cicerosilvayaleedu
+
+ Thoracic Imaging
+   Anna Bader annabaderyaleedu
+
+ Ultrasound
+   Jonathan Kirsch jonathankirschyaleedu
+
+ Managers Radiology YSCSRC
+   Hamid Mojibian Hamidmojibianyaleedu
+   BH Radiology Admin
+   Adel Mustafa Manager Physics adelmustafaynhhorg
+   Judy Pasqualoni Manager Marketing judypasqualoniynhhorg
+   Robert DeVito Sr Manager XRay robertdevitoynhhorg
+   Anne Marie Watrous Manager SRC XRay annemariewatrousyaleedu
+   Dave Facchini Manager QSXRay davidfacchiniynhhorg
+   Beth DeRosaLinsley Sr Manager US elizabethderosalinsleyynhhorg
+   Kim Hall Manager Business ServicesClerical kimhallynhhorg
+   Sue Mastriano Business Manager suemastrianoynhhorg
+   Landra Knoth Access Manager landraknothynhhorg

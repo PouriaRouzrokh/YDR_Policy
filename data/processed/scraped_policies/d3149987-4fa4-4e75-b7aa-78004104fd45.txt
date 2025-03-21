@@ -1,0 +1,35 @@
+Title and Metadata
+Yale Radiology and Biomedical Imaging  Home Work Stations
+SOP 16000
+Effective Date April 2020
+Version Number 3
+RAD Mission Clinical
+Prepared By Regina Hooley MD and Jeetu Bhawnani
+Updated March 2023
+Approval Rob Goodman MD March 2023
+
+
+A Purpose
+The purpose of this Standard Operating Procedure SOP is to describe the policy for YDR faculty home work station HWS use
+
+
+B Materials
+1 Barco monitors and computers for HWS are secured via staff accounts YDR or YNHH funds
+   a Prior to May 1 2020 faculty may have used staff accounts to purchase HWS to provide individual flexibility to read cases during sanctionedofficial evenings and weekends
+    Faculty staff accounts will not be reimbursed by YNHH or YDR for HWS
+    After May 2 2020 limited YNHH COVID19 emergency funds were used by YDR to provide workstations for clinical faculty except Interventional Radiology and Breast Imaging
+    YDRYNHH may purchase additional HWS as needed
+    Beginning in March 2023 HWS became available to Breast Imaging faculty with computersmonitors supplied by YNHH
+2 YDR IT Jeetu Bhawnanis team will procure provide setup and support HWS computerssoftware
+   a YNHH IT Matt Zawalichs team should not be used to provide technical support for HWS computers
+3 Accessory support is the primary responsibility of the individual radiologist
+   a A section may use up to 350 from staff accounts to purchase a workstation desk
+       Exception Breast Imaging requires dedicated highresolution monitors and up to 1000 may be used from staff accounts to purchase a workstation desk
+   b Staff accounts may not be used to upgrade internet connectivity or purchase blackout shades desk chairs headphones or any other accessory items
+4 WFH may require regular equipment performance testing at home
+5 All HWS monitors and computers must be returned to YDR upon faculty resignation
+
+
+C Revision History
+Version 2  March 2022 Minor updates
+Version 3  March 2023 Edited to include Breast Imaging budget due to the type of monitors needed for at home workstations

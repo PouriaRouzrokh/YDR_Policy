@@ -1,0 +1,118 @@
+Use of IV and Oral Contrast Media in Radiology
+SOP Not specified
+Reviewed 4  9910  078  081  093  094  096  7  108  103  118  11 br 9  126  139  1311  132  148  151  176  1910  216  22 br 12  221  234  2312  232  24
+RevisedReviewed 11  8  2024
+
+
+
+ PURPOSE
+
+To provide guidelines for the use of intravenous or oral iodinated and gadolinium based contrast media as well as the proper response of Radiology staff in the event of a contrast media event
+
+ RESPONSIBILITY
+
+1 IV and oral contrast media agents are considered medications under Joint Commission standards all applicable YNHH drug use policies apply
+2 The patients physician PA or APRN orders radiology exams including those requiring contrast via written requisition or computer order entry Inpatient and ED requests must include information such as pregnancy status and renal function as appropriate
+3 The radiologist is primarily responsible for reviewing the patients history including eGFR levels when applicable and ensuring the appropriateness of contrast use with the dose and agent typically preassigned per protocol
+4 For CT exams ordered with IV contrast only radiology physicians andor advanced practitioners or autoprotocoleligible exams may protocol the study In these exams the patients eGFR should be  30 If eGFR is  30 the following workflow applies
+   a Inpatients and ED patients must have eGFR results within 48 hours unless the exam qualifies for bypass
+   b Outpatients who answer Yes to a renal risk factor question on the CT OralIV Contrast Questionnaire require renal function assessment If no eGFR is available within 6 weeks in Epic a Point of Care POC eGFR test is provided and levels under 30 are referred to the radiologist
+5 All personnel involved in administering contrast media must know the procedures to anticipate prevent recognize and respond to contrast reactions see Addendum 115A Recognition and Response to Contrast Reaction
+
+
+
+ 6 eGFR Workflow and Responsibilities for CT
+
+a For CT studies ordered WITH contrast and with eGFR over 30 the exam can proceed with IV contrast
+
+b For CT studies with a LifeLimb Threatening priority eg full trauma or stroke code eGFR testing is not required prior to imaging
+
+c For CT studies WITH contrast and eGFR below 30 upon patient arrival
+   i The technologist contacts the appropriate reading room so a radiologist can review the case and decide whether to
+      1 Proceed with contrast despite eGFR  30 after discussion with the ordering provider and documenting the reasoning
+      2 Change the exam to CT WITHOUT contrast with documentation and specific actions such as placing a 52 Modifier and emailing rationale or
+      3 Cancelreschedule the exam with the cancellation reason noted in Epic by the Clinical Scheduling Assistant
+   ii The radiologists decision is documented in the Epic study notes
+   iii If changes or cancellations occur the CSA communicates with the ordering physicians office using an approved script if disagreement arises the radiologists decision prevails
+
+
+
+ PROCEDURE GUIDELINES FOR INTRAVENOUS IV CONTRAST
+
+1 IV contrast is administered through an established IV line by a nurse or technologist Refer to DR Policy Medication Administration by Technologists in Diagnostic Radiology
+
+2 Before IV contrast administration the patients historyincluding medications allergies and renal impairment screeningis reviewed via the medical record or outpatient questionnaire
+   a If no contraindications are present proceed per the radiologists protocol
+   b If contraindications exist the case is referred to the radiologist
+   c The IV line is maintained during the exam in case IV drug therapy becomes necessary
+   d A physician APP or RN must be on site during contrast administration
+   e A contrast reaction kit and emergency equipment eg a code cart at hospital sites must be immediately available
+
+3 Point of Care POC testing is performed by technologists or nursing staff to measure creatinine and calculate eGFR to assess renal function
+
+4 The POC meter is maintained by the MRI and CT scan departments under a strict QA schedule that includes staff training and annual competency reviews by the Department of Laboratory Medicine
+
+5 For POC Renal Function Testing in Radiology
+   a MRI Patients See the MRI safety manual for details
+   b CT Patients Outpatients answering Yes to contrastrelated questions on the CT OralIV Contrast Questionnaire receive POC testing if no eGFRCr value is available within 6 weeks with eGFR levels under 30 being referred to the radiologist
+
+
+
+ For Planned Administration of Contrast Agents
+
+Previous reaction to allergens eg shellfish peanuts medications
+
+Mild  Moderate  Severe
+    
+None  None  None
+
+Previous reaction to the same class of contrast agent planned to be given
+
+Mild  Moderate  Severe
+    
+None  Premedicate and use a different agent  Do not give contrast
+
+Previous reaction to a different class of contrast agent than the one planned
+
+Mild  Moderate  Severe
+    
+None  None  None
+
+Unless in the opinion of the responsible health care professional and supervising radiologist the benefits outweigh the risks eg in emergency situations In such cases the clinical provider should accompany the patient to the radiology suite to manage any repeat reaction
+
+Premedication with steroids and Benadryl is now recommended only for patients with a prior reaction to the same class of contrast agent iodinated for CT and gadoliniumbased for MRI Prophylaxis for reactions to other allergens is no longer necessary
+
+Evidence supporting these guidelines includes
+ An estimated overall reaction risk of 1 approximately 0206 Wang et al Dillman et al
+ Patients with a prior reaction face a 311 overall reaction rate and a 2 breakthrough reaction rate despite premedication during CT Mervak et al Lasser et al
+ An IV steroid regimen detailed below is considered noninferior to a longer oral regimen and is recommended in ED and inpatient settings to expedite imaging Mervak et al
+
+
+
+ Exclusions
+
+In certain clinical circumstances the urgency of a contrastenhanced CT or MRI may override the benefits of fully executing the premedication protocol In these cases contrast may be administered without premedication or with a modified protocol Such decisions should be made jointly by the supervising radiologist and the ordering clinician and the patient if feasible with appropriate documentation in the medical record
+
+ Allergic Like Reaction Definitions 1
+
+Mild              Moderate                      Severe
+
+Limited urticariapruritis 2  Diffuse urticariapruritis  Diffuse edema or facial edema with dyspnea
+Nasal congestion  Diffuse erythema with stable vital signs  Diffuse erythema with hypotension
+Cutaneous edema   Facial edema without dyspnea   Laryngeal edema with stridor andor hypoxia
+Sneezingconjunctivitisrhinorrhea  Throat tightness or hoarseness without dyspnea  Wheezingbronchospasm with significant hypoxia
+Limited itchyscratchy throat  Wheezingbronchospasm with mild or no hypoxia  Anaphylactic shock hypotension  tachycardia
+
+0
+0 1 Physiologic reactions such as nausea vomiting or a feeling of warmth are unlikely to benefit from premedication 2 If urticariapruritis required medical treatment it should be considered moderate in severity
+
+
+
+ References
+
+ Wang CL Cohan RH Ellis JH Caoili EM Wang G Francis IR Frequency outcome and appropriateness of treatment of nonionic contrast media reactions AJR 2008 191409415
+ Lasser EC Berry CC Mishkin MM Williamson B Zheutlin N Silverman JM Pretreatment with corticosteroids to prevent adverse reactions to nonionic contrast media AJR 1994 162523526
+ Mervak BM Davenport MS Ellis JH et al Breakthrough reaction rates in highrisk inpatients premedicated before contrastenhanced CT AJR 2015 2057784
+ Dillman JR Strouse PJ Ellis JH Cohan RH Jan SC Incidence and severity of acute allergiclike reactions to iv nonionic iodinated contrast material in children AJR 2007 18816431647
+ Mervak BM Cohan RH Ellis JH Khalatbari S Davenport MS Intravenous Corticosteroid Premedication Administered 5 Hours before CT Compared with a Traditional 13Hour Oral Regimen Radiology 2017 285425433
+ American College of Radiology Contrast Manual 2020 httpswwwacrorg mediaACRFilesClinicalResourcesContrastMediapdf
