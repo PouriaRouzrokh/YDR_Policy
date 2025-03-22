@@ -3,21 +3,13 @@ Main entry point for the Yale Medicine crawler application.
 """
 import logging
 import os
-
-from ydrpolicy.data_collection import config
+from types import SimpleNamespace
 from ydrpolicy.data_collection.crawl.crawler import YaleCrawler
 from dotenv import load_dotenv
 from ydrpolicy.data_collection.logger import DataCollectionLogger
 
-def main(logger: logging.Logger = None, config_override: dict = None):
+def main(logger: logging.Logger = None, config: SimpleNamespace = None):
     """Main function to run the crawler."""
-
-    def determine_config(key, default_value):
-        if config_override is not None:
-            if key in config_override:
-                return config_override[key]
-        return default_value
-    
     # Load environment variables
     load_dotenv()
 
@@ -30,11 +22,11 @@ def main(logger: logging.Logger = None, config_override: dict = None):
         )
     
     # Set up configuration using default values from config
-    url = determine_config("MAIN_URL", config.MAIN_URL) 
-    depth = determine_config("DEFAULT_MAX_DEPTH", config.DEFAULT_MAX_DEPTH)
-    follow_definite_only = determine_config("FOLLOW_DEFINITE_LINKS_ONLY", config.FOLLOW_DEFINITE_LINKS_ONLY)
-    resume = determine_config("RESUME_CRAWL", config.RESUME_CRAWL)  # Default: don't resume from previous state
-    reset = determine_config("RESET_CRAWL", config.RESET_CRAWL)   # Default: don't reset existing crawl state
+    url = config.MAIN_URL
+    depth = config.DEFAULT_MAX_DEPTH
+    follow_definite_only = config.FOLLOW_DEFINITE_LINKS_ONLY
+    resume = config.RESUME_CRAWL  # Default: don't resume from previous state
+    reset = config.RESET_CRAWL   # Default: don't reset existing crawl state
     
     # Validate environment variables
     if not os.environ.get("OPENAI_API_KEY"):
@@ -60,7 +52,7 @@ def main(logger: logging.Logger = None, config_override: dict = None):
     
     # Initialize and start the crawler
     try:
-        crawler = YaleCrawler(max_depth=depth, resume=resume, logger=logger)
+        crawler = YaleCrawler(config=config, logger=logger)
         crawler.start(initial_url=url)
         
         logger.info(f"Crawling completed. Results saved to {config.RAW_DATA_DIR}")
@@ -71,6 +63,8 @@ def main(logger: logging.Logger = None, config_override: dict = None):
         logger.error(f"Error during crawling: {str(e)}", exc_info=True)
 
 if __name__ == "__main__":
+    from ydrpolicy.data_collection.config import config
+
     print("Yale Medicine Policy Crawler")
     print("============================")
     print("This script will crawl Yale Medicine pages for policies and guidelines.")
@@ -90,4 +84,4 @@ if __name__ == "__main__":
     os.makedirs(config.MARKDOWN_DIR, exist_ok=True)
     os.makedirs(config.DOCUMENT_DIR, exist_ok=True)
     
-    main(logger)
+    main(logger, config)

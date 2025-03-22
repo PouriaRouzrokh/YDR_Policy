@@ -1,12 +1,15 @@
+import datetime
 import logging
 import os
 import re
 
 import pandas as pd
 from openai import OpenAI
-from ydrpolicy.data_collection.scrape.llm_prompts import SCRAPER_LLM_SYSTEM_PROMPT
 from pydantic import BaseModel, Field
 from tqdm import tqdm
+
+from ydrpolicy.data_collection.scrape.llm_prompts import \
+    SCRAPER_LLM_SYSTEM_PROMPT
 
 
 class PolicyExtraction(BaseModel):
@@ -19,7 +22,14 @@ def clean_string(string: str) -> str:
     """Remove unnecessary characters and extra spaces or newlines from a string"""
     return re.sub(r'[^a-zA-Z0-9\s]', '', string)
 
-def scrape_policies(df: pd.DataFrame, api_key: str = None, model: str = None, base_path: str = None, scraped_policies_dir: str = None, logger: logging.Logger = None) -> pd.DataFrame:
+def scrape_policies(
+        df: pd.DataFrame, 
+        api_key: str = None, 
+        model: str = None, 
+        base_path: str = None, 
+        scraped_policies_dir: str = None, 
+        logger: logging.Logger = None
+    ) -> pd.DataFrame:
     """Process Markdown files to identify and extract policy text.
     
     This function analyzes each Markdown file specified in the DataFrame's file_path
@@ -96,7 +106,7 @@ def scrape_policies(df: pd.DataFrame, api_key: str = None, model: str = None, ba
             if result['contains_policy']:
                 policy_content = clean_string(result['policy_content'])
                 policy_name = row['url'].split("/")[-1]
-                policy_content_path = os.path.join(scraped_policies_dir, policy_name + ".txt")
+                policy_content_path = os.path.join(scraped_policies_dir, f"{policy_name}_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt")
                 result['policy_content_path'] = policy_content_path
             else:
                 result['policy_content_path'] = None

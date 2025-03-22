@@ -2,44 +2,46 @@
 Configuration settings for the Yale Medicine crawler.
 """
 import os
-
+from types import SimpleNamespace
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
 
-# --------------------------- Data directory settings --------------------------
+# Base directory
+_BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data2")
-RAW_DATA_DIR = os.path.join(DATA_DIR, "raw")
-DOCUMENT_DIR = os.path.join(RAW_DATA_DIR, "documents")
-MARKDOWN_DIR = os.path.join(RAW_DATA_DIR, "markdown_files")
-PROCESSED_DATA_DIR = os.path.join(DATA_DIR, "processed")
-SCRAPED_POLICIES_DIR = os.path.join(PROCESSED_DATA_DIR, "scraped_policies")
+# Create config dictionary first
+_config_dict = {
+    # Data directory settings
+    "DATA_DIR": os.path.join(_BASE_DIR, "data2"),
+    "RAW_DATA_DIR": os.path.join(_BASE_DIR, "data2", "raw"),
+    "DOCUMENT_DIR": os.path.join(_BASE_DIR, "data2", "raw", "documents"),
+    "MARKDOWN_DIR": os.path.join(_BASE_DIR, "data2", "raw", "markdown_files"),
+    "PROCESSED_DATA_DIR": os.path.join(_BASE_DIR, "data2", "processed"),
+    "SCRAPED_POLICIES_DIR": os.path.join(_BASE_DIR, "data2", "processed", "scraped_policies"),
+    
+    # LLM settings
+    "MISTRAL_API_KEY": os.environ.get("MISTRAL_API_KEY"),
+    "OPENAI_API_KEY": os.environ.get("OPENAI_API_KEY"),
+    "CRAWLER_LLM_MODEL": "o3-mini",  # Should be a reasoning model from OpenAI
+    "SCRAPER_LLM_MODEL": "o3-mini",  # Should be a reasoning model from OpenAI
+    "OCR_MODEL": "mistral-ocr-latest",
+    
+    # Crawler-specific settings
+    "MAIN_URL": "https://medicine.yale.edu/diagnosticradiology/facintranet/policies",
+    "ALLOWED_DOMAINS": ["yale.edu", "medicine.yale.edu"],
+    "DOCUMENT_EXTENSIONS": ['.pdf', '.doc', '.docx'],
+    "ALLOWED_EXTENSIONS": ['.pdf', '.doc', '.docx', '.html', '.htm', '.php', '.aspx'],
+    
+    "FOLLOW_DEFINITE_LINKS_ONLY": False,  # If False, follow both "definite" and "probable" links
+    "DEFAULT_MAX_DEPTH": 6,
+    "REQUEST_TIMEOUT": 30,
+    "WAIT_TIME": 60,
+    
+    "RESUME_CRAWL": False,
+    "RESET_CRAWL": False,
+}
 
-# ------------------------------ LLM settings ------------------------------
-
-MISTRAL_API_KEY = os.environ.get("MISTRAL_API_KEY")
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
-CRAWLER_LLM_MODEL = "o3-mini"  # Should be a reasoning model from OpenAI
-SCRAPER_LLM_MODEL = "o3-mini" # Should be a reasoning model from OpenAI
-OCR_MODEL = "mistral-ocr-latest"
-
-# ------------------------------ Crawler-specific settings ------------------------------   
-
-## URL settings
-MAIN_URL = "https://medicine.yale.edu/diagnosticradiology/facintranet/policies"
-ALLOWED_DOMAINS = ["yale.edu", "medicine.yale.edu"]
-DOCUMENT_EXTENSIONS = ['.pdf', '.doc', '.docx']
-ALLOWED_EXTENSIONS = DOCUMENT_EXTENSIONS + ['.html', '.htm', '.php', '.aspx']   
-
-## Crawling behavior
-FOLLOW_DEFINITE_LINKS_ONLY = False  # If True, only follow links the LLM considers "definite" policy content
-                                    # If False, follow both "definite" and "probable" links
-DEFAULT_MAX_DEPTH = 2
-REQUEST_TIMEOUT = 30        
-WAIT_TIME = 60
-
-## Crawler state
-RESUME_CRAWL = False
-RESET_CRAWL = False
+# Convert dictionary to an object with attributes
+config = SimpleNamespace(**_config_dict)

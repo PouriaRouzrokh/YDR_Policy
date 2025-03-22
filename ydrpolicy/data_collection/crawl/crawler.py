@@ -9,26 +9,32 @@ import re
 import signal
 import time
 import urllib.parse
-from typing import Dict, List, Optional, Set, Tuple
-
-from ydrpolicy.data_collection import config
+from typing import List, Optional, Tuple
+from types import SimpleNamespace
 import pandas as pd
-from ydrpolicy.data_collection.crawl.crawler_state import CrawlerState
-from ydrpolicy.data_collection.crawl.processors.document_processor import (convert_to_markdown,
-                                           download_document, html_to_markdown)
-from ydrpolicy.data_collection.crawl.processors.llm_processor import analyze_content_for_policies
-from ydrpolicy.data_collection.crawl.processors.pdf_processor import pdf_to_markdown
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from ydrpolicy.data_collection.crawl.crawler_state import CrawlerState
+from ydrpolicy.data_collection.crawl.processors.document_processor import (
+    convert_to_markdown, download_document, html_to_markdown)
+from ydrpolicy.data_collection.crawl.processors.llm_processor import \
+    analyze_content_for_policies
+from ydrpolicy.data_collection.crawl.processors.pdf_processor import \
+    pdf_to_markdown
+
 
 class YaleCrawler:
     """Class for crawling Yale Medicine webpages and documents using priority-based algorithm."""
     
-    def __init__(self, max_depth: int = config.DEFAULT_MAX_DEPTH, resume: bool = True, logger: logging.Logger = None):
+    def __init__(
+            self, 
+            config: SimpleNamespace,
+            logger: logging.Logger = None
+        ):
         """
         Initialize the crawler.
         
@@ -37,13 +43,14 @@ class YaleCrawler:
             resume: Whether to try to resume from a previous crawl
             logger: Logger for logging messages
         """
-        self.max_depth = max_depth
+        self.config = config
+        self.max_depth = config.DEFAULT_MAX_DEPTH
         self.visited_urls = set()
         self.priority_queue = []  # Priority queue of (priority, url, depth)
         self.driver = None
         self.current_url = None
-        self.current_depth = 0
-        self.resume = resume
+        self.current_depth = 0  
+        self.resume = config.RESUME_CRAWL
         self.logger = logger        
         self.state_manager = CrawlerState(os.path.join(config.RAW_DATA_DIR, "state"), logger)
         
@@ -137,7 +144,7 @@ class YaleCrawler:
         self.logger.info(f"Resumed crawler state with {len(self.visited_urls)} visited URLs and {len(self.priority_queue)} URLs in queue")
         return True
     
-    def start(self, initial_url: str = config.MAIN_URL):
+    def start(self, initial_url: str = None):
         """
         Start the crawling process.
         
@@ -145,6 +152,10 @@ class YaleCrawler:
             initial_url: URL to start crawling from
         """
         try:
+            # If no initial URL is provided, use the main URL from the config
+            if initial_url is None:
+                initial_url = self.config.MAIN_URL
+
             # Navigate to the initial URL
             self.logger.info(f"Opening {initial_url}...")
             self.driver.get(initial_url)
@@ -262,7 +273,7 @@ class YaleCrawler:
         
         # Check domain restrictions
         parsed_url = urllib.parse.urlparse(url)
-        allowed = any(domain in parsed_url.netloc for domain in config.ALLOWED_DOMAINS)
+        allowed = any(domain in parsed_url.netloc for domain in self.config.ALLOWED_DOMAINS)
         if not allowed:
             self.logger.debug(f"Skipping URL from non-allowed domain: {url}")
         return allowed
@@ -282,7 +293,7 @@ class YaleCrawler:
         
         # Check for known document extensions
         extension = os.path.splitext(path)[1]
-        if extension in config.DOCUMENT_EXTENSIONS:
+        if extension in self.config.DOCUMENT_EXTENSIONS:
             self.logger.info(f"Detected document URL by extension: {url}")
             return True
         
@@ -471,7 +482,7 @@ class YaleCrawler:
                         self.logger.info(f"Adding definite policy link: {link_url}")
                     
                     # Add probable links if configured to do so
-                    if not config.FOLLOW_DEFINITE_LINKS_ONLY:
+                    if not self.config.FOLLOW_DEFINITE_LINKS_ONLY:
                         for link_url in policy_result.get('probable_links', []):
                             links_to_follow.append((link_url, "Probable policy link"))
                             self.logger.info(f"Adding probable policy link: {link_url}")
@@ -516,7 +527,7 @@ class YaleCrawler:
             self.driver.get(url)
             
             # Wait for the main content to load
-            WebDriverWait(self.driver, config.REQUEST_TIMEOUT).until(
+            WebDriverWait(self.driver, self.config.REQUEST_TIMEOUT).until(
                 EC.presence_of_element_located((By.TAG_NAME, "body"))
             )
             
@@ -557,7 +568,7 @@ class YaleCrawler:
             if 'files-profile.medicine.yale.edu/documents/' in url:
                 # Assume this is a PDF for Yale document repository URLs without extension
                 self.logger.info(f"Processing Yale document repository URL as PDF: {url}")
-                doc_output_dir = os.path.join(config.DOCUMENT_DIR, f"doc_{hash(url) % 10000}")
+                doc_output_dir = os.path.join(self.config.DOCUMENT_DIR, f"doc_{hash(url) % 10000}")
                 os.makedirs(doc_output_dir, exist_ok=True)
                 
                 self.logger.info(f"Processing with Mistral OCR: {url}")
@@ -575,7 +586,7 @@ class YaleCrawler:
             # Process based on file extension
             elif file_ext == '.pdf' or file_ext == '':  # Handle both PDF and extensionless URLs
                 # Try Mistral OCR for PDFs and extensionless URLs that might be PDFs
-                doc_output_dir = os.path.join(config.DOCUMENT_DIR, f"doc_{hash(url) % 10000}")
+                doc_output_dir = os.path.join(self.config.DOCUMENT_DIR, f"doc_{hash(url) % 10000}")
                 os.makedirs(doc_output_dir, exist_ok=True)
                 
                 self.logger.info(f"Processing with Mistral OCR: {url}")
@@ -591,7 +602,7 @@ class YaleCrawler:
                     return ""
             else:
                 # For other document types, use the standard approach
-                file_path = download_document(url, config.DOCUMENT_DIR)
+                file_path = download_document(url, self.config.DOCUMENT_DIR)
                 
                 if not file_path:
                     self.logger.error(f"Failed to download document from {url}")
@@ -636,7 +647,7 @@ class YaleCrawler:
             full_filename += '.md'
         
         # Save the full content
-        full_file_path = os.path.join(config.MARKDOWN_DIR, full_filename)
+        full_file_path = os.path.join(self.config.MARKDOWN_DIR, full_filename)
         with open(full_file_path, 'w', encoding='utf-8') as f:
             f.write(f"# Content from {parsed_url.netloc}{parsed_url.path}\n\n")
             f.write(f"Source URL: {url}\n")
@@ -665,7 +676,7 @@ class YaleCrawler:
             policy_filename += '.md'
         
         # Save the policy content
-        policy_file_path = os.path.join(config.MARKDOWN_DIR, policy_filename)
+        policy_file_path = os.path.join(self.config.MARKDOWN_DIR, policy_filename)
         with open(policy_file_path, 'w', encoding='utf-8') as f:
             f.write(f"# Policy Content from {parsed_url.netloc}{parsed_url.path}\n\n")
             f.write(f"Source URL: {url}\n")

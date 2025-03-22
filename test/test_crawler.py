@@ -4,28 +4,18 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from ydrpolicy.data_collection.crawl.crawl import main as crawl_main
+from ydrpolicy.data_collection.config import config
 
 def test_crawler():
-    DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "test_data")
-    RAW_DATA_DIR = os.path.join(DATA_DIR, "raw")
-    DOCUMENT_DIR = os.path.join(RAW_DATA_DIR, "documents")
-    MARKDOWN_DIR = os.path.join(RAW_DATA_DIR, "markdown_files")
-    PROCESSED_DATA_DIR = os.path.join(DATA_DIR, "processed")
-    SCRAPED_POLICIES_DIR = os.path.join(PROCESSED_DATA_DIR, "scraped_policies")
+    config.DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "test_data")
+    config.RAW_DATA_DIR = os.path.join(config.DATA_DIR, "raw")
+    config.DOCUMENT_DIR = os.path.join(config.RAW_DATA_DIR, "documents")
+    config.MARKDOWN_DIR = os.path.join(config.RAW_DATA_DIR, "markdown_files")
+    config.PROCESSED_DATA_DIR = os.path.join(config.DATA_DIR, "processed")
+    config.SCRAPED_POLICIES_DIR = os.path.join(config.PROCESSED_DATA_DIR, "scraped_policies")
+    config.MAX_DEPTH = 1
 
-    config_dict = {
-        "DATA_DIR": DATA_DIR,
-        "RAW_DATA_DIR": RAW_DATA_DIR,
-        "DOCUMENT_DIR": DOCUMENT_DIR,
-        "MARKDOWN_DIR": MARKDOWN_DIR,
-        "PROCESSED_DATA_DIR": PROCESSED_DATA_DIR,
-        "SCRAPED_POLICIES_DIR": SCRAPED_POLICIES_DIR,
-        "DEFAULT_MAX_DEPTH": 1,
-        "FOLLOW_DEFINITE_LINKS_ONLY": True,
-        "RESUME_CRAWL": False,
-        "RESET_CRAWL": False,
-    }
-    crawl_main(config_override=config_dict)
+    crawl_main(config=config)
 
-if __name__ == "__main__":
+if __name__ == "__main__":  
     test_crawler()

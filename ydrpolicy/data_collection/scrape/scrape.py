@@ -1,21 +1,14 @@
 import logging
 import os
+from types import SimpleNamespace
 
-from ydrpolicy.data_collection import config
 import pandas as pd
 from dotenv import load_dotenv
 from ydrpolicy.data_collection.logger import DataCollectionLogger
 from ydrpolicy.data_collection.scrape.scraper import scrape_policies
 
-def main(logger: logging.Logger = None, config_override: dict = None):
+def main(logger: logging.Logger = None, config: SimpleNamespace = None):
     """Main function to run the policy extraction process."""       
-
-    def determine_config(key, default_value):
-        if config_override is not None:
-            if key in config_override:
-                return config_override[key]
-        return default_value
-    
     # Load environment variables
     load_dotenv()
 
@@ -28,12 +21,12 @@ def main(logger: logging.Logger = None, config_override: dict = None):
         )
     
     # Set up configuration using default values from config
-    OPENAI_API_KEY = determine_config("OPENAI_API_KEY", config.OPENAI_API_KEY)
-    RAW_DATA_DIR = determine_config("RAW_DATA_DIR", config.RAW_DATA_DIR)
-    SCRAPED_POLICIES_DIR = determine_config("SCRAPED_POLICIES_DIR", config.SCRAPED_POLICIES_DIR)
-    PROCESSED_DATA_DIR = determine_config("PROCESSED_DATA_DIR", config.PROCESSED_DATA_DIR)
+    OPENAI_API_KEY = config.OPENAI_API_KEY
+    RAW_DATA_DIR = config.RAW_DATA_DIR
+    SCRAPED_POLICIES_DIR = config.SCRAPED_POLICIES_DIR
+    PROCESSED_DATA_DIR = config.PROCESSED_DATA_DIR
     crawled_policies_data_path = os.path.join(RAW_DATA_DIR, "crawled_policies_data.csv")
-    model = determine_config("SCRAPER_LLM_MODEL", config.SCRAPER_LLM_MODEL)
+    model = config.SCRAPER_LLM_MODEL
     
     # Validate environment variables
     if not os.environ.get("OPENAI_API_KEY"):
@@ -70,6 +63,8 @@ def main(logger: logging.Logger = None, config_override: dict = None):
     logger.info("Policy extraction completed successfully")
 
 if __name__ == "__main__":
+    from ydrpolicy.data_collection.config import config
+
     print("Yale Medicine Policy Scraper")
     print("============================")
     print("This script will extract policies from crawled Yale Medicine pages.")
@@ -83,4 +78,4 @@ if __name__ == "__main__":
     )
     
     logger.info("\n" + "="*80 + "\n" + "STARTING POLICY EXTRACTION PROCESS" + "\n" + "="*80)
-    main(logger)
+    main(logger, config)
