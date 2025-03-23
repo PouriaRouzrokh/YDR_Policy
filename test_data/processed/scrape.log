@@ -1,0 +1,259 @@
+2025-03-22 22:21:55,188 - scrape - INFO - Logging initialized. Log file: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/processed/scrape.log
+2025-03-22 22:21:55,189 - scrape - INFO - Starting policy extraction with the following settings:
+2025-03-22 22:21:55,189 - scrape - INFO -   - Input directory: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw
+2025-03-22 22:21:55,190 - scrape - INFO -   - Crawled policies dataframe path: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/crawled_policies_data.csv
+2025-03-22 22:21:55,190 - scrape - INFO -   - Output directory: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/processed/scraped_policies
+2025-03-22 22:21:55,190 - scrape - INFO -   - Scraping LLM model: o3-mini
+2025-03-22 22:21:55,190 - scrape - INFO - Reading input data from: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/crawled_policies_data.csv
+2025-03-22 22:21:55,234 - scrape - INFO - 
+--------------------------------------------------------------------------------
+2025-03-22 22:21:55,235 - scrape - INFO - Processing file 1/8: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_0_facintranet_policies.md
+2025-03-22 22:21:55,236 - scrape - INFO - --------------------------------------------------------------------------------
+2025-03-22 22:22:03,979 - scrape - INFO - 
+RESULTS:
+2025-03-22 22:22:03,980 - scrape - INFO - Contains policy: False
+2025-03-22 22:22:03,981 - scrape - INFO - Reasoning: The document does not include any actual policy text. It primarily consists of navigation elements and links to other policy pages, rather than containing standalone policy content.
+2025-03-22 22:22:03,981 - scrape - INFO - No policy content extracted.
+2025-03-22 22:22:03,982 - scrape - INFO - 
+--------------------------------------------------------------------------------
+2025-03-22 22:22:03,983 - scrape - INFO - Processing file 2/8: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_1_policies_guidelines.md
+2025-03-22 22:22:03,983 - scrape - INFO - --------------------------------------------------------------------------------
+2025-03-22 22:22:18,193 - scrape - INFO - 
+RESULTS:
+2025-03-22 22:22:18,195 - scrape - INFO - Contains policy: False
+2025-03-22 22:22:18,196 - scrape - INFO - Reasoning: The provided markdown content does not include actual policy text. Instead, it lists various links labeled as both definite and probable policy links, along with a table referencing 'Contrast Issues & Policies'. There is no substantive policy language beyond these navigational links, so the document does not contain any policy text to extract.
+2025-03-22 22:22:18,197 - scrape - INFO - No policy content extracted.
+2025-03-22 22:22:18,198 - scrape - INFO - 
+--------------------------------------------------------------------------------
+2025-03-22 22:22:18,199 - scrape - INFO - Processing file 3/8: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_1_policies_coi.md
+2025-03-22 22:22:18,200 - scrape - INFO - --------------------------------------------------------------------------------
+2025-03-22 22:22:44,275 - scrape - INFO - 
+RESULTS:
+2025-03-22 22:22:44,276 - scrape - INFO - Contains policy: True
+2025-03-22 22:22:44,277 - scrape - INFO - Reasoning: The document contains substantial policy text outlining the Conflict of Interest policy for Yale Diagnostic Radiology. While it includes meta-information and non-policy links (such as the source URL, crawl depth, and an LLM-generated list of links), the core section starting with 'Conflict of Interest' and detailing the principles for external clinical, consulting, and educational activities constitutes actual policy text. Extraneous navigational information has been removed, and integral policy links have been retained.
+2025-03-22 22:22:44,278 - scrape - INFO - 
+EXTRACTED POLICY SAVED TO: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/processed/scraped_policies/coi_20250322_222244.txt
+2025-03-22 22:22:44,279 - scrape - INFO - ----------------------------------------
+2025-03-22 22:22:44,280 - scrape - INFO - Conflict of Interest
+
+Yale University Policy on Conflict of Interesthttpsyouryaleeduresearchsupportconflictinterestofficepoliciesproceduresguidance
+
+YDR Conflict of Interest Policy
+
+Principals for External Clinical Consulting  Educational Activities
+
+For engagement in sponsored research in consulting education or in other interactions with external organizations
+
+Yale Diagnostic Radiology YDR has articulated the following principles to help faculty members identify and address potential actual and apparent conflicts of interest and commitment associated with external clinical and educational activities The fundamental premise is that each member of the Yale community has an obligation to act in the best interest of the University and in furtherance of the Universitys mission and must not let outside activities or outside financial interests interfere with those obligations Yale Universitys complete policy on conflict of the interest and conflict of commitment can be viewed at httpsprovostyaleedu
+
+The following principles may help YDR faculty members identify and avoid potential conflicts of interest and commitment associated with external clinical and educational activities
+
+1 External activities should not compromise an individuals ability to perform ALL the activities henceforth known as YDR duties expected of him or her as a YDR faculty member including
+   a expected clinical and academic responsibilities
+   b requirements as stipulated for the clinical supplement ie requirements necessary for adequate functioning of YDR as a whole
+
+2 Time commitments for external activities should be realistically assessed such that they should not compromise YDR duties
+   a This is especially true when one takes on multiple external activities
+   b External commitments must not preclude one from being available for emergency clinical coverage
+
+3 YDR facilities equipment and personnel should be used only for YDR activities and purposes such as teleradiology except when other uses are specifically authorized by the YDR Chair University resources should not be used for external consulting activities including outside legal work that are not performed under contract with Yale University Such resources include conference rooms secretarial support and office supplies
+
+4 External clinical activities at competing institutions may represent a conflict of interest unless there is a reciprocal benefit to YDR
+
+5 Lectures at outside institutions must also be presented to YDR trainees within a 2 year period if material is deemed appropriate for the trainees
+
+6 Faculty members must update their conflict of interest and conflict of commitment disclosures with each new external activity
+
+These principles are intended to increase the awareness of YDR faculty members to potential conflicts of interest and commitment associated with external clinical and educational activities
+2025-03-22 22:22:44,286 - scrape - INFO - ----------------------------------------
+2025-03-22 22:22:44,287 - scrape - INFO - 
+--------------------------------------------------------------------------------
+2025-03-22 22:22:44,288 - scrape - INFO - Processing file 4/8: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_1_policies_grandroundsexpenses.md
+2025-03-22 22:22:44,289 - scrape - INFO - --------------------------------------------------------------------------------
+2025-03-22 22:23:07,859 - scrape - INFO - 
+RESULTS:
+2025-03-22 22:23:07,860 - scrape - INFO - Contains policy: True
+2025-03-22 22:23:07,861 - scrape - INFO - Reasoning: The document includes detailed policy text regarding Grand Rounds Allowable Expenses, including guidelines for hotels, transportation, honorarium, and meeting arrangements. Although the document initially lists several navigation and link elements, the main body of policy text (separated by the '---' marker) provides specific instructions and financial limits, indicating that this is an actual policy document rather than just a list of links.
+2025-03-22 22:23:07,863 - scrape - INFO - 
+EXTRACTED POLICY SAVED TO: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/processed/scraped_policies/grandroundsexpenses_20250322_222307.txt
+2025-03-22 22:23:07,864 - scrape - INFO - ----------------------------------------
+2025-03-22 22:23:07,864 - scrape - INFO -  Grand Rounds Allowable Expenses
+
+ Hotel
+
+Up to twonight stay will be provided by Yale Radiology at one of the following hotels
+
+ Omni New Havenhttpswwwomnihotelscomhotelsnewhavenyale 203 7726664 mention Yale Radiology Residency Program for discount
+ The Blake Hotelhttpswwwtheblakenewhavencom 203 3905352 mention Yale Radiology Residency Program for discount
+ The Study at Yalehttpswwwthestudyatyalecom 203 5033900 mention Yale Radiology Residency Program for discount
+
+Included with room charges Parking if applicable local phone and meals
+
+If the speaker wishes to stay additional days heshe is responsible for the additional hotel charges
+
+
+
+ Transportation
+
+ Roundtrip Coach Airfare
+
+Reimbursed by YDR from the home city to the following
+
+ Tweed New Haven Airport New Haven CT
+ Bradley International Airport Hartford CT
+ JFK International Airport NYC
+ LaGuardia Airport NYC
+ White Plains NY
+ TF Green Airport Providence RI
+
+Airplane tickets should be booked 6 weeks in advance if possible If a multidestination ticket is necessary due to other commitments YDR will reimburse the cost of a round trip coach ticket from the home city to Bradley International Airport BDL booked 6 weeks in advance
+
+ Round Trip Train Fare
+
+Metro North or Amtrak Regional or Acela  Business Class Only for Acela to Union Station
+
+ Taxi ServiceUber
+
+Reimbursable from Tweed New Haven Airport or train station
+
+Metro Taxi 203 7777777
+
+ Limo Transportation or Rental Car
+
+Reimbursable for all other Connecticut New York RI airports
+
+Hys Limo 203 9346331 mention Yale Radiology Residency Program for discount
+
+ Personal Car
+
+Mileage reimbursed at current IRS rate
+
+
+
+ Honorarium
+
+ Grand Rounds only 500
+ Grand Rounds  Resident Conference 750
+ Grand Rounds Resident Conference  Board Review 1000
+
+Yale Faculty do not receive the honorarium but may be invited to dinner
+
+
+
+ Grand Rounds Dinner  Meeting Itinerary
+
+Hosts administrative assistant arranges dinner
+
+Maximum total of 62500 or 12500 per person maximum of 5 people Alcohol is included
+
+Refer to Yale University policy FR 3401
+
+In the case of a Yale Diagnostic Radiology Faculty Grand Rounds speaker dinner is included with host and guests up to 300 maximum
+
+ Monies from the section or personal staff accounts can be used to supplement this amount
+
+ Lunch
+
+Host may use PCard to take Lecture to YNHH Caf Expense will be reimbursed to host by the department
+
+ Meeting Itinerary
+
+Hosts administrative assistant arranges meeting itinerary for speaker with Yale faculty members
+2025-03-22 22:23:07,872 - scrape - INFO - ----------------------------------------
+2025-03-22 22:23:07,874 - scrape - INFO - 
+--------------------------------------------------------------------------------
+2025-03-22 22:23:07,875 - scrape - INFO - Processing file 5/8: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_1_policies_timeaway.md
+2025-03-22 22:23:07,876 - scrape - INFO - --------------------------------------------------------------------------------
+2025-03-22 22:23:41,038 - scrape - INFO - 
+RESULTS:
+2025-03-22 22:23:41,039 - scrape - INFO - Contains policy: True
+2025-03-22 22:23:41,040 - scrape - INFO - Reasoning: The document begins with a list of links and meta information, which serves as navigation and reference. However, following the separator ("---"), the content provides detailed policy text regarding the Leave of Absence, specifically addressing Sabbatical and Triennial Leaves of Absence for School of Medicine faculty, including eligibility criteria and a strict deadline. This substantive text confirms that the document does indeed contain actual policy content.
+2025-03-22 22:23:41,041 - scrape - INFO - 
+EXTRACTED POLICY SAVED TO: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/processed/scraped_policies/timeaway_20250322_222341.txt
+2025-03-22 22:23:41,042 - scrape - INFO - ----------------------------------------
+2025-03-22 22:23:41,043 - scrape - INFO -  Leave of Absence
+
+ Sabbatical  Triennial Leaves of Absence
+
+The leave of absence policies for sabbatical and triennial leaves described here apply to faculty in the Traditional Track Investigator Track ClinicianEducator Track and ClinicianScholar Track Note that the Leave of Absence policy for the School of Medicine differs from the policy set forth in the Yale University Faculty Handbook
+
+
+
+ School of Medicine Sabbatical and Triennial Leave Policy
+
+Faculty members become eligible for an initial Sabbatical or Triennial Leave after having taught at the rank of Associate Professor or Professor for two years The Initial Leave of Absence may be a triennial or a sabbatical
+
+Deadline The deadline for submitting a request for Sabbatical or Triennial Leave of Absence beginning on or after July 1 for any academic year is January 16 of the previous academic year  eg requests for leaves effective during the 20152016 academic year must be received by January 16 2015  This is an absolute deadline There can be NO EXCEPTIONS made to this policy
+
+  
+  
+ Leave of Absence Process  Requirementshttpsmedicineyaleeduoapd 
+ Download Leave of Absence form herehttpsmedicineyaleeduoapd 
+ YDR Paternity Leave SOPhttpsmedicineyaleedudiagnosticradiologyfacintranetSOPsSOPParentalLeaveOct201833243428443076v4pdf 
+2025-03-22 22:23:41,046 - scrape - INFO - ----------------------------------------
+2025-03-22 22:23:41,047 - scrape - INFO - 
+--------------------------------------------------------------------------------
+2025-03-22 22:23:41,048 - scrape - INFO - Processing file 6/8: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/full_depth_1_myysm_policies.md
+2025-03-22 22:23:41,049 - scrape - INFO - --------------------------------------------------------------------------------
+2025-03-22 22:23:53,330 - scrape - INFO - 
+RESULTS:
+2025-03-22 22:23:53,332 - scrape - INFO - Contains policy: False
+2025-03-22 22:23:53,333 - scrape - INFO - Reasoning: The provided content is primarily a navigation and link page from the Yale School of Medicine MyYSM policies section. It lists various links to policy-related resources (such as PolicyTech, documents by category, and different policy areas) along with navigation menus and site information. There is no substantive policy text or detailed policy content included—only descriptions and links directing users to where the actual policies reside.
+2025-03-22 22:23:53,335 - scrape - INFO - No policy content extracted.
+2025-03-22 22:23:53,337 - scrape - INFO - 
+--------------------------------------------------------------------------------
+2025-03-22 22:23:53,337 - scrape - INFO - Processing file 7/8: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_1_diagnosticradiology_quality-safety.md
+2025-03-22 22:23:53,338 - scrape - INFO - --------------------------------------------------------------------------------
+2025-03-22 22:24:00,762 - scrape - INFO - 
+RESULTS:
+2025-03-22 22:24:00,763 - scrape - INFO - Contains policy: False
+2025-03-22 22:24:00,764 - scrape - INFO - Reasoning: The provided markdown content does not include actual policy text. It is a listing of links to various policies and guidelines without any substantive policy details. Therefore, it only contains links and headings pointing to policies rather than the policies themselves.
+2025-03-22 22:24:00,765 - scrape - INFO - No policy content extracted.
+2025-03-22 22:24:00,766 - scrape - INFO - 
+--------------------------------------------------------------------------------
+2025-03-22 22:24:00,767 - scrape - INFO - Processing file 8/8: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_1_documents_cba873d8-f1ac-4003-a2fb-9b9745988403.md
+2025-03-22 22:24:00,768 - scrape - INFO - --------------------------------------------------------------------------------
+2025-03-22 22:24:25,275 - scrape - INFO - 
+RESULTS:
+2025-03-22 22:24:25,277 - scrape - INFO - Contains policy: True
+2025-03-22 22:24:25,278 - scrape - INFO - Reasoning: The markdown content includes actual policy text detailing the administrative standard operating procedures for managing critical outpatient imaging findings and providing ED contact numbers. Extraneous navigation elements and meta-data (such as source URL, crawl depth, and link lists) have been removed, leaving only the integral policy content.
+2025-03-22 22:24:25,279 - scrape - INFO - 
+EXTRACTED POLICY SAVED TO: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/processed/scraped_policies/cba873d8-f1ac-4003-a2fb-9b9745988403_20250322_222425.txt
+2025-03-22 22:24:25,280 - scrape - INFO - ----------------------------------------
+2025-03-22 22:24:25,280 - scrape - INFO - Administrative SOP Critical outpatient imaging findings identified at time of imaging  Recommendations for a patient in need of immediate medical care
+Reviewed All Yale Radiology Division Chiefs
+Revised  Reviewed July 2024
+Approved By David Facchini Director Dr Jay Pahade Vice Chair Quality and Safety
+
+1 If the patient has left the department use critical test result communication
+2 If the patient is still in the department the radiologist and technologist discuss the case The patient waits with the technologist The radiologist reviews the case and attempts to contact the ordering or covering provider If the patient is unstable call 155 adult or pediatric medical emergency or 911
+3 The patients immediate management is discussed with the ordering or covering provider Options might include ED transfer assessment at the outpatient clinic or discharge home with medical followup
+4 If the patient needs to go to the ED including when there is a finding that likely warrants immediate attention and the ordering provider team cannot be contacted
+   a The radiologist should call the ED triage contact numbers below and give a verbal signout to the RN or covering provider that an outpatient is being transferred from Radiology to the ED
+       The radiologist can write a note in the chart OR
+       Ensure the radiology report is viewable in Epic with an impression explaining the ED transfer
+   b A radiologist should speak with the patient in person or via phone whenever feasible and explain
+       Why they need to go to the ED
+       Whether the ordering provider was reached or not
+       Technologists can assist in patient communication as needed
+   c At facilities where an ED is present the Radiology RN or technologist will transfer or arrange the transfer to ED checkin where care is handed off to the ED team
+   d At offsite locations with no ED the technologist or Radiology RN would call 911 when directed to arrange for ambulance transfer
+5 Technologists must complete the case ie end the exam before the patient leaves the department
+
+ED CONTACT NUMBERS
+ SRC triage 7896001
+ York Street Adult triage 688 4496 2nd line  Charge Nurse 6886786
+ York Street Peds triage 6883333
+ Shoreline triage 4537123
+ Bridgeport main campus triage 3843566
+ Milford triage 3011100
+2025-03-22 22:24:25,285 - scrape - INFO - ----------------------------------------
+2025-03-22 22:24:25,288 - scrape - INFO - 
+================================================================================
+POLICY EXTRACTION COMPLETE
+================================================================================
+2025-03-22 22:24:25,289 - scrape - INFO - Total files processed: 8
+2025-03-22 22:24:25,290 - scrape - INFO - Files containing policies: 4
+2025-03-22 22:24:25,291 - scrape - INFO - Files without policies: 4
+2025-03-22 22:24:25,291 - scrape - INFO - Saving scraped policies to: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/processed/scraped_policies_data.csv
+2025-03-22 22:24:25,294 - scrape - INFO - Policy extraction completed successfully

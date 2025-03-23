@@ -1,0 +1,149 @@
+2025-03-22 22:16:31,953 - crawl - INFO - Logging initialized. Log file: /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/crawl.log
+2025-03-22 22:16:31,953 - crawl - INFO - Starting crawler with the following settings:
+2025-03-22 22:16:31,954 - crawl - INFO -   - Starting URL: https://medicine.yale.edu/diagnosticradiology/facintranet/policies
+2025-03-22 22:16:31,954 - crawl - INFO -   - Maximum depth: 6
+2025-03-22 22:16:31,954 - crawl - INFO -   - Follow definite links only: False
+2025-03-22 22:16:31,954 - crawl - INFO -   - Resume from previous state: False
+2025-03-22 22:16:31,956 - crawl - INFO - Initializing Chrome WebDriver...
+2025-03-22 22:16:32,504 - crawl - INFO - WebDriver initialized successfully
+2025-03-22 22:16:32,505 - crawl - INFO - Opening https://medicine.yale.edu/diagnosticradiology/facintranet/policies...
+2025-03-22 22:16:42,156 - crawl - INFO - Please log in manually. The browser will wait until you're done.
+2025-03-22 22:16:42,159 - crawl - INFO - Once you've logged in and can see the policies page, press Enter to continue...
+2025-03-22 22:18:02,024 - crawl - INFO - Resume mode disabled, starting fresh crawl
+2025-03-22 22:18:02,026 - crawl - INFO - Crawler state cleared
+2025-03-22 22:18:02,026 - crawl - INFO - Starting new crawl from https://medicine.yale.edu/diagnosticradiology/facintranet/policies
+2025-03-22 22:18:02,027 - crawl - INFO - Starting automated crawling with max depth 1...
+2025-03-22 22:18:02,028 - crawl - INFO - 
+================================================================================
+Processing [1] (Priority: 100.0, Depth: 0): https://medicine.yale.edu/diagnosticradiology/facintranet/policies
+2025-03-22 22:18:02,029 - crawl - INFO - Processing URL: https://medicine.yale.edu/diagnosticradiology/facintranet/policies at depth 0
+2025-03-22 22:18:02,030 - crawl - INFO - Processing as webpage: https://medicine.yale.edu/diagnosticradiology/facintranet/policies
+2025-03-22 22:18:02,031 - crawl - INFO - Navigating to webpage: https://medicine.yale.edu/diagnosticradiology/facintranet/policies
+2025-03-22 22:18:02,639 - crawl - INFO - Retrieved HTML content from https://medicine.yale.edu/diagnosticradiology/facintranet/policies (length: 81839 characters)
+2025-03-22 22:18:02,650 - crawl - INFO - Converted HTML to markdown (length: 4424 characters)
+2025-03-22 22:18:02,650 - crawl - INFO - Extracted 24 valid links from https://medicine.yale.edu/diagnosticradiology/facintranet/policies
+2025-03-22 22:18:02,651 - crawl - INFO - Extracted 24 links from https://medicine.yale.edu/diagnosticradiology/facintranet/policies
+2025-03-22 22:18:14,702 - crawl - INFO - Full content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/full_depth_0_facintranet_policies.md
+2025-03-22 22:18:14,703 - crawl - INFO - Policy content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_0_facintranet_policies.md
+2025-03-22 22:18:14,706 - crawl - INFO - Added new entry to policies data for https://medicine.yale.edu/diagnosticradiology/facintranet/policies
+2025-03-22 22:18:14,707 - crawl - INFO - Policy data recorded in /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/crawled_policies_data.csv
+2025-03-22 22:18:14,707 - crawl - INFO - Adding definite policy link: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/guidelines
+2025-03-22 22:18:14,708 - crawl - INFO - Adding definite policy link: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/coi
+2025-03-22 22:18:14,708 - crawl - INFO - Adding definite policy link: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/timeaway
+2025-03-22 22:18:14,709 - crawl - INFO - Adding definite policy link: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/grandroundsexpenses
+2025-03-22 22:18:14,709 - crawl - INFO - Adding definite policy link: https://medicine.yale.edu/diagnosticradiology/quality-safety/
+2025-03-22 22:18:14,709 - crawl - INFO - Adding definite policy link: https://files-profile.medicine.yale.edu/documents/cba873d8-f1ac-4003-a2fb-9b9745988403
+2025-03-22 22:18:14,710 - crawl - INFO - Adding definite policy link: https://medicine.yale.edu/myysm/policies/
+2025-03-22 22:18:14,710 - crawl - INFO - Added to queue: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/guidelines (Priority: 70.0, Depth: 1)
+2025-03-22 22:18:14,710 - crawl - INFO - Added to queue: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/coi (Priority: 39.0, Depth: 1)
+2025-03-22 22:18:14,711 - crawl - INFO - Added to queue: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/timeaway (Priority: 39.0, Depth: 1)
+2025-03-22 22:18:14,711 - crawl - INFO - Added to queue: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/grandroundsexpenses (Priority: 39.0, Depth: 1)
+2025-03-22 22:18:14,712 - crawl - INFO - Added to queue: https://medicine.yale.edu/diagnosticradiology/quality-safety/ (Priority: 21.5, Depth: 1)
+2025-03-22 22:18:14,712 - crawl - INFO - Added to queue: https://files-profile.medicine.yale.edu/documents/cba873d8-f1ac-4003-a2fb-9b9745988403 (Priority: 4.0, Depth: 1)
+2025-03-22 22:18:14,713 - crawl - INFO - Added to queue: https://medicine.yale.edu/myysm/policies/ (Priority: 26.5, Depth: 1)
+2025-03-22 22:18:14,713 - crawl - ERROR - Error processing URL https://medicine.yale.edu/diagnosticradiology/facintranet/policies: 'types.SimpleNamespace' object has no attribute 'PRIORITY_QUEUE'
+2025-03-22 22:18:14,714 - crawl - INFO - 
+================================================================================
+Processing [1] (Priority: 70.0, Depth: 1): https://medicine.yale.edu/diagnosticradiology/facintranet/policies/guidelines
+2025-03-22 22:18:14,714 - crawl - INFO - Processing URL: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/guidelines at depth 1
+2025-03-22 22:18:14,715 - crawl - INFO - Processing as webpage: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/guidelines
+2025-03-22 22:18:14,715 - crawl - INFO - Navigating to webpage: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/guidelines
+2025-03-22 22:18:15,625 - crawl - INFO - Retrieved HTML content from https://medicine.yale.edu/diagnosticradiology/facintranet/policies/guidelines (length: 78162 characters)
+2025-03-22 22:18:15,640 - crawl - INFO - Converted HTML to markdown (length: 3770 characters)
+2025-03-22 22:18:15,641 - crawl - INFO - Extracted 22 valid links from https://medicine.yale.edu/diagnosticradiology/facintranet/policies/guidelines
+2025-03-22 22:18:15,642 - crawl - INFO - Extracted 22 links from https://medicine.yale.edu/diagnosticradiology/facintranet/policies/guidelines
+2025-03-22 22:18:25,590 - crawl - INFO - Full content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/full_depth_1_policies_guidelines.md
+2025-03-22 22:18:25,591 - crawl - INFO - Policy content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_1_policies_guidelines.md
+2025-03-22 22:18:25,595 - crawl - INFO - Added new entry to policies data for https://medicine.yale.edu/diagnosticradiology/facintranet/policies/guidelines
+2025-03-22 22:18:25,598 - crawl - INFO - Policy data recorded in /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/crawled_policies_data.csv
+2025-03-22 22:18:25,599 - crawl - INFO - 
+================================================================================
+Processing [2] (Priority: 39.0, Depth: 1): https://medicine.yale.edu/diagnosticradiology/facintranet/policies/coi
+2025-03-22 22:18:25,600 - crawl - INFO - Processing URL: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/coi at depth 1
+2025-03-22 22:18:25,601 - crawl - INFO - Processing as webpage: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/coi
+2025-03-22 22:18:25,601 - crawl - INFO - Navigating to webpage: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/coi
+2025-03-22 22:18:26,935 - crawl - INFO - Retrieved HTML content from https://medicine.yale.edu/diagnosticradiology/facintranet/policies/coi (length: 91648 characters)
+2025-03-22 22:18:26,946 - crawl - INFO - Converted HTML to markdown (length: 6720 characters)
+2025-03-22 22:18:26,947 - crawl - INFO - Extracted 22 valid links from https://medicine.yale.edu/diagnosticradiology/facintranet/policies/coi
+2025-03-22 22:18:26,947 - crawl - INFO - Extracted 22 links from https://medicine.yale.edu/diagnosticradiology/facintranet/policies/coi
+2025-03-22 22:18:40,123 - crawl - INFO - Full content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/full_depth_1_policies_coi.md
+2025-03-22 22:18:40,125 - crawl - INFO - Policy content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_1_policies_coi.md
+2025-03-22 22:18:40,128 - crawl - INFO - Added new entry to policies data for https://medicine.yale.edu/diagnosticradiology/facintranet/policies/coi
+2025-03-22 22:18:40,130 - crawl - INFO - Policy data recorded in /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/crawled_policies_data.csv
+2025-03-22 22:18:40,131 - crawl - INFO - 
+================================================================================
+Processing [3] (Priority: 39.0, Depth: 1): https://medicine.yale.edu/diagnosticradiology/facintranet/policies/grandroundsexpenses
+2025-03-22 22:18:40,132 - crawl - INFO - Processing URL: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/grandroundsexpenses at depth 1
+2025-03-22 22:18:40,133 - crawl - INFO - Processing as webpage: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/grandroundsexpenses
+2025-03-22 22:18:40,133 - crawl - INFO - Navigating to webpage: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/grandroundsexpenses
+2025-03-22 22:18:41,115 - crawl - INFO - Retrieved HTML content from https://medicine.yale.edu/diagnosticradiology/facintranet/policies/grandroundsexpenses (length: 88115 characters)
+2025-03-22 22:18:41,133 - crawl - INFO - Converted HTML to markdown (length: 6447 characters)
+2025-03-22 22:18:41,134 - crawl - INFO - Extracted 19 valid links from https://medicine.yale.edu/diagnosticradiology/facintranet/policies/grandroundsexpenses
+2025-03-22 22:18:41,134 - crawl - INFO - Extracted 19 links from https://medicine.yale.edu/diagnosticradiology/facintranet/policies/grandroundsexpenses
+2025-03-22 22:19:18,996 - crawl - INFO - Full content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/full_depth_1_policies_grandroundsexpenses.md
+2025-03-22 22:19:18,997 - crawl - INFO - Policy content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_1_policies_grandroundsexpenses.md
+2025-03-22 22:19:19,001 - crawl - INFO - Added new entry to policies data for https://medicine.yale.edu/diagnosticradiology/facintranet/policies/grandroundsexpenses
+2025-03-22 22:19:19,003 - crawl - INFO - Policy data recorded in /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/crawled_policies_data.csv
+2025-03-22 22:19:19,004 - crawl - INFO - 
+================================================================================
+Processing [4] (Priority: 39.0, Depth: 1): https://medicine.yale.edu/diagnosticradiology/facintranet/policies/timeaway
+2025-03-22 22:19:19,005 - crawl - INFO - Processing URL: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/timeaway at depth 1
+2025-03-22 22:19:19,005 - crawl - INFO - Processing as webpage: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/timeaway
+2025-03-22 22:19:19,006 - crawl - INFO - Navigating to webpage: https://medicine.yale.edu/diagnosticradiology/facintranet/policies/timeaway
+2025-03-22 22:19:20,233 - crawl - INFO - Retrieved HTML content from https://medicine.yale.edu/diagnosticradiology/facintranet/policies/timeaway (length: 84478 characters)
+2025-03-22 22:19:20,243 - crawl - INFO - Converted HTML to markdown (length: 5139 characters)
+2025-03-22 22:19:20,243 - crawl - INFO - Extracted 19 valid links from https://medicine.yale.edu/diagnosticradiology/facintranet/policies/timeaway
+2025-03-22 22:19:20,244 - crawl - INFO - Extracted 19 links from https://medicine.yale.edu/diagnosticradiology/facintranet/policies/timeaway
+2025-03-22 22:19:52,126 - crawl - INFO - Full content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/full_depth_1_policies_timeaway.md
+2025-03-22 22:19:52,127 - crawl - INFO - Policy content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_1_policies_timeaway.md
+2025-03-22 22:19:52,131 - crawl - INFO - Added new entry to policies data for https://medicine.yale.edu/diagnosticradiology/facintranet/policies/timeaway
+2025-03-22 22:19:52,132 - crawl - INFO - Policy data recorded in /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/crawled_policies_data.csv
+2025-03-22 22:19:52,133 - crawl - INFO - 
+================================================================================
+Processing [5] (Priority: 26.5, Depth: 1): https://medicine.yale.edu/myysm/policies/
+2025-03-22 22:19:52,134 - crawl - INFO - Processing URL: https://medicine.yale.edu/myysm/policies/ at depth 1
+2025-03-22 22:19:52,134 - crawl - INFO - Processing as webpage: https://medicine.yale.edu/myysm/policies/
+2025-03-22 22:19:52,135 - crawl - INFO - Navigating to webpage: https://medicine.yale.edu/myysm/policies/
+2025-03-22 22:19:52,945 - crawl - INFO - Retrieved HTML content from https://medicine.yale.edu/myysm/policies/ (length: 253715 characters)
+2025-03-22 22:19:52,980 - crawl - INFO - Converted HTML to markdown (length: 19107 characters)
+2025-03-22 22:19:52,981 - crawl - INFO - Extracted 21 valid links from https://medicine.yale.edu/myysm/policies/
+2025-03-22 22:19:52,981 - crawl - INFO - Extracted 21 links from https://medicine.yale.edu/myysm/policies/
+2025-03-22 22:20:01,098 - crawl - INFO - Full content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/full_depth_1_myysm_policies.md
+2025-03-22 22:20:01,099 - crawl - INFO - No policy content found in https://medicine.yale.edu/myysm/policies/
+2025-03-22 22:20:01,103 - crawl - INFO - Added new entry to policies data for https://medicine.yale.edu/myysm/policies/
+2025-03-22 22:20:01,104 - crawl - INFO - Policy data recorded in /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/crawled_policies_data.csv
+2025-03-22 22:20:01,105 - crawl - INFO - 
+================================================================================
+Processing [6] (Priority: 21.5, Depth: 1): https://medicine.yale.edu/diagnosticradiology/quality-safety/
+2025-03-22 22:20:01,106 - crawl - INFO - Processing URL: https://medicine.yale.edu/diagnosticradiology/quality-safety/ at depth 1
+2025-03-22 22:20:01,107 - crawl - INFO - Processing as webpage: https://medicine.yale.edu/diagnosticradiology/quality-safety/
+2025-03-22 22:20:01,108 - crawl - INFO - Navigating to webpage: https://medicine.yale.edu/diagnosticradiology/quality-safety/
+2025-03-22 22:20:01,771 - crawl - INFO - Retrieved HTML content from https://medicine.yale.edu/diagnosticradiology/quality-safety/ (length: 299093 characters)
+2025-03-22 22:20:01,838 - crawl - INFO - Converted HTML to markdown (length: 27830 characters)
+2025-03-22 22:20:01,839 - crawl - INFO - Extracted 26 valid links from https://medicine.yale.edu/diagnosticradiology/quality-safety/
+2025-03-22 22:20:01,839 - crawl - INFO - Extracted 26 links from https://medicine.yale.edu/diagnosticradiology/quality-safety/
+2025-03-22 22:20:41,735 - crawl - INFO - Full content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/full_depth_1_diagnosticradiology_quality-safety.md
+2025-03-22 22:20:41,737 - crawl - INFO - Policy content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_1_diagnosticradiology_quality-safety.md
+2025-03-22 22:20:41,740 - crawl - INFO - Added new entry to policies data for https://medicine.yale.edu/diagnosticradiology/quality-safety/
+2025-03-22 22:20:41,742 - crawl - INFO - Policy data recorded in /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/crawled_policies_data.csv
+2025-03-22 22:20:41,743 - crawl - INFO - 
+================================================================================
+Processing [7] (Priority: 4.0, Depth: 1): https://files-profile.medicine.yale.edu/documents/cba873d8-f1ac-4003-a2fb-9b9745988403
+2025-03-22 22:20:41,744 - crawl - INFO - Processing URL: https://files-profile.medicine.yale.edu/documents/cba873d8-f1ac-4003-a2fb-9b9745988403 at depth 1
+2025-03-22 22:20:41,745 - crawl - INFO - Detected document URL by pattern '/documents/': https://files-profile.medicine.yale.edu/documents/cba873d8-f1ac-4003-a2fb-9b9745988403
+2025-03-22 22:20:41,746 - crawl - INFO - Processing as document: https://files-profile.medicine.yale.edu/documents/cba873d8-f1ac-4003-a2fb-9b9745988403
+2025-03-22 22:20:41,747 - crawl - INFO - Processing Yale document repository URL as PDF: https://files-profile.medicine.yale.edu/documents/cba873d8-f1ac-4003-a2fb-9b9745988403
+2025-03-22 22:20:41,748 - crawl - INFO - Processing with Mistral OCR: https://files-profile.medicine.yale.edu/documents/cba873d8-f1ac-4003-a2fb-9b9745988403
+2025-03-22 22:20:45,571 - crawl - INFO - Successfully extracted content using OCR: https://files-profile.medicine.yale.edu/documents/cba873d8-f1ac-4003-a2fb-9b9745988403 (length: 2495 characters)
+2025-03-22 22:20:56,661 - crawl - INFO - Full content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/full_depth_1_documents_cba873d8-f1ac-4003-a2fb-9b9745988403.md
+2025-03-22 22:20:56,663 - crawl - INFO - Policy content saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/markdown_files/policy_depth_1_documents_cba873d8-f1ac-4003-a2fb-9b9745988403.md
+2025-03-22 22:20:56,666 - crawl - INFO - Added new entry to policies data for https://files-profile.medicine.yale.edu/documents/cba873d8-f1ac-4003-a2fb-9b9745988403
+2025-03-22 22:20:56,668 - crawl - INFO - Policy data recorded in /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw/crawled_policies_data.csv
+2025-03-22 22:20:56,670 - crawl - INFO - Crawler state saved: 8 URLs visited, 0 URLs in queue
+2025-03-22 22:20:56,671 - crawl - INFO - Last URL: https://files-profile.medicine.yale.edu/documents/cba873d8-f1ac-4003-a2fb-9b9745988403 (depth: 1)
+2025-03-22 22:20:56,671 - crawl - INFO - Crawler completed - all URLs processed
+2025-03-22 22:20:56,672 - crawl - INFO - Crawler state cleared
+2025-03-22 22:20:56,674 - crawl - INFO - Crawler state saved: 8 URLs visited, 0 URLs in queue
+2025-03-22 22:20:56,675 - crawl - INFO - Last URL: https://files-profile.medicine.yale.edu/documents/cba873d8-f1ac-4003-a2fb-9b9745988403 (depth: 1)
+2025-03-22 22:20:56,676 - crawl - INFO - Closing the browser...
+2025-03-22 22:20:56,758 - crawl - INFO - Crawling completed. Results saved to /Users/pouria/Documents/Coding/YDR Policy Scraping/test_data/raw
