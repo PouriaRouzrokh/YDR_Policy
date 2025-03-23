@@ -3,11 +3,15 @@ import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ydrpolicy.data_collection.crawl.crawl import main as crawl_main
+from ydrpolicy.data_collection.scrape.scrape import main as scrape_main
 from ydrpolicy.data_collection.config import config
 
-def test_crawler():
-    config.DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "test_data")
+def test_scraper():
+    config.DATA_DIR = os.path.join(
+        os.path.dirname(
+            os.path.dirname(
+                os.path.dirname(
+                os.path.abspath(__file__)))), "test_data")    
     config.RAW_DATA_DIR = os.path.join(config.DATA_DIR, "raw")
     config.DOCUMENT_DIR = os.path.join(config.RAW_DATA_DIR, "documents")
     config.MARKDOWN_DIR = os.path.join(config.RAW_DATA_DIR, "markdown_files")
@@ -15,7 +19,7 @@ def test_crawler():
     config.SCRAPED_POLICIES_DIR = os.path.join(config.PROCESSED_DATA_DIR, "scraped_policies")
     config.MAX_DEPTH = 1
 
-    crawl_main(config=config)
+    scrape_main(config=config)
 
-if __name__ == "__main__":  
-    test_crawler()
+if __name__ == "__main__":
+    test_scraper()

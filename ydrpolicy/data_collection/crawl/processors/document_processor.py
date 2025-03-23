@@ -1,28 +1,29 @@
 """
 Module for handling document downloads and conversions.
 """
+import logging
 import os
 import re
-import logging
 import urllib.parse
-import requests
-import tempfile
 from pathlib import Path
+from types import SimpleNamespace
 
 # Document processing libraries
 import markdownify
+import requests
 from docx import Document
 
 # Local imports
-from ydrpolicy.data_collection import config  # Changed to absolute import
-from ydrpolicy.data_collection.crawl.processors.llm_processor import process_document_with_ocr
-from ydrpolicy.data_collection.crawl.processors.pdf_processor import pdf_to_markdown
+from ydrpolicy.data_collection.crawl.processors.llm_processor import \
+    process_document_with_ocr
+from ydrpolicy.data_collection.crawl.processors.pdf_processor import \
+    pdf_to_markdown
+from ydrpolicy.data_collection.logger import DataCollectionLogger
 
 # Set up logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+logger = DataCollectionLogger(name="document_processor", level=logging.INFO)
 
-def download_document(url: str, output_dir: str) -> str:
+def download_document(url: str, output_dir: str, config: SimpleNamespace) -> str:
     """
     Download a document from a URL and save it to the output directory.
     
@@ -102,7 +103,7 @@ def download_document(url: str, output_dir: str) -> str:
         logger.error(f"Error downloading document: {str(e)}")
         return ""
 
-def convert_to_markdown(file_path: str, url: str) -> str:
+def convert_to_markdown(file_path: str, url: str, config: SimpleNamespace) -> str:
     """
     Convert a document to markdown based on its file type.
     
@@ -119,7 +120,7 @@ def convert_to_markdown(file_path: str, url: str) -> str:
         # Handle different file types
         if file_ext in ['.pdf']:
             # Always use Mistral OCR for PDFs
-            return convert_pdf_to_markdown(file_path, url)
+            return convert_pdf_to_markdown(file_path, url, config)
         elif file_ext in ['.doc', '.docx']:
             return convert_docx_to_markdown(file_path)
         else:
@@ -130,7 +131,7 @@ def convert_to_markdown(file_path: str, url: str) -> str:
         logger.error(f"Error converting document to markdown: {str(e)}")
         return ""
 
-def convert_pdf_to_markdown(file_path: str, url: str) -> str:
+def convert_pdf_to_markdown(file_path: str, url: str, config: SimpleNamespace) -> str:
     """
     Convert a PDF document to markdown using Mistral OCR.
     

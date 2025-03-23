@@ -5,16 +5,14 @@ import os
 import base64
 import uuid
 import logging
+from types import SimpleNamespace
 from mistralai import Mistral
-
-# Local imports
-from ydrpolicy.data_collection import config  # Changed to absolute import
+from ydrpolicy.data_collection.logger import DataCollectionLogger
 
 # Set up logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+logger = DataCollectionLogger(name="pdf_processor", level=logging.INFO)
 
-def pdf_to_markdown(pdf_url, output_folder):
+def pdf_to_markdown(pdf_url: str, output_folder: str, config: SimpleNamespace):
     """
     Convert a PDF to markdown with extracted images.
     

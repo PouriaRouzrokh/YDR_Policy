@@ -3,6 +3,7 @@ Module for handling LLM interactions for content analysis and OCR.
 """
 import os
 import json
+from types import SimpleNamespace
 from typing import Dict, Optional, Union, List
 from pydantic import BaseModel, Field
 import logging
@@ -12,12 +13,11 @@ from mistralai import Mistral
 from litellm import completion
 
 # Local imports
-from ydrpolicy.data_collection import config  # Changed to absolute import
 from ydrpolicy.data_collection.crawl.processors import llm_prompts
+from ydrpolicy.data_collection.logger import DataCollectionLogger
 
 # Set up logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+logger = DataCollectionLogger(name="llm_processor", level=logging.INFO)
 
 class PolicyContent(BaseModel):
     """Pydantic model for structured policy content extraction."""
@@ -26,7 +26,7 @@ class PolicyContent(BaseModel):
     definite_links: List[str] = Field(default_factory=list, description="Links that definitely contain policy information")
     probable_links: List[str] = Field(default_factory=list, description="Links that might contain policy information")
 
-def process_document_with_ocr(document_url: str) -> str:
+def process_document_with_ocr(document_url: str, config: SimpleNamespace) -> str:
     """
     Process a document using Mistral's OCR capabilities.
     
@@ -67,7 +67,7 @@ def process_document_with_ocr(document_url: str) -> str:
         logger.error(f"Error processing document with OCR: {str(e)}")
         return f"Error processing document: {str(e)}"
 
-def analyze_content_for_policies(content: str, url: str, links: list = None) -> Dict[str, Union[bool, str, list]]:
+def analyze_content_for_policies(content: str, url: str, links: list = None, config: SimpleNamespace = None) -> Dict[str, Union[bool, str, list]]:
     """
     Analyze content using LLM to detect policy information and relevant links.
     

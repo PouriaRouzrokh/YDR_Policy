@@ -9,8 +9,9 @@ import re
 import signal
 import time
 import urllib.parse
-from typing import List, Optional, Tuple
 from types import SimpleNamespace
+from typing import List, Optional, Tuple
+
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -33,24 +34,21 @@ class YaleCrawler:
     def __init__(
             self, 
             config: SimpleNamespace,
-            logger: logging.Logger = None
+            logger: logging.Logger = None 
         ):
         """
         Initialize the crawler.
         
         Args:
-            max_depth: Maximum depth to crawl
-            resume: Whether to try to resume from a previous crawl
+            config: Configuration object
             logger: Logger for logging messages
         """
-        self.config = config
-        self.max_depth = config.DEFAULT_MAX_DEPTH
         self.visited_urls = set()
         self.priority_queue = []  # Priority queue of (priority, url, depth)
         self.driver = None
         self.current_url = None
         self.current_depth = 0  
-        self.resume = config.RESUME_CRAWL
+        self.config = config
         self.logger = logger        
         self.state_manager = CrawlerState(os.path.join(config.RAW_DATA_DIR, "state"), logger)
         
@@ -62,20 +60,14 @@ class YaleCrawler:
         signal.signal(signal.SIGTERM, self.signal_handler)
         
         # Keywords for priority scoring
-        self.priority_keywords = [
-            'policy', 'policies', 'guideline', 'guidelines', 'procedure', 'procedures',
-            'protocol', 'protocols', 'radiology', 'diagnostic', 'imaging', 'safety',
-            'radiation', 'contrast', 'mri', 'ct', 'ultrasound', 'xray', 'x-ray',
-            'regulation', 'requirement', 'compliance', 'standard', 'documentation'
-        ]
         
         # Create output directories
-        os.makedirs(config.RAW_DATA_DIR, exist_ok=True)
-        os.makedirs(config.MARKDOWN_DIR, exist_ok=True)
-        os.makedirs(config.DOCUMENT_DIR, exist_ok=True)
+        os.makedirs(self.config.RAW_DATA_DIR, exist_ok=True)
+        os.makedirs(self.config.MARKDOWN_DIR, exist_ok=True)
+        os.makedirs(self.config.DOCUMENT_DIR, exist_ok=True)
         
         # Initialize the data tracking CSV
-        self.policies_df_path = os.path.join(config.RAW_DATA_DIR, "crawled_policies_data.csv")
+        self.policies_df_path = os.path.join(self.config.RAW_DATA_DIR, "crawled_policies_data.csv")
         if not os.path.exists(self.policies_df_path):
             policies_df = pd.DataFrame(columns=[
                 'url', 'file_path', 'include', 'found_links_count', 
@@ -100,7 +92,7 @@ class YaleCrawler:
             self.logger.error(f"Error initializing WebDriver: {str(e)}")
             raise
     
-    def signal_handler(self, sig, frame):
+    def signal_handler(self):
         """Handle termination signals to save state before exiting."""
         self.logger.info("Received termination signal. Saving state and shutting down gracefully...")
         self.stopping = True
@@ -125,7 +117,7 @@ class YaleCrawler:
     
     def load_state(self):
         """Load previous crawler state if it exists."""
-        if not self.resume:
+        if not self.config.RESUME_CRAWL:
             self.logger.info("Resume mode disabled, starting fresh crawl")
             self.state_manager.clear_state()
             return False
@@ -137,7 +129,7 @@ class YaleCrawler:
             
         # Restore state
         self.visited_urls = state["visited_urls"]
-        self.priority_queue = state["priority_queue"]
+        self.priority_queue = state["priority_queue"] if "priority_queue" in state else []
         self.current_url = state["current_url"]
         self.current_depth = state["current_depth"]
         
@@ -152,7 +144,7 @@ class YaleCrawler:
             initial_url: URL to start crawling from
         """
         try:
-            # If no initial URL is provided, use the main URL from the config
+            # If no initial URL is provided, use the main URL
             if initial_url is None:
                 initial_url = self.config.MAIN_URL
 
@@ -182,7 +174,7 @@ class YaleCrawler:
                     time.sleep(2)  # Give the page a moment to load
             
             # Start automated crawling
-            self.logger.info(f"Starting automated crawling with max depth {self.max_depth}...")
+            self.logger.info(f"Starting automated crawling with max depth {self.config.MAX_DEPTH}...")
             self.crawl_automatically()
             
         except Exception as e:
@@ -203,7 +195,6 @@ class YaleCrawler:
     def crawl_automatically(self):
         """Run the automated crawling process using the priority queue."""
         pages_processed = 0
-        save_interval = 10  # Save state every 10 pages
         
         # Continue until priority queue is empty
         while self.priority_queue and not self.stopping:
@@ -221,7 +212,7 @@ class YaleCrawler:
                     self.logger.info(f"Skipping already visited URL: {url}")
                     continue
                     
-                if depth > self.max_depth:
+                if depth > self.config.MAX_DEPTH:
                     self.logger.info(f"Skipping {url} - max depth reached")
                     continue
                 
@@ -231,7 +222,7 @@ class YaleCrawler:
                 pages_processed += 1
                 
                 # Save state periodically
-                if pages_processed % save_interval == 0:
+                if pages_processed % self.config.SAVE_INTERVAL == 0:
                     self.save_state()
                     self.logger.info(f"Progress: {pages_processed} pages processed, {len(self.priority_queue)} URLs in queue")
                     
@@ -345,7 +336,7 @@ class YaleCrawler:
         priority = 1.0
         
         # Check URL path for keywords
-        for keyword in self.priority_keywords:
+        for keyword in self.config.PRIORITY_KEYWORDS:
             if keyword in path:
                 priority += 5.0
                 
@@ -356,7 +347,7 @@ class YaleCrawler:
         # Check link text for keywords
         if link_text:
             link_text_lower = link_text.lower()
-            for keyword in self.priority_keywords:
+            for keyword in self.config.PRIORITY_KEYWORDS:
                 if keyword in link_text_lower:
                     priority += 4.0
         
@@ -446,7 +437,7 @@ class YaleCrawler:
                 return
             
             # Analyze and save policy content
-            policy_result = analyze_content_for_policies(markdown_content, url)
+            policy_result = analyze_content_for_policies(markdown_content, url, config=self.config)
             self.save_policy_content(url, markdown_content, depth, policy_result)
         else:
             # Process webpage
@@ -458,13 +449,13 @@ class YaleCrawler:
                 return
             
             # Pass the links to the LLM for analysis
-            policy_result = analyze_content_for_policies(markdown_content, url, all_links)
+            policy_result = analyze_content_for_policies(markdown_content, url, all_links, config=self.config)
             
             # Save all content regardless of policy detection
             self.save_policy_content(url, markdown_content, depth, policy_result)
             
             # Process links if not at max depth
-            if depth < self.max_depth:
+            if depth < self.config.MAX_DEPTH:
                 links_to_follow = []
                 
                 # For the root URL: If no policy links are found, follow all links up to a limit
@@ -491,7 +482,7 @@ class YaleCrawler:
                 self.add_links_to_queue(links_to_follow, depth + 1)
                 
                 # Log summary of links
-                self.logger.info(f"Added {len(links_to_follow)} links to priority queue. Queue size: {len(self.priority_queue)}")
+                self.logger.info(f"Added {len(links_to_follow)} links to priority queue. Queue size: {len(self.config.PRIORITY_QUEUE)}")
     
     def add_links_to_queue(self, links: List[Tuple[str, str]], depth: int):
         """
@@ -509,7 +500,7 @@ class YaleCrawler:
                 added_count += 1
                 self.logger.info(f"Added to queue: {url} (Priority: {priority:.1f}, Depth: {depth})")
         
-        self.logger.info(f"Added {added_count} links to priority queue. Queue size: {len(self.priority_queue)}")
+        self.logger.info(f"Added {added_count} links to priority queue. Queue size: {len(self.config.PRIORITY_QUEUE)}")
     
     def process_webpage(self, url: str) -> Tuple[str, List[Tuple[str, str]]]:
         """
@@ -572,7 +563,7 @@ class YaleCrawler:
                 os.makedirs(doc_output_dir, exist_ok=True)
                 
                 self.logger.info(f"Processing with Mistral OCR: {url}")
-                markdown_path = pdf_to_markdown(url, doc_output_dir)
+                markdown_path = pdf_to_markdown(url, doc_output_dir, self.config)
                 
                 if markdown_path and os.path.exists(markdown_path):
                     with open(markdown_path, 'r', encoding='utf-8') as f:
@@ -590,7 +581,7 @@ class YaleCrawler:
                 os.makedirs(doc_output_dir, exist_ok=True)
                 
                 self.logger.info(f"Processing with Mistral OCR: {url}")
-                markdown_path = pdf_to_markdown(url, doc_output_dir)
+                markdown_path = pdf_to_markdown(url, doc_output_dir, self.config)
                 
                 if markdown_path and os.path.exists(markdown_path):
                     with open(markdown_path, 'r', encoding='utf-8') as f:
@@ -602,14 +593,14 @@ class YaleCrawler:
                     return ""
             else:
                 # For other document types, use the standard approach
-                file_path = download_document(url, self.config.DOCUMENT_DIR)
+                file_path = download_document(url, self.config.DOCUMENT_DIR, self.config)
                 
                 if not file_path:
                     self.logger.error(f"Failed to download document from {url}")
                     return ""
                 
                 # Convert document to markdown
-                markdown_content = convert_to_markdown(file_path, url)
+                markdown_content = convert_to_markdown(file_path, url, self.config)
                 self.logger.info(f"Converted document to markdown: {url} (length: {len(markdown_content)} characters)")
                 return markdown_content
                 
@@ -633,7 +624,7 @@ class YaleCrawler:
         # If policy_result not provided, analyze content
         if policy_result is None:
             self.logger.info(f"No policy result provided, analyzing content for {url}")
-            policy_result = analyze_content_for_policies(content, url)
+            policy_result = analyze_content_for_policies(content, url, config=self.config)
         
         # Save all content as markdown regardless of policy detection
         parsed_url = urllib.parse.urlparse(url)

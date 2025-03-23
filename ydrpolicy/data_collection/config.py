@@ -33,14 +33,19 @@ _config_dict = {
     "ALLOWED_DOMAINS": ["yale.edu", "medicine.yale.edu"],
     "DOCUMENT_EXTENSIONS": ['.pdf', '.doc', '.docx'],
     "ALLOWED_EXTENSIONS": ['.pdf', '.doc', '.docx', '.html', '.htm', '.php', '.aspx'],
-    
+    "PRIORITY_KEYWORDS": [
+        'policy', 'policies', 'guideline', 'guidelines', 'procedure', 'procedures',
+        'protocol', 'protocols', 'radiology', 'diagnostic', 'imaging', 'safety',
+        'radiation', 'contrast', 'mri', 'ct', 'ultrasound', 'xray', 'x-ray',
+        'regulation', 'requirement', 'compliance', 'standard', 'documentation'
+    ],
     "FOLLOW_DEFINITE_LINKS_ONLY": False,  # If False, follow both "definite" and "probable" links
     "DEFAULT_MAX_DEPTH": 6,
     "REQUEST_TIMEOUT": 30,
     "WAIT_TIME": 60,
-    
     "RESUME_CRAWL": False,
     "RESET_CRAWL": False,
+    "SAVE_INTERVAL": 10,
 }
 
 # Convert dictionary to an object with attributes
