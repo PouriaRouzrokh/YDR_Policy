@@ -62,7 +62,7 @@ def main(config: SimpleNamespace = None, logger: logging.Logger = None):
         logger.error(f"Error during crawling: {str(e)}")
 
 if __name__ == "__main__":
-    from ydrpolicy.data_collection.config import config
+    from ydrpolicy.config import config
 
     print("Yale Medicine Policy Crawler")
     print("============================")
