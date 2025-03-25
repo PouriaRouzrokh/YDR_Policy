@@ -25,7 +25,7 @@ def pdf_to_markdown(pdf_url: str, output_folder: str, config: SimpleNamespace):
     """
     try:
         # Set up Mistral client
-        api_key = config.MISTRAL_API_KEY
+        api_key = config.LLM.MISTRAL_API_KEY
         if not api_key:
             logger.error("No Mistral API key found in environment variables")
             return ""
@@ -39,7 +39,7 @@ def pdf_to_markdown(pdf_url: str, output_folder: str, config: SimpleNamespace):
         # Process the PDF with OCR
         logger.info(f"Processing PDF with OCR: {pdf_url}")
         ocr_response = client.ocr.process(
-            model=config.OCR_MODEL,
+            model=config.LLM.OCR_MODEL,
             document={
                 "type": "document_url",
                 "document_url": pdf_url

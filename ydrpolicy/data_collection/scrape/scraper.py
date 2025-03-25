@@ -52,7 +52,7 @@ def scrape_policies(
         ValueError: If the DataFrame doesn't contain a 'file_path' column.
     """
     # Initialize OpenAI client
-    client = OpenAI(api_key=config.OPENAI_API_KEY)
+    client = OpenAI(api_key=config.LLM.OPENAI_API_KEY)
     
     # Create copies of the required columns to avoid modifying the original during iteration
     results = []
@@ -76,7 +76,7 @@ def scrape_policies(
             
             # Call the OpenAI API with structured output
             response = client.beta.chat.completions.parse(
-                model=config.SCRAPER_LLM_MODEL,
+                model=config.LLM.SCRAPER_LLM_MODEL,
                 reasoning_effort="high",  # Using high reasoning effort for thorough analysis
                 messages=[
                     {"role": "system", "content": system_message},
@@ -103,7 +103,7 @@ def scrape_policies(
             if result['contains_policy']:
                 policy_content = clean_string(result['policy_content'])
                 policy_name = row['url'].split("/")[-1]
-                policy_content_path = os.path.join(config.SCRAPED_POLICIES_DIR, f"{policy_name}_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt")
+                policy_content_path = os.path.join(config.PATHS.SCRAPED_POLICIES_DIR, f"{policy_name}_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt")
                 result['policy_content_path'] = policy_content_path
             else:
                 result['policy_content_path'] = None

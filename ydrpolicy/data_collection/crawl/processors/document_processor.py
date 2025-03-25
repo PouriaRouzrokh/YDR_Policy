@@ -75,7 +75,7 @@ def download_document(url: str, output_dir: str, config: SimpleNamespace) -> str
             'Cache-Control': 'max-age=0'
         }
         
-        response = requests.get(url, stream=True, timeout=config.REQUEST_TIMEOUT, headers=headers)
+        response = requests.get(url, stream=True, timeout=config.CRAWLER.REQUEST_TIMEOUT, headers=headers)
         response.raise_for_status()
         
         # Check content type to confirm it's a document
@@ -146,7 +146,7 @@ def convert_pdf_to_markdown(file_path: str, url: str, config: SimpleNamespace) -
         logger.info(f"Processing PDF with Mistral OCR: {url}")
         
         # Create a specific output directory for this document
-        doc_output_dir = os.path.join(config.DOCUMENT_DIR, f"doc_{hash(url) % 10000}")
+        doc_output_dir = os.path.join(config.PATHS.DOCUMENT_DIR, f"doc_{hash(url) % 10000}")
         os.makedirs(doc_output_dir, exist_ok=True)
         
         # Use the pdf_to_markdown function from pdf_processor

@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 from ydrpolicy.data_collection.crawl.crawler import YaleCrawler
 from ydrpolicy.data_collection.logger import DataCollectionLogger
+from ydrpolicy.data_collection.config import config
 
 def main(config: SimpleNamespace = None, logger: logging.Logger = None):
     """Main function to run the crawler."""
@@ -20,7 +21,7 @@ def main(config: SimpleNamespace = None, logger: logging.Logger = None):
         logger = DataCollectionLogger(
             name="crawl",
             level=logging.INFO,
-            path=os.path.join(config.RAW_DATA_DIR, "crawl.log")
+            path=config.LOGGING.CRAWLER_LOG_FILE
         )
     
     # Validate environment variables
@@ -31,19 +32,19 @@ def main(config: SimpleNamespace = None, logger: logging.Logger = None):
         logger.warning("MISTRAL_API_KEY not found in environment variables. PDF OCR processing will not work.")
     
     # Handle reset option (overrides resume)
-    if config.RESET_CRAWL:
+    if config.CRAWLER.RESET_CRAWL:
         from crawler_state import CrawlerState
-        state_manager = CrawlerState(os.path.join(config.RAW_DATA_DIR, "state"), logger)
+        state_manager = CrawlerState(os.path.join(config.PATHS.RAW_DATA_DIR, "state"), logger)
         state_manager.clear_state()
         logger.info("Crawler state has been reset. Starting fresh crawl.")
     
     
     # Display configuration settings
     logger.info(f"Starting crawler with the following settings:")
-    logger.info(f"  - Starting URL: {config.MAIN_URL}")
-    logger.info(f"  - Maximum depth: {config.DEFAULT_MAX_DEPTH}")
-    logger.info(f"  - Follow definite links only: {config.FOLLOW_DEFINITE_LINKS_ONLY}")
-    logger.info(f"  - Resume from previous state: {config.RESUME_CRAWL}")
+    logger.info(f"  - Starting URL: {config.CRAWLER.MAIN_URL}")
+    logger.info(f"  - Maximum depth: {config.CRAWLER.MAX_DEPTH}")
+    logger.info(f"  - Follow definite links only: {config.CRAWLER.FOLLOW_DEFINITE_LINKS_ONLY}")
+    logger.info(f"  - Resume from previous state: {config.CRAWLER.RESUME_CRAWL}")
     
     # Initialize and start the crawler
     try:
@@ -53,7 +54,7 @@ def main(config: SimpleNamespace = None, logger: logging.Logger = None):
         )
         crawler.start()
         
-        logger.info(f"Crawling completed. Results saved to {config.RAW_DATA_DIR}")
+        logger.info(f"Crawling completed. Results saved to {config.PATHS.RAW_DATA_DIR}")
         
     except KeyboardInterrupt:
         logger.info("Crawling stopped by user")
@@ -66,20 +67,20 @@ if __name__ == "__main__":
     print("Yale Medicine Policy Crawler")
     print("============================")
     print("This script will crawl Yale Medicine pages for policies and guidelines.")
-    print(f"All results will be saved in the '{config.RAW_DATA_DIR}' directory.")
-    print(f"Logs will be saved to '{os.path.join(config.RAW_DATA_DIR, 'crawler.log')}'")
+    print(f"All results will be saved in the '{config.PATHS.RAW_DATA_DIR}' directory.")
+    print(f"Logs will be saved to '{os.path.join(config.PATHS.RAW_DATA_DIR, 'crawler.log')}'")
     print("Press Ctrl+C to stop the crawler at any time - state will be saved automatically.")
     print()
 
     logger = DataCollectionLogger(
         name="crawl",
         level=logging.INFO,
-        path=os.path.join(config.RAW_DATA_DIR, "crawl.log")
+        path=config.LOGGING.CRAWLER_LOG_FILE
     )
 
     # Create output directories before setting up logging
-    os.makedirs(config.RAW_DATA_DIR, exist_ok=True)
-    os.makedirs(config.MARKDOWN_DIR, exist_ok=True)
-    os.makedirs(config.DOCUMENT_DIR, exist_ok=True)
+    os.makedirs(config.PATHS.RAW_DATA_DIR, exist_ok=True)
+    os.makedirs(config.PATHS.MARKDOWN_DIR, exist_ok=True)
+    os.makedirs(config.PATHS.DOCUMENT_DIR, exist_ok=True)
     
     main(config=config, logger=logger)

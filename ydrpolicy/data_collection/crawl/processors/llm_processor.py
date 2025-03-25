@@ -37,14 +37,14 @@ def process_document_with_ocr(document_url: str, config: SimpleNamespace) -> str
         Extracted text in markdown format
     """
     try:
-        if not config.MISTRAL_API_KEY:
+        if not config.LLM.MISTRAL_API_KEY:
             raise ValueError("MISTRAL_API_KEY is not set in the environment variables")
         
-        client = Mistral(api_key=config.MISTRAL_API_KEY)
+        client = Mistral(api_key=config.LLM.MISTRAL_API_KEY)
         
         logger.info(f"Processing document with OCR: {document_url}")
         ocr_response = client.ocr.process(
-            model=config.OCR_MODEL,
+            model=config.LLM.OCR_MODEL,
             document={
                 "type": "document_url",
                 "document_url": document_url
@@ -80,10 +80,10 @@ def analyze_content_for_policies(content: str, url: str, links: list = None, con
         Dictionary with 'include', 'content', 'definite_links', and 'probable_links' keys
     """
     try:
-        if not config.OPENAI_API_KEY:
+        if not config.LLM.OPENAI_API_KEY:
             raise ValueError("OPENAI_API_KEY is not set in the environment variables")
         
-        os.environ["OPENAI_API_KEY"] = config.OPENAI_API_KEY
+        os.environ["OPENAI_API_KEY"] = config.LLM.OPENAI_API_KEY
         
         # Add links information to the prompt if available
         links_info = ""
@@ -106,7 +106,7 @@ def analyze_content_for_policies(content: str, url: str, links: list = None, con
         try:
             # Get completion from LLM with proper Pydantic model
             response = completion(
-                model=config.CRAWLER_LLM_MODEL,
+                model=config.LLM.CRAWLER_LLM_MODEL,
                 messages=messages,
                 response_format={"type": "json_object"}
             )
@@ -135,7 +135,7 @@ def analyze_content_for_policies(content: str, url: str, links: list = None, con
             # Try direct JSON approach as fallback
             try:
                 response = completion(
-                    model=config.CRAWLER_LLM_MODEL,
+                    model=config.LLM.CRAWLER_LLM_MODEL,
                     messages=messages,
                     response_format={"type": "json_object"}
                 )

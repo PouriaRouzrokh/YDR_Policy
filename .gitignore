@@ -11,3 +11,6 @@ wheels/
 
 # APIs
 .env
+
+# Data
+test_data/

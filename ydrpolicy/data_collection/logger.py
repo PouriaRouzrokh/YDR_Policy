@@ -5,6 +5,8 @@ from typing import Optional
 from rich.console import Console
 from rich.logging import RichHandler
 
+from ydrpolicy.data_collection.config import config
+
 class DataCollectionLogger:
     """Custom logger class using Rich for formatting and file output"""
     

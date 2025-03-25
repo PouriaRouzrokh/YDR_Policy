@@ -50,7 +50,7 @@ class YaleCrawler:
         self.current_depth = 0  
         self.config = config
         self.logger = logger        
-        self.state_manager = CrawlerState(os.path.join(config.RAW_DATA_DIR, "state"), logger)
+        self.state_manager = CrawlerState(os.path.join(config.PATHS.RAW_DATA_DIR, "state"), logger)
         
         # Flag to track if the crawler is stopping gracefully
         self.stopping = False
@@ -62,12 +62,12 @@ class YaleCrawler:
         # Keywords for priority scoring
         
         # Create output directories
-        os.makedirs(self.config.RAW_DATA_DIR, exist_ok=True)
-        os.makedirs(self.config.MARKDOWN_DIR, exist_ok=True)
-        os.makedirs(self.config.DOCUMENT_DIR, exist_ok=True)
+        os.makedirs(self.config.PATHS.RAW_DATA_DIR, exist_ok=True)
+        os.makedirs(self.config.PATHS.MARKDOWN_DIR, exist_ok=True)
+        os.makedirs(self.config.PATHS.DOCUMENT_DIR, exist_ok=True)
         
         # Initialize the data tracking CSV
-        self.policies_df_path = os.path.join(self.config.RAW_DATA_DIR, "crawled_policies_data.csv")
+        self.policies_df_path = os.path.join(self.config.PATHS.RAW_DATA_DIR, "crawled_policies_data.csv")
         if not os.path.exists(self.policies_df_path):
             policies_df = pd.DataFrame(columns=[
                 'url', 'file_path', 'include', 'found_links_count', 
@@ -117,7 +117,7 @@ class YaleCrawler:
     
     def load_state(self):
         """Load previous crawler state if it exists."""
-        if not self.config.RESUME_CRAWL:
+        if not self.config.CRAWLER.RESUME_CRAWL:
             self.logger.info("Resume mode disabled, starting fresh crawl")
             self.state_manager.clear_state()
             return False
@@ -129,7 +129,7 @@ class YaleCrawler:
             
         # Restore state
         self.visited_urls = state["visited_urls"]
-        self.priority_queue = state["priority_queue"] if "priority_queue" in state else []
+        self.priority_queue = state["priority_queue"]
         self.current_url = state["current_url"]
         self.current_depth = state["current_depth"]
         
@@ -146,7 +146,7 @@ class YaleCrawler:
         try:
             # If no initial URL is provided, use the main URL
             if initial_url is None:
-                initial_url = self.config.MAIN_URL
+                initial_url = self.config.CRAWLER.MAIN_URL
 
             # Navigate to the initial URL
             self.logger.info(f"Opening {initial_url}...")
@@ -174,7 +174,7 @@ class YaleCrawler:
                     time.sleep(2)  # Give the page a moment to load
             
             # Start automated crawling
-            self.logger.info(f"Starting automated crawling with max depth {self.config.MAX_DEPTH}...")
+            self.logger.info(f"Starting automated crawling with max depth {self.config.CRAWLER.MAX_DEPTH}...")
             self.crawl_automatically()
             
         except Exception as e:
@@ -212,7 +212,7 @@ class YaleCrawler:
                     self.logger.info(f"Skipping already visited URL: {url}")
                     continue
                     
-                if depth > self.config.MAX_DEPTH:
+                if depth > self.config.CRAWLER.MAX_DEPTH:
                     self.logger.info(f"Skipping {url} - max depth reached")
                     continue
                 
@@ -222,7 +222,7 @@ class YaleCrawler:
                 pages_processed += 1
                 
                 # Save state periodically
-                if pages_processed % self.config.SAVE_INTERVAL == 0:
+                if pages_processed % self.config.CRAWLER.SAVE_INTERVAL == 0:
                     self.save_state()
                     self.logger.info(f"Progress: {pages_processed} pages processed, {len(self.priority_queue)} URLs in queue")
                     
@@ -264,7 +264,7 @@ class YaleCrawler:
         
         # Check domain restrictions
         parsed_url = urllib.parse.urlparse(url)
-        allowed = any(domain in parsed_url.netloc for domain in self.config.ALLOWED_DOMAINS)
+        allowed = any(domain in parsed_url.netloc for domain in self.config.CRAWLER.ALLOWED_DOMAINS)
         if not allowed:
             self.logger.debug(f"Skipping URL from non-allowed domain: {url}")
         return allowed
@@ -284,7 +284,7 @@ class YaleCrawler:
         
         # Check for known document extensions
         extension = os.path.splitext(path)[1]
-        if extension in self.config.DOCUMENT_EXTENSIONS:
+        if extension in self.config.CRAWLER.DOCUMENT_EXTENSIONS:
             self.logger.info(f"Detected document URL by extension: {url}")
             return True
         
@@ -336,7 +336,7 @@ class YaleCrawler:
         priority = 1.0
         
         # Check URL path for keywords
-        for keyword in self.config.PRIORITY_KEYWORDS:
+        for keyword in self.config.CRAWLER.PRIORITY_KEYWORDS:
             if keyword in path:
                 priority += 5.0
                 
@@ -347,7 +347,7 @@ class YaleCrawler:
         # Check link text for keywords
         if link_text:
             link_text_lower = link_text.lower()
-            for keyword in self.config.PRIORITY_KEYWORDS:
+            for keyword in self.config.CRAWLER.PRIORITY_KEYWORDS:
                 if keyword in link_text_lower:
                     priority += 4.0
         
@@ -455,7 +455,7 @@ class YaleCrawler:
             self.save_policy_content(url, markdown_content, depth, policy_result)
             
             # Process links if not at max depth
-            if depth < self.config.MAX_DEPTH:
+            if depth < self.config.CRAWLER.MAX_DEPTH:
                 links_to_follow = []
                 
                 # For the root URL: If no policy links are found, follow all links up to a limit
@@ -473,7 +473,7 @@ class YaleCrawler:
                         self.logger.info(f"Adding definite policy link: {link_url}")
                     
                     # Add probable links if configured to do so
-                    if not self.config.FOLLOW_DEFINITE_LINKS_ONLY:
+                    if not self.config.CRAWLER.FOLLOW_DEFINITE_LINKS_ONLY:
                         for link_url in policy_result.get('probable_links', []):
                             links_to_follow.append((link_url, "Probable policy link"))
                             self.logger.info(f"Adding probable policy link: {link_url}")
@@ -482,7 +482,7 @@ class YaleCrawler:
                 self.add_links_to_queue(links_to_follow, depth + 1)
                 
                 # Log summary of links
-                self.logger.info(f"Added {len(links_to_follow)} links to priority queue. Queue size: {len(self.config.PRIORITY_QUEUE)}")
+                self.logger.info(f"Added {len(links_to_follow)} links to priority queue. Queue size: {len(self.priority_queue)}")
     
     def add_links_to_queue(self, links: List[Tuple[str, str]], depth: int):
         """
@@ -500,7 +500,7 @@ class YaleCrawler:
                 added_count += 1
                 self.logger.info(f"Added to queue: {url} (Priority: {priority:.1f}, Depth: {depth})")
         
-        self.logger.info(f"Added {added_count} links to priority queue. Queue size: {len(self.config.PRIORITY_QUEUE)}")
+        self.logger.info(f"Added {added_count} links to priority queue. Queue size: {len(self.priority_queue)}")
     
     def process_webpage(self, url: str) -> Tuple[str, List[Tuple[str, str]]]:
         """
@@ -518,7 +518,7 @@ class YaleCrawler:
             self.driver.get(url)
             
             # Wait for the main content to load
-            WebDriverWait(self.driver, self.config.REQUEST_TIMEOUT).until(
+            WebDriverWait(self.driver, self.config.CRAWLER.REQUEST_TIMEOUT).until(
                 EC.presence_of_element_located((By.TAG_NAME, "body"))
             )
             
@@ -559,7 +559,7 @@ class YaleCrawler:
             if 'files-profile.medicine.yale.edu/documents/' in url:
                 # Assume this is a PDF for Yale document repository URLs without extension
                 self.logger.info(f"Processing Yale document repository URL as PDF: {url}")
-                doc_output_dir = os.path.join(self.config.DOCUMENT_DIR, f"doc_{hash(url) % 10000}")
+                doc_output_dir = os.path.join(self.config.PATHS.DOCUMENT_DIR, f"doc_{hash(url) % 10000}")
                 os.makedirs(doc_output_dir, exist_ok=True)
                 
                 self.logger.info(f"Processing with Mistral OCR: {url}")
@@ -577,7 +577,7 @@ class YaleCrawler:
             # Process based on file extension
             elif file_ext == '.pdf' or file_ext == '':  # Handle both PDF and extensionless URLs
                 # Try Mistral OCR for PDFs and extensionless URLs that might be PDFs
-                doc_output_dir = os.path.join(self.config.DOCUMENT_DIR, f"doc_{hash(url) % 10000}")
+                doc_output_dir = os.path.join(self.config.PATHS.DOCUMENT_DIR, f"doc_{hash(url) % 10000}")
                 os.makedirs(doc_output_dir, exist_ok=True)
                 
                 self.logger.info(f"Processing with Mistral OCR: {url}")
@@ -593,7 +593,7 @@ class YaleCrawler:
                     return ""
             else:
                 # For other document types, use the standard approach
-                file_path = download_document(url, self.config.DOCUMENT_DIR, self.config)
+                file_path = download_document(url, self.config.PATHS.DOCUMENT_DIR, self.config)
                 
                 if not file_path:
                     self.logger.error(f"Failed to download document from {url}")
@@ -638,7 +638,7 @@ class YaleCrawler:
             full_filename += '.md'
         
         # Save the full content
-        full_file_path = os.path.join(self.config.MARKDOWN_DIR, full_filename)
+        full_file_path = os.path.join(self.config.PATHS.MARKDOWN_DIR, full_filename)
         with open(full_file_path, 'w', encoding='utf-8') as f:
             f.write(f"# Content from {parsed_url.netloc}{parsed_url.path}\n\n")
             f.write(f"Source URL: {url}\n")
@@ -667,7 +667,7 @@ class YaleCrawler:
             policy_filename += '.md'
         
         # Save the policy content
-        policy_file_path = os.path.join(self.config.MARKDOWN_DIR, policy_filename)
+        policy_file_path = os.path.join(self.config.PATHS.MARKDOWN_DIR, policy_filename)
         with open(policy_file_path, 'w', encoding='utf-8') as f:
             f.write(f"# Policy Content from {parsed_url.netloc}{parsed_url.path}\n\n")
             f.write(f"Source URL: {url}\n")
