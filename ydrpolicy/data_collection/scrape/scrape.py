@@ -58,7 +58,7 @@ def main(config: SimpleNamespace = None, logger: logging.Logger = None):
     logger.info("Policy extraction completed successfully")
 
 if __name__ == "__main__":
-    from ydrpolicy.config import config
+    from ydrpolicy.data_collection.config import config
 
     print("Yale Medicine Policy Scraper")
     print("============================")

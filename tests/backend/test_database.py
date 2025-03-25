@@ -13,9 +13,9 @@ from ydrpolicy.backend.database.models import Base, Policy, PolicyChunk, User
 from ydrpolicy.backend.database.init_db import init_db, create_tables
 from ydrpolicy.backend.services.embeddings import embed_text
 from ydrpolicy.backend.services.chunking import chunk_text
-from ydrpolicy.backend.repository.policies import PolicyRepository
-from ydrpolicy.backend.repository.users import UserRepository
-from ydrpolicy.config import get_settings
+from ydrpolicy.backend.database.repository import PolicyRepository
+from ydrpolicy.backend.database.repository import UserRepository
+from ydrpolicy.data_collection.config import get_settings
 
 # PostgreSQL connection details - customize these for your environment
 PG_USER = "pouria"

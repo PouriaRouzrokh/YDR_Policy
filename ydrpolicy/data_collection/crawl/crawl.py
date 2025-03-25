@@ -10,7 +10,6 @@ from dotenv import load_dotenv
 from ydrpolicy.data_collection.crawl.crawler import YaleCrawler
 from ydrpolicy.data_collection.logger import DataCollectionLogger
 
-
 def main(config: SimpleNamespace = None, logger: logging.Logger = None):
     """Main function to run the crawler."""
     # Load environment variables
@@ -62,7 +61,7 @@ def main(config: SimpleNamespace = None, logger: logging.Logger = None):
         logger.error(f"Error during crawling: {str(e)}")
 
 if __name__ == "__main__":
-    from ydrpolicy.config import config
+    from ydrpolicy.data_collection.config import config
 
     print("Yale Medicine Policy Crawler")
     print("============================")

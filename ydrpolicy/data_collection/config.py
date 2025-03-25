@@ -14,13 +14,13 @@ _BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Create config dictionary first
 _config_dict = {
     # Data directory settings
-    "DATA_DIR": os.path.join(_BASE_DIR, "data2"),
-    "RAW_DATA_DIR": os.path.join(_BASE_DIR, "data2", "raw"),
-    "DOCUMENT_DIR": os.path.join(_BASE_DIR, "data2", "raw", "documents"),
-    "MARKDOWN_DIR": os.path.join(_BASE_DIR, "data2", "raw", "markdown_files"),
-    "PROCESSED_DATA_DIR": os.path.join(_BASE_DIR, "data2", "processed"),
-    "SCRAPED_POLICIES_DIR": os.path.join(_BASE_DIR, "data2", "processed", "scraped_policies"),
-    
+    "DATA_DIR": os.path.join(_BASE_DIR, "data"),
+    "RAW_DATA_DIR": os.path.join(_BASE_DIR, "data", "raw"),
+    "DOCUMENT_DIR": os.path.join(_BASE_DIR, "data", "raw", "documents"),
+    "MARKDOWN_DIR": os.path.join(_BASE_DIR, "data", "raw", "markdown_files"),
+    "PROCESSED_DATA_DIR": os.path.join(_BASE_DIR, "data", "processed"),
+    "SCRAPED_POLICIES_DIR": os.path.join(_BASE_DIR, "data", "processed", "scraped_policies"),
+        
     # LLM settings
     "MISTRAL_API_KEY": os.environ.get("MISTRAL_API_KEY"),
     "OPENAI_API_KEY": os.environ.get("OPENAI_API_KEY"),

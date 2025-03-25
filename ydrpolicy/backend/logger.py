@@ -5,10 +5,11 @@ from typing import Optional
 from rich.console import Console
 from rich.logging import RichHandler
 
-class DataCollectionLogger:
-    """Custom logger class using Rich for formatting and file output"""
+
+class BackendLogger:
+    """Custom logger class for the backend using Rich for formatting and file output"""
     
-    def __init__(self, name: str = "DataCollectionLogger", level: int = logging.INFO, path: Optional[str] = None):
+    def __init__(self, name: str = "BackendLogger", level: int = logging.INFO, path: Optional[str] = None):
         """Initialize the logger with Rich formatting and file output
 
         Args:
@@ -56,9 +57,9 @@ class DataCollectionLogger:
             self.logger.addHandler(file_handler)
             
             # Log that we initialized with a file
-            self.logger.info(f"Logging initialized. Log file: {path}")
+            self.logger.info(f"Backend logging initialized. Log file: {path}")
         else:
-            self.logger.info("Logging initialized (console only)")
+            self.logger.info("Backend logging initialized (console only)")
 
     def info(self, message: str) -> None:
         """Log info level message"""
@@ -87,3 +88,19 @@ class DataCollectionLogger:
     def progress(self, message: str) -> None:
         """Log progress as an info message with progress prefix"""
         self.logger.info(f"[blue]PROGRESS:[/blue] {message}")
+        
+    def db(self, message: str) -> None:
+        """Log database-related message with special formatting"""
+        self.logger.info(f"[yellow]DATABASE:[/yellow] {message}")
+        
+    def api(self, message: str) -> None:
+        """Log API-related message with special formatting"""
+        self.logger.info(f"[magenta]API:[/magenta] {message}")
+        
+    def vector(self, message: str) -> None:
+        """Log vector operations with special formatting"""
+        self.logger.info(f"[cyan]VECTOR:[/cyan] {message}")
+
+
+# Create a default instance for import
+logger = BackendLogger(path=os.path.join("data", "logs", "backend.log"))

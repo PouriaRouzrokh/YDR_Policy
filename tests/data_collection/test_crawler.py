@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))   
 
 from ydrpolicy.data_collection.crawl import crawl_main
-from ydrpolicy.config import config
+from ydrpolicy.data_collection.config import config
 
 def test_crawler():
     config.DATA_DIR = os.path.join(
