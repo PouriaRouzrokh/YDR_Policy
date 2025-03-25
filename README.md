@@ -96,16 +96,18 @@ yale-radiology-rag/
 │   │   ├── documents/        # Downloaded documents (PDFs, etc.)
 │   │   ├── markdown_files/   # Markdown content from web pages
 │   │   ├── state/            # Crawler state for resuming
-│   │   ├── crawler.log       # Crawler log file
 │   │   └── crawled_policies_data.csv  # List of crawled policy URLs
 │   │
 │   ├── processed/            # Processed data
 │   │   ├── scraped_policies/ # Extracted policy content
-│   │   │   └── scraped_policies_data.csv # Data about scraped policies
-│   │   └── scrape.log        # Scraper log file
+│   │   └── scraped_policies_data.csv # Data about scraped policies
 │   │
 │   ├── auth/                 # Authentication data
-│   └── uploads/              # User uploaded documents
+│   ├── uploads/              # User uploaded documents
+|   └── logs/                 # Project logs
+│       ├── crawler.log       # Crawler logs
+│       ├── scraper.log       # Scraper logs
+│       └── backend.log       # Backend logs
 │
 ├── test_data/                # Test data files
 │   ├── mock_policies/        # Mock policy files for testing
@@ -115,7 +117,6 @@ yale-radiology-rag/
 │
 ├── tests/                    # Centralized test directory
 │   ├── __init__.py           # Test package initialization
-│   ├── conftest.py           # PyTest fixtures and configuration
 │   ├── data_collection/      # Tests for data collection components
 │   │   ├── __init__.py       # Test package initialization
 │   │   ├── test_crawler.py   # Tests for crawler
@@ -134,6 +135,7 @@ yale-radiology-rag/
 │   ├── backend/              # Tests for backend components
 │   │   ├── __init__.py       # Test package initialization
 │   │   ├── test_app.py       # Tests for main app
+|   |   ├── test_database.py  # Tests the database functionalities
 │   │   ├── test_api/         # Tests for API endpoints
 │   │   │   ├── __init__.py   # Test package initialization
 │   │   │   ├── test_auth.py  # Tests for auth endpoints
@@ -216,8 +218,6 @@ yale-radiology-rag/
 │   │   │   │   ├── users.py  # User repository
 │   │   │   │   ├── policies.py # Policy repository
 │   │   │   │   ├── chat.py   # Chat history repository
-│   │   │   │   ├── api_usage.py # API usage tracking repository
-│   │   │   │   └── feedback.py # User feedback repository
 │   │   │   └── migrations/   # Alembic migrations
 │   │   │       ├── versions/ # Migration scripts
 │   │   │       ├── env.py    # Alembic environment
@@ -269,12 +269,11 @@ yale-radiology-rag/
 │   │   │   ├── usage_tracker.py # API usage tracking middleware
 │   │   │   └── logging_middleware.py # Request logging middleware
 │   │   │
-│   │   └── middleware/       # Middleware components
-│   │       ├── __init__.py   # Package initialization
-│   │       ├── auth_middleware.py # JWT validation middleware
-│   │       ├── error_handler.py # Error handling middleware
-│   │       ├── usage_tracker.py # API usage tracking middleware
-│   │       └── logging_middleware.py # Request logging middleware
+│   │   ├── scripts/       # Standalone backend scripts
+│   │   │   ├── initalize_database.py # initialize the database
+│   │   │
+|   |   └── utils/       # Misc backend utils
+│   │       ├── paths.py # Ensure the database paths exist
 │   │
 │   └── frontend/             # Next.js Frontend
 │       ├── .eslintrc.json    # ESLint configuration
