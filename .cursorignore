@@ -2,3 +2,4 @@
 data/raw/documents/
 data/raw/markdown_files/
 data/processed/scraped_policies/
+test_data/
