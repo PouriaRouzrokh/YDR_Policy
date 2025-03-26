@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import (
 )
 
 from ydrpolicy.backend.config import config
+from ydrpolicy.backend.logger import logger
 
 # Global engine instance
 _engine: Optional[AsyncEngine] = None
@@ -25,6 +26,7 @@ def get_async_engine() -> AsyncEngine:
     global _engine
     
     if _engine is None:
+        logger.info("Creating new database engine")
         
         _engine = _create_async_engine(
             str(config.DATABASE.DATABASE_URL),
@@ -35,6 +37,8 @@ def get_async_engine() -> AsyncEngine:
             pool_recycle=config.DATABASE.POOL_RECYCLE,
             pool_pre_ping=True,  # Verify connection before using from pool
         )
+        
+        logger.info("Database engine created successfully")
     
     return _engine
 
@@ -64,8 +68,10 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
         try:
             yield session
             await session.commit()
-        except Exception:
+            logger.debug("Session committed successfully")
+        except Exception as e:
             await session.rollback()
+            logger.error(f"Session rolled back due to error: {str(e)}")
             raise
 
 
@@ -75,7 +81,7 @@ async def get_session() -> AsyncGenerator[AsyncSession, None]:
     
     This function is mainly used for dependency injection in FastAPI.
     
-    Returns:
+    Yields:
         AsyncSession: A SQLAlchemy async session.
     
     Example:
@@ -108,5 +114,7 @@ async def close_db_connection() -> None:
     global _engine
     
     if _engine is not None:
+        logger.info("Closing database connection pool")
         await _engine.dispose()
         _engine = None
+        logger.info("Database connection pool closed")

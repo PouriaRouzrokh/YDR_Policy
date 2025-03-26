@@ -8,8 +8,8 @@ from sqlalchemy import text
 
 from ydrpolicy.backend.database.models import Base, create_search_vector_trigger
 from ydrpolicy.backend.config import config
-
 from ydrpolicy.backend.logger import logger
+from ydrpolicy.backend.utils.paths import ensure_directories
 
 
 async def create_database(db_url: str) -> bool:
@@ -102,6 +102,9 @@ async def init_db(db_url: Optional[str] = None) -> None:
     Args:
         db_url: Optional database URL. If not provided, uses the URL from settings.
     """
+    # Ensure all required directories exist
+    ensure_directories()
+    
     if db_url is None:
         db_url = str(config.DATABASE.DATABASE_URL)
     
@@ -118,7 +121,7 @@ async def init_db(db_url: Optional[str] = None) -> None:
         # Create all tables
         await create_tables(engine)
         
-        logger.info("Database initialization completed successfully.")
+        logger.success("Database initialization completed successfully.")
     finally:
         await engine.dispose()
 
@@ -164,7 +167,7 @@ async def drop_db(db_url: Optional[str] = None) -> None:
         await conn.execute(f'DROP DATABASE IF EXISTS "{db_name}"')
         await conn.close()
         
-        logger.info(f"Database '{db_name}' dropped successfully.")
+        logger.success(f"Database '{db_name}' dropped successfully.")
     except Exception as e:
         logger.error(f"Error dropping database: {str(e)}")
         raise

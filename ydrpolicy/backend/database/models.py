@@ -1,17 +1,14 @@
 from datetime import datetime
 from typing import List, Optional
-from uuid import uuid4
 
 from sqlalchemy import (
     Column, String, Text, Boolean, DateTime, ForeignKey, 
-    Integer, Float, UniqueConstraint, Index, func
+    Integer, Float, UniqueConstraint, Index, func, JSON
 )
-from sqlalchemy.dialects.postgresql import UUID, ARRAY, JSONB, TSVECTOR
+from sqlalchemy.dialects.postgresql import TSVECTOR
 from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, mapped_column, Mapped
-
-from ydrpolicy.backend.config import config
 
 # Import for pgvector
 try:
@@ -30,53 +27,41 @@ class User(Base):
     """User model for authentication and access control."""
     __tablename__ = "users"
 
-    id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid4
-    )
-    username: Mapped[str] = mapped_column(String(64), unique=True, index=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, index=True)
-    hashed_password: Mapped[str] = mapped_column(String(128))
-    first_name: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
-    last_name: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
-    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    email: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
+    password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
+    full_name: Mapped[str] = mapped_column(String(255), nullable=False)
     is_admin: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime(timezone=True), default=datetime.utcnow
     )
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+    last_login: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True), nullable=True
     )
 
     # Relationships
     chats: Mapped[List["Chat"]] = relationship("Chat", back_populates="user")
-    api_usage: Mapped[List["APIUsage"]] = relationship("APIUsage", back_populates="user")
-    feedback: Mapped[List["Feedback"]] = relationship("Feedback", back_populates="user")
+    policy_updates: Mapped[List["PolicyUpdate"]] = relationship("PolicyUpdate", back_populates="admin")
 
     def __repr__(self):
-        return f"<User {self.username}>"
+        return f"<User {self.email}>"
 
 
 class Policy(Base):
     """Policy document model."""
     __tablename__ = "policies"
 
-    id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid4
-    )
-    title: Mapped[str] = mapped_column(String(256), index=True)
-    content: Mapped[str] = mapped_column(Text)
-    source_url: Mapped[Optional[str]] = mapped_column(String(512), nullable=True)
-    source_file: Mapped[Optional[str]] = mapped_column(String(512), nullable=True)
-    department: Mapped[str] = mapped_column(String(128), index=True)
-    category: Mapped[Optional[str]] = mapped_column(String(128), nullable=True, index=True)
-    tags: Mapped[List[str]] = mapped_column(ARRAY(String), default=list)
-    metadata: Mapped[dict] = mapped_column(JSONB, default=dict)
-    last_updated: Mapped[str] = mapped_column(String(64))
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    title: Mapped[str] = mapped_column(String(255), nullable=False)
+    description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    url: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    metadata: Mapped[dict] = mapped_column(JSON, default=dict)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime(timezone=True), default=datetime.utcnow
     )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+        DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow
     )
     search_vector: Mapped[Optional[str]] = mapped_column(
         TSVECTOR, nullable=True
@@ -85,6 +70,9 @@ class Policy(Base):
     # Relationships
     chunks: Mapped[List["PolicyChunk"]] = relationship(
         "PolicyChunk", back_populates="policy", cascade="all, delete-orphan"
+    )
+    updates: Mapped[List["PolicyUpdate"]] = relationship(
+        "PolicyUpdate", back_populates="policy"
     )
 
     # Indexes
@@ -104,24 +92,19 @@ class PolicyChunk(Base):
     """Chunks of policy documents with embeddings."""
     __tablename__ = "policy_chunks"
 
-    id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid4
-    )
-    policy_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("policies.id"), index=True
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    policy_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("policies.id"), index=True
     )
     chunk_index: Mapped[int] = mapped_column(Integer)
     content: Mapped[str] = mapped_column(Text)
-    metadata: Mapped[dict] = mapped_column(JSONB, default=dict)
-    embedding = Column(
-        Vector(config.RAG.EMBEDDING_DIMENSIONS),
-        nullable=True
-    )
+    metadata: Mapped[dict] = mapped_column(JSON, default=dict)
+    embedding = Column(Vector(1536))  # Default for OpenAI text-embedding-3-small
     search_vector: Mapped[Optional[str]] = mapped_column(
         TSVECTOR, nullable=True
     )
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime(timezone=True), default=datetime.utcnow
     )
 
     # Relationships
@@ -151,130 +134,98 @@ class Chat(Base):
     """Chat session model."""
     __tablename__ = "chats"
 
-    id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid4
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("users.id"), index=True
     )
-    user_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("users.id"), index=True
-    )
-    title: Mapped[str] = mapped_column(String(256))
+    title: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime(timezone=True), default=datetime.utcnow
     )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+        DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow
     )
 
     # Relationships
     user: Mapped["User"] = relationship("User", back_populates="chats")
-    messages: Mapped[List["ChatMessage"]] = relationship(
-        "ChatMessage", back_populates="chat", cascade="all, delete-orphan"
+    messages: Mapped[List["Message"]] = relationship(
+        "Message", back_populates="chat", cascade="all, delete-orphan"
     )
 
     def __repr__(self):
         return f"<Chat {self.id}>"
 
 
-class ChatMessage(Base):
-    """Individual chat message model."""
-    __tablename__ = "chat_messages"
+class Message(Base):
+    """Message model for chat interactions."""
+    __tablename__ = "messages"
 
-    id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid4
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    chat_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("chats.id"), index=True
     )
-    chat_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("chats.id"), index=True
-    )
-    role: Mapped[str] = mapped_column(String(20))  # 'user' or 'assistant'
-    content: Mapped[str] = mapped_column(Text)
+    role: Mapped[str] = mapped_column(String(50), nullable=False)  # 'user', 'assistant', or 'system'
+    content: Mapped[str] = mapped_column(Text, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime(timezone=True), default=datetime.utcnow
     )
-    
-    # For tracking which tools/chunks were used
-    metadata: Mapped[dict] = mapped_column(JSONB, default=dict)
 
     # Relationships
     chat: Mapped["Chat"] = relationship("Chat", back_populates="messages")
+    tool_usages: Mapped[List["ToolUsage"]] = relationship(
+        "ToolUsage", back_populates="message", cascade="all, delete-orphan"
+    )
 
     def __repr__(self):
-        return f"<ChatMessage {self.id} ({self.role})>"
+        return f"<Message {self.id} ({self.role})>"
 
 
-class Feedback(Base):
-    """User feedback on responses."""
-    __tablename__ = "feedback"
+class ToolUsage(Base):
+    """Tool usage tracking for assistant messages."""
+    __tablename__ = "tool_usage"
 
-    id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid4
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    message_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("messages.id", ondelete="CASCADE"), index=True
     )
-    user_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("users.id"), index=True
-    )
-    message_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("chat_messages.id"), index=True
-    )
-    rating: Mapped[int] = mapped_column(Integer)  # 1-5 star rating
-    comment: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    tool_name: Mapped[str] = mapped_column(String(100), nullable=False)  # 'rag', 'keyword_search', etc.
+    input: Mapped[dict] = mapped_column(JSON, nullable=False)  # Tool input parameters
+    output: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)  # Tool output
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime(timezone=True), default=datetime.utcnow
+    )
+    execution_time: Mapped[Optional[float]] = mapped_column(Float, nullable=True)  # Time taken in seconds
+
+    # Relationships
+    message: Mapped["Message"] = relationship("Message", back_populates="tool_usages")
+
+    def __repr__(self):
+        return f"<ToolUsage {self.id} {self.tool_name}>"
+
+
+class PolicyUpdate(Base):
+    """Log of policy updates."""
+    __tablename__ = "policy_updates"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    admin_id: Mapped[Optional[int]] = mapped_column(
+        Integer, ForeignKey("users.id"), nullable=True, index=True
+    )
+    policy_id: Mapped[Optional[int]] = mapped_column(
+        Integer, ForeignKey("policies.id", ondelete="SET NULL"), nullable=True, index=True
+    )
+    action: Mapped[str] = mapped_column(String(50), nullable=False)  # 'create', 'update', 'delete'
+    details: Mapped[dict] = mapped_column(JSON, nullable=True)  # Details of what was changed
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=datetime.utcnow
     )
 
     # Relationships
-    user: Mapped["User"] = relationship("User", back_populates="feedback")
+    admin: Mapped[Optional["User"]] = relationship("User", back_populates="policy_updates")
+    policy: Mapped[Optional["Policy"]] = relationship("Policy", back_populates="updates")
 
     def __repr__(self):
-        return f"<Feedback {self.id} ({self.rating})>"
-
-
-class APIUsage(Base):
-    """API usage tracking model."""
-    __tablename__ = "api_usage"
-
-    id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid4
-    )
-    user_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("users.id"), index=True
-    )
-    endpoint: Mapped[str] = mapped_column(String(256))
-    method: Mapped[str] = mapped_column(String(10))
-    status_code: Mapped[int] = mapped_column(Integer)
-    response_time_ms: Mapped[float] = mapped_column(Float)
-    tokens_used: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
-    model: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
-    )
-
-    # Relationships
-    user: Mapped["User"] = relationship("User", back_populates="api_usage")
-
-    def __repr__(self):
-        return f"<APIUsage {self.endpoint} ({self.status_code})>"
-
-
-class SearchLog(Base):
-    """Log of search queries and results."""
-    __tablename__ = "search_logs"
-
-    id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid4
-    )
-    user_id: Mapped[Optional[UUID]] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("users.id"), nullable=True, index=True
-    )
-    query: Mapped[str] = mapped_column(Text)
-    search_type: Mapped[str] = mapped_column(String(20))  # 'vector', 'keyword', 'hybrid'
-    num_results: Mapped[int] = mapped_column(Integer)
-    execution_time_ms: Mapped[float] = mapped_column(Float)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
-    )
-    metadata: Mapped[dict] = mapped_column(JSONB, default=dict)  # For additional search parameters
-
-    def __repr__(self):
-        return f"<SearchLog {self.id} ({self.search_type})>"
+        return f"<PolicyUpdate {self.id} {self.action}>"
 
 
 # Create a trigger function to update search_vector on policies
@@ -284,9 +235,8 @@ def create_search_vector_trigger():
     CREATE OR REPLACE FUNCTION policies_search_vector_update() RETURNS trigger AS $$
     BEGIN
         NEW.search_vector = setweight(to_tsvector('english', COALESCE(NEW.title, '')), 'A') ||
-                            setweight(to_tsvector('english', COALESCE(NEW.content, '')), 'B') ||
-                            setweight(to_tsvector('english', COALESCE(NEW.department, '')), 'C') ||
-                            setweight(to_tsvector('english', COALESCE(NEW.category, '')), 'C');
+                            setweight(to_tsvector('english', COALESCE(NEW.description, '')), 'B') ||
+                            setweight(to_tsvector('english', COALESCE(NEW.content, '')), 'C');
         RETURN NEW;
     END
     $$ LANGUAGE plpgsql;

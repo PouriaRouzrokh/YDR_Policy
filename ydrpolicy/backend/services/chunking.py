@@ -2,6 +2,7 @@ import re
 from typing import List, Optional
 
 from ydrpolicy.backend.config import config
+from ydrpolicy.backend.logger import logger
 
 
 def chunk_text(
@@ -29,6 +30,8 @@ def chunk_text(
     
     if chunk_overlap is None:
         chunk_overlap = config.RAG.CHUNK_OVERLAP
+    
+    logger.debug(f"Chunking text of length {len(text)} with chunk_size={chunk_size}, chunk_overlap={chunk_overlap}")
     
     # If text is already small enough, return it as a single chunk
     if len(text) <= chunk_size:
@@ -137,9 +140,11 @@ def chunk_text(
     
     # If we still don't have any chunks, fall back to simple character-based chunking
     if not chunks:
+        logger.warning("Falling back to character-based chunking")
         for i in range(0, len(text), chunk_size - chunk_overlap):
             chunks.append(text[i:i + chunk_size])
     
+    logger.debug(f"Text split into {len(chunks)} chunks")
     return chunks
 
 
@@ -169,6 +174,8 @@ def chunk_markdown(
     if chunk_overlap is None:
         chunk_overlap = config.RAG.CHUNK_OVERLAP
     
+    logger.debug(f"Chunking markdown text of length {len(markdown_text)}")
+    
     # If text is already small enough, return it as a single chunk
     if len(markdown_text) <= chunk_size:
         return [markdown_text]
@@ -184,6 +191,8 @@ def chunk_markdown(
     
     # If we have headings, use them as chunk boundaries
     if heading_positions:
+        logger.debug(f"Found {len(heading_positions)} headings in markdown text")
+        
         # Add start of document as a position
         all_positions = [0] + heading_positions
         
@@ -204,6 +213,8 @@ def chunk_markdown(
                 chunks.extend(section_chunks)
     else:
         # If no headings found, fall back to regular chunking
+        logger.debug("No headings found in markdown, falling back to regular chunking")
         chunks = chunk_text(markdown_text, chunk_size, chunk_overlap)
     
+    logger.debug(f"Markdown text split into {len(chunks)} chunks")
     return chunks

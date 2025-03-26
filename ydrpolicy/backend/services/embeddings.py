@@ -1,11 +1,10 @@
 import asyncio
 from typing import List, Dict, Any, Optional
+import logging
 
 from openai import AsyncOpenAI
 
 from ydrpolicy.backend.config import config
-
-# Set up logging
 from ydrpolicy.backend.logger import logger
 
 # Cache for the OpenAI client
@@ -50,10 +49,12 @@ async def embed_text(text: str, model: Optional[str] = None) -> List[float]:
         model = config.RAG.EMBEDDING_MODEL
     
     try:
+        logger.debug(f"Generating embedding for text: {text[:50]}...")
         response = await client.embeddings.create(
             model=model,
             input=text
         )
+        logger.debug(f"Successfully generated embedding with dimensions: {len(response.data[0].embedding)}")
         return response.data[0].embedding
     except Exception as e:
         logger.error(f"Error generating embedding: {str(e)}")
@@ -94,11 +95,13 @@ async def embed_texts(texts: List[str], model: Optional[str] = None) -> List[Lis
     
     try:
         if valid_texts:
+            logger.info(f"Generating embeddings for {len(valid_texts)} texts")
             response = await client.embeddings.create(
                 model=model,
                 input=valid_texts
             )
             embeddings = [item.embedding for item in response.data]
+            logger.info(f"Successfully generated {len(embeddings)} embeddings")
         else:
             embeddings = []
         
@@ -162,6 +165,7 @@ class DummyEmbedding:
         if norm > 0:
             vector = [x/norm for x in vector]
         
+        logger.debug(f"Generated dummy embedding for text: {text[:50]}...")
         return vector
 
 
@@ -177,3 +181,22 @@ async def dummy_embed_text(text: str) -> List[float]:
         Dummy embedding vector
     """
     return await DummyEmbedding.embed(text)
+
+
+async def dummy_embed_texts(texts: List[str]) -> List[List[float]]:
+    """
+    Generate dummy embeddings for multiple texts.
+    
+    Args:
+        texts: List of texts to embed
+        
+    Returns:
+        List of dummy embedding vectors
+    """
+    results = []
+    for text in texts:
+        if text and text.strip():
+            results.append(await dummy_embed_text(text))
+        else:
+            results.append([0.0] * config.RAG.EMBEDDING_DIMENSIONS)
+    return results

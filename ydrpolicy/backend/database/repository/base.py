@@ -1,5 +1,4 @@
-from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
-from uuid import UUID
+from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, cast
 
 from sqlalchemy import select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -28,7 +27,7 @@ class BaseRepository(Generic[ModelType]):
         self.session = session
         self.model_class = model_class
     
-    async def get_by_id(self, id: Union[str, UUID]) -> Optional[ModelType]:
+    async def get_by_id(self, id: int) -> Optional[ModelType]:
         """
         Get a record by its ID.
         
@@ -38,12 +37,6 @@ class BaseRepository(Generic[ModelType]):
         Returns:
             The record if found, None otherwise
         """
-        if isinstance(id, str):
-            try:
-                id = UUID(id)
-            except ValueError:
-                return None
-                
         stmt = select(self.model_class).where(self.model_class.id == id)
         result = await self.session.execute(stmt)
         return result.scalars().first()
@@ -78,7 +71,7 @@ class BaseRepository(Generic[ModelType]):
         await self.session.refresh(obj_in)
         return obj_in
     
-    async def update(self, id: Union[str, UUID], obj_in: Dict[str, Any]) -> Optional[ModelType]:
+    async def update(self, id: int, obj_in: Dict[str, Any]) -> Optional[ModelType]:
         """
         Update a record by ID.
         
@@ -89,12 +82,6 @@ class BaseRepository(Generic[ModelType]):
         Returns:
             The updated model instance if found, None otherwise
         """
-        if isinstance(id, str):
-            try:
-                id = UUID(id)
-            except ValueError:
-                return None
-        
         stmt = (
             update(self.model_class)
             .where(self.model_class.id == id)
@@ -105,7 +92,7 @@ class BaseRepository(Generic[ModelType]):
         await self.session.flush()
         return result.scalars().first()
     
-    async def delete(self, id: Union[str, UUID]) -> bool:
+    async def delete(self, id: int) -> bool:
         """
         Delete a record by ID.
         
@@ -115,12 +102,6 @@ class BaseRepository(Generic[ModelType]):
         Returns:
             True if the record was deleted, False if not found
         """
-        if isinstance(id, str):
-            try:
-                id = UUID(id)
-            except ValueError:
-                return False
-                
         stmt = delete(self.model_class).where(self.model_class.id == id)
         result = await self.session.execute(stmt)
         return result.rowcount > 0

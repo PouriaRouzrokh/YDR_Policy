@@ -55,6 +55,7 @@ alwaysApply: false
 - **Detailed Docstrings:** All functions, methods, and classes must have Google-style docstrings, thoroughly explaining their purpose, parameters, return values, and any exceptions raised. Include usage examples where helpful.
 - **Thorough Unit Testing:** Aim for high test coverage (90% or higher) using `pytest`. Test both common cases and edge cases.
 - **Robust Exception Handling:** Use specific exception types, provide informative error messages, and handle exceptions gracefully. Implement custom exception classes when needed. Avoid bare `except` clauses.
+- ** Avoid unnessarily nested and very complicated coding blocks.
 - **Logging:** Employ the `logging` module judiciously to log important events, warnings, and errors.
 
 ## 4. ML/AI Specific Guidelines
